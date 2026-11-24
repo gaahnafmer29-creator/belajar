@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kang Asep - Dada Ayam Marinasi Sehat & Praktis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Leaflet CSS & JS untuk Pemilih Peta Interaktif -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            900: '#7c2d12',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    <i data-lucide="flame" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-tight text-slate-900 block leading-none">Kang Asep</span>
+                    <span class="text-[11px] font-medium text-brand-600 tracking-wide uppercase">Protein Meal Prep</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#beranda" class="hover:text-brand-600 transition-colors">Beranda</a>
+                <a href="#kalkulator" class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="calculator" class="w-4 h-4 text-brand-500"></i>
+                    Konsultasi Protein
+                </a>
+                <a href="#produk" class="hover:text-brand-600 transition-colors">Menu & Harga</a>
+                <a href="#cara-masak" class="hover:text-brand-600 transition-colors">Cara Masak</a>
+            </nav>
+
+            <!-- Cart Button -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleCart()" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-600 transition-colors flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline text-sm font-semibold">Keranjang</span>
+                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-brand-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100 text-brand-700 text-xs sm:text-sm font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
+                        100% Dada Ayam Fillet Segar • Takaran Akurat
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                        Kejar Target Protein Harian Jadi Praktis Bareng <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-amber-500">Kang Asep</span>
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Dada ayam fillet tanpa kulit yang sudah dimarinasi bumbu meresap. Dikemas vakum higienis per <strong>50 gram</strong> dan <strong>100 gram</strong>. Tinggal panggang 5 menit, siap santap!
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                        <a href="#kalkulator" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-600/25 transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                            Cek Kebutuhan Proteinmu
+                        </a>
+                        <a href="#produk" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold border border-slate-200 shadow-sm transition-all flex items-center justify-center gap-2">
+                            Lihat Pilihan Kemasan
+                            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="text-xl sm:text-2xl font-extrabold text-slate-900">~23g</p>
+                            <p class="text-xs text-slate-500">Protein per 100g</p>
+                        </div>
+                        <div>
+                            <p class="text-xl sm:text-2xl font-extrabold text-slate-900">5 Menit</p>
+                            <p class="text-xs text-slate-500">Waktu Masak</p>
+                        </div>
+                        <div>
+                            <p class="text-xl sm:text-2xl font-extrabold text-slate-900">0% Ribet</p>
+                            <p class="text-xs text-slate-500">Tanpa Cuci & Potong</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Card -->
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-3xl bg-gradient-to-br from-brand-500 to-amber-500 p-1.5 shadow-2xl shadow-brand-500/20">
+                        <div class="bg-white rounded-[22px] overflow-hidden">
+                            <div class="relative w-full h-64 sm:h-72 bg-slate-100 overflow-hidden group">
+                                <img src="https://i.postimg.cc/2jMc7bHz/Vacuum-Sealed-Chicken-on-Wooden-Board.png"
+                                     onerror="this.src='https://placehold.co/800x520/fff7ed/ea580c?text=Dada+Ayam+Fillet+Kemasan+Vakum+50g+%26+100g'"
+                                     alt="Dada Ayam Fillet Marinasi Kemasan Vakum Rapi Kang Asep"
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                                    <span class="px-3 py-1 rounded-lg bg-brand-600 text-white text-xs font-extrabold tracking-wide shadow-sm">
+                                        Kemasan Vakum 50g &amp; 100g
+                                    </span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-white/95 text-slate-800 text-[11px] font-bold shadow-xs">
+                                        Fillet Terpackaging
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold">High Protein • Low Fat</span>
+                                    <span class="text-xs font-medium text-slate-400">Made by Order</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-slate-900">Kemasan Takar 50g & 100g</h3>
+                                <p class="text-sm text-slate-600">Memudahkan kamu menghitung kalori dan makro nutrisi harian tanpa perlu timbangan dapur lagi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Konsultasi & Kalkulator Protein Section -->
+    <section id="kalkulator" class="py-16 bg-white border-y border-slate-200/80">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
+                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Konsultasi Nutrisi Gratis</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Hitung Kebutuhan Protein Tubuhmu</h2>
+                <p class="text-slate-600 text-sm sm:text-base">Masukkan berat badan, tinggi badan, dan targetmu. Kang Asep bantu hitungkan berapa bungkus dada ayam yang pas buat kamu setiap hari!</p>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-8 bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                <!-- Form Input -->
+                <form id="protein-form" onsubmit="calculateProtein(event)" class="md:col-span-6 space-y-5">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Jenis Kelamin</label>
+                            <select id="gender" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                                <option value="male">Laki-laki</option>
+                                <option value="female">Perempuan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Usia (Tahun)</label>
+                            <input type="number" id="age" value="25" min="15" max="80" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Berat Badan (KG)</label>
+                            <input type="number" id="weight" value="65" min="30" max="200" step="0.5" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tinggi Badan (CM)</label>
+                            <input type="number" id="height" value="170" min="120" max="230" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Target</label>
+                            <select id="goal" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                                <option value="maintain">Jaga Kesehatan / Maintain</option>
+                                <option value="fat_loss" selected>Turun Berat Badan / Fat Loss</option>
+                                <option value="muscle_gain">Naik Massa Otot / Bulking</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Aktivitas Fisik</label>
+                            <select id="activity" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                                <option value="mager">Mager (Minim Gerak / Rebahan)</option>
+                                <option value="ringan">Ringan (Jalan Santai / 1-2x Minggu)</option>
+                                <option value="sedang" selected>Sedang (Olahraga 3-4x / Minggu)</option>
+                                <option value="berat">Berat (Latihan Intens / Gym Rutin)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-brand-600 text-white font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        Analisa Kebutuhan Protein Saya
+                    </button>
+                </form>
+
+                <!-- Result Output -->
+                <div class="md:col-span-6 flex flex-col justify-between bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                    <div id="calc-result-container" class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Hasil Analisa Kang Asep</span>
+                            <span id="bmi-badge" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold">BMI: 22.5 (Ideal)</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3.5 rounded-xl bg-brand-50 border border-brand-100">
+                                <span class="text-xs font-medium text-brand-700 block">Target Protein Harian</span>
+                                <div class="flex items-baseline gap-1 mt-1">
+                                    <span id="protein-target" class="text-2xl sm:text-3xl font-extrabold text-brand-600">104</span>
+                                    <span class="text-xs font-bold text-brand-700">gram</span>
+                                </div>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                                <span class="text-xs font-medium text-slate-500 block">Berat Badan Ideal</span>
+                                <div class="flex items-baseline gap-1 mt-1">
+                                    <span id="ideal-weight" class="text-2xl sm:text-3xl font-extrabold text-slate-800">63</span>
+                                    <span class="text-xs font-bold text-slate-500">kg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200/60 space-y-3">
+                            <div class="flex items-center gap-3">
+                                <img src="https://i.postimg.cc/2jMc7bHz/Vacuum-Sealed-Chicken-on-Wooden-Board.png"
+                                     onerror="this.src='https://placehold.co/160x120/fff7ed/ea580c?text=Ayam+100g+%26+50g'"
+                                     alt="Foto Produk Dada Ayam Marinasi Kang Asep"
+                                     class="w-16 h-14 rounded-xl object-cover border border-amber-200 shrink-0">
+                                <div class="space-y-1">
+                                    <p class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                                        <i data-lucide="chef-hat" class="w-4 h-4 text-amber-600"></i>
+                                        Rekomendasi Porsi Ayam Kang Asep:
+                                    </p>
+                                    <p class="text-[11px] text-amber-800/80">Kemasan vakum 50g & 100g siap olah</p>
+                                </div>
+                            </div>
+                            <p id="portion-recommendation" class="text-sm text-slate-700 leading-relaxed">
+                                Untuk memenuhi <strong>104g protein</strong> (dengan asumsi ~70% dari ayam & sisanya telur/tempe/nasi), kamu butuh sekitar <strong>300g dada ayam mentah</strong> per hari (<strong>3 bungkus 100g</strong>).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-2.5">
+                        <button type="button" onclick="applyRecommendationToCart()" class="flex-1 py-2.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold transition-colors flex items-center justify-center gap-1.5">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            Masukkan Rekomendasi ke Keranjang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Katalog Produk Section -->
+    <section id="produk" class="py-16 sm:py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
+                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Menu Kang Asep</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Pilih Ukuran Kemasan</h2>
+                <p class="text-slate-600 text-sm sm:text-base">100% dada ayam fillet segar dengan racikan bumbu marinasi khas Kang Asep. Tersedia dalam 2 ukuran takar praktis.</p>
+            </div>
+
+            <!-- Grid Produk -->
+            <div id="product-grid" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Produk di-render via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cara Masak & Info Penyimpanan -->
+    <section id="cara-masak" class="py-16 bg-slate-900 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
+                <span class="text-brand-400 font-bold text-sm uppercase tracking-wider">Praktis & Higienis</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold">Cara Penyimpanan & Penyajian</h2>
+                <p class="text-slate-400 text-sm">Bumbu sudah meresap dari Kang Asep. Tinggal simpan sesuai kebutuhan dan masak dengan cara yang paling nyaman.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
+                    <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">1</div>
+                    <h3 class="font-bold text-lg">Penyimpanan Kulkas</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Simpan di freezer untuk ketahanan sekitar <strong>2–3 minggu</strong>, atau di chiller/kulkas bawah sekitar <strong>2–3 hari</strong> untuk pemakaian dekat. Jika beku, cairkan dulu di suhu ruang atau rendam kemasan tertutup di air biasa sebelum dimasak.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
+                    <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">2</div>
+                    <h3 class="font-bold text-lg">Proses Masak</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Masak di atas <strong>teflon/pan anti lengket</strong> sekitar 5–7 menit per sisi hingga matang merata, atau gunakan <strong>air fryer</strong> / panggang sesuai selera tanpa perlu tambah banyak bumbu.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
+                    <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">3</div>
+                    <h3 class="font-bold text-lg">Siap Disajikan</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">Sajikan hangat bersama nasi, sayur, atau sumber karbohidrat favorit untuk memenuhi kebutuhan protein harian kapan saja.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white">
+                    <i data-lucide="flame" class="w-4 h-4"></i>
+                </div>
+                <span class="font-bold text-slate-900">Dada Ayam Marinasi Kang Asep</span>
+            </div>
+            <p class="text-xs text-slate-500 text-center sm:text-right">
+                Fresh Homemade Meal Prep • Kemasan 50g & 100g • Pesan Antar Area Sekitar
+            </p>
+        </div>
+    </footer>
+
+    <!-- Drawer Keranjang Belanja (Slide-over) -->
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Header Cart -->
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-600"></i>
+                <h3 class="font-extrabold text-lg text-slate-900">Keranjang Pesanan</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-500">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Item keranjang dirender lewat JS -->
+        </div>
+
+        <!-- Checkout Form & Total -->
+        <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-4">
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between text-slate-600">
+                    <span>Total Berat Ayam</span>
+                    <span id="cart-total-weight" class="font-bold text-slate-800">0 gram</span>
+                </div>
+                <div class="flex justify-between text-slate-600">
+                    <span>Estimasi Total Protein</span>
+                    <span id="cart-total-protein" class="font-bold text-emerald-600">0 gram</span>
+                </div>
+                <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+                    <span>Total Harga</span>
+                    <span id="cart-total-price" class="text-brand-600">Rp 0</span>
+                </div>
+            </div>
+
+            <div class="space-y-2.5">
+                <input type="text" id="customer-name" placeholder="Nama penerima (contoh: Budi)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
+                <input type="text" id="customer-address" placeholder="Detail alamat / patokan (blok, no rumah, dll)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
+
+                <!-- Fitur Share Lokasi Fleksibel (Pilih di Peta atau GPS Saat Ini) -->
+                <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600"></i>
+                            Titik Lokasi Antar
+                        </span>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" onclick="openLocationPicker()" class="px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors flex items-center gap-1 shadow-2xs">
+                                <i data-lucide="map" class="w-3.5 h-3.5"></i>
+                                <span id="pick-loc-label">Pilih di Peta</span>
+                            </button>
+                            <button type="button" id="share-loc-btn" onclick="shareLocation()" title="Gunakan posisi GPS saat ini" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1">
+                                <i data-lucide="locate-fixed" class="w-3.5 h-3.5 text-brand-600"></i>
+                                <span id="share-loc-label">GPS</span>
+                            </button>
+                            <button type="button" id="clear-loc-btn" onclick="clearLocation()" title="Hapus lokasi" class="hidden p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition-colors">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p id="location-status" class="text-[11px] text-slate-500 leading-snug">
+                        Bisa pilih titik tujuan di peta (misal kirim ke teman/kantor) atau pakai GPS langsung.
+                    </p>
+                </div>
+            </div>
+
+            <button onclick="checkoutWhatsApp()" class="w-full py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                Pesan Sekarang via WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <!-- Modal Pemilih Lokasi Interaktif (Map Picker seperti GoSend/Grab/Shopee) -->
+    <div id="location-modal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5">
+        <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
+            <!-- Modal Header -->
+            <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-white">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+                        <i data-lucide="map-pinned" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-base text-slate-900 leading-tight">Pilih Titik Lokasi Pengantaran</h3>
+                        <p class="text-[11px] text-slate-500">Cari alamat atau geser pin ke rumah / lokasi teman</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeLocationPicker()" class="p-2 rounded-xl hover:bg-slate-100 text-slate-500">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Bar Pencarian Tempat / Alamat -->
+            <div class="p-3.5 bg-slate-50 border-b border-slate-200 space-y-2 relative">
+                <div class="flex gap-2">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="map-search-input" onkeydown="if(event.key==='Enter'){event.preventDefault(); searchMapLocation();}" placeholder="Cari jalan, perumahan, kampus, atau gedung..." class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-500">
+                    </div>
+                    <button type="button" onclick="searchMapLocation()" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-600 text-white text-xs sm:text-sm font-bold transition-colors shrink-0">
+                        Cari
+                    </button>
+                    <button type="button" onclick="locateMeOnMap()" title="Ke posisi saya saat ini" class="px-3 py-2.5 rounded-xl bg-white hover:bg-brand-50 border border-slate-300 text-brand-600 font-bold text-xs flex items-center gap-1 shrink-0">
+                        <i data-lucide="locate-fixed" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Dropdown Hasil Pencarian Alamat -->
+                <div id="map-search-results" class="hidden max-h-40 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-lg divide-y divide-slate-100 text-xs"></div>
+            </div>
+
+            <!-- Container Peta Leaflet -->
+            <div class="relative w-full h-72 sm:h-80 bg-slate-100">
+                <div id="picker-map" class="w-full h-full z-10"></div>
+                <div class="absolute bottom-3 left-3 z-20 px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-xs shadow-md border border-slate-200 text-[11px] font-medium text-slate-700 flex items-center gap-1.5 pointer-events-none">
+                    <i data-lucide="hand" class="w-3.5 h-3.5 text-brand-600"></i>
+                    Klik peta atau geser pin oranye untuk menentukan titik tepat
+                </div>
+            </div>
+
+            <!-- Info Titik Terpilih & Tombol Konfirmasi -->
+            <div class="p-4 bg-white border-t border-slate-200 space-y-3">
+                <div class="p-3 rounded-xl bg-brand-50/70 border border-brand-100 flex items-start gap-2.5">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                    <div class="min-w-0 flex-1 space-y-0.5">
+                        <p id="picker-selected-address" class="text-xs font-bold text-slate-800 line-clamp-2">
+                            Memuat titik peta...
+                        </p>
+                        <p id="picker-selected-coords" class="text-[11px] text-slate-500 font-mono">
+                            -6.917464, 107.619123
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" onclick="closeLocationPicker()" class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition-colors">
+                        Batal
+                    </button>
+                    <button type="button" onclick="confirmPickedLocation()" class="flex-1 py-3 px-5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        Gunakan Titik Lokasi Ini
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification (Pengganti alert) -->
+    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2.5 opacity-0 pointer-events-none transition-all duration-300">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+        <span id="toast-message">Ditambahkan ke keranjang</span>
+    </div>
+
+    <!-- Floating Customer Service (CS) Widget -->
+    <div id="cs-widget" class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
+        <!-- Pop-up Panel CS -->
+        <div id="cs-panel" class="hidden w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transition-all">
+            <div class="bg-gradient-to-r from-brand-600 to-amber-500 p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
+                        <i data-lucide="headphones" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm leading-tight">CS Kang Asep</p>
+                        <p class="text-[11px] text-orange-100 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
+                            Siap bantu tanya stok & order
+                        </p>
+                    </div>
+                </div>
+                <button type="button" onclick="toggleCSPanel()" class="p-1 rounded-lg hover:bg-white/15 transition-colors">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div class="p-4 space-y-2.5 text-xs">
+                <p class="text-slate-600 leading-relaxed">Halo! Ada yang bisa Kang Asep bantu terkait dada ayam marinasi 50g / 100g atau konsultasi protein?</p>
+                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau tanya ketersediaan stok & jadwal pengiriman dada ayam marinasi.')" class="w-full text-left px-3 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-200 text-slate-700 hover:text-brand-700 font-semibold transition-colors flex items-center justify-between">
+                    <span>Tanya stok & jadwal kirim</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau konsultasi kebutuhan protein harian dan porsi ayamnya.')" class="w-full text-left px-3 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-200 text-slate-700 hover:text-brand-700 font-semibold transition-colors flex items-center justify-between">
+                    <span>Konsultasi porsi & protein</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+                <button type="button" onclick="openCSWhatsApp('Halo CS Kang Asep, saya ingin terhubung langsung.')" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    Chat WhatsApp Sekarang
+                </button>
+            </div>
+        </div>
+
+        <!-- Tombol Lambang CS Mengambang -->
+        <button type="button" onclick="toggleCSPanel()" aria-label="Buka Customer Service Kang Asep" class="group flex items-center gap-2.5 bg-slate-900 hover:bg-brand-600 text-white px-4 py-3 rounded-full shadow-xl shadow-slate-900/20 hover:shadow-brand-600/30 transition-all active:scale-95">
+            <span class="relative flex items-center justify-center">
+                <i data-lucide="headphones" class="w-5 h-5"></i>
+                <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-900 group-hover:ring-brand-600"></span>
+            </span>
+            <span class="text-xs sm:text-sm font-bold pr-0.5">CS</span>
+        </button>
+    </div>
+
+    <script>
+        // Nomor WhatsApp Kang Asep (format internasional tanpa tanda + atau spasi)
+        const WHATSAPP_NUMBER = "201507035950";
+
+        // Data Produk Dada Ayam Marinasi Kang Asep (Hanya 1 Racikan Original, 2 Ukuran Kemasan)
+        const products = [
+            {
+                id: "ayam-100",
+                name: "Dada Ayam Marinasi (100g)",
+                weight: 100,
+                protein: 23,
+                calories: 120,
+                price: 12000,
+                desc: "Dada ayam fillet tanpa kulit dimarinasi bumbu spesial Kang Asep. Takaran pas 100 gram untuk porsi makan utama tinggi protein.",
+                badge: "Paling Laris"
+            },
+            {
+                id: "ayam-50",
+                name: "Dada Ayam Marinasi (50g)",
+                weight: 50,
+                protein: 11.5,
+                calories: 60,
+                price: 6500,
+                desc: "Kemasan praktis 50 gram untuk porsi ringan, tambahan lauk sarapan, atau pelengkap agar target protein harianmu pas.",
+                badge: "Porsi Praktis"
+            }
+        ];
+
+        // Foto Produk Dada Ayam Marinasi (100g vs 50g) untuk Katalog Produk
+        function getPackagingSVG(weight) {
+            const is100 = weight === 100;
+            const labelBg = is100 ? "bg-brand-600 text-white" : "bg-slate-900 text-white";
+            const badgeText = is100 ? "KEMASAN VAKUM 100g" : "KEMASAN VAKUM 50g";
+            const fallbackUrl = `https://placehold.co/800x480/fff7ed/ea580c?text=Dada+Ayam+Fillet+Terpackaging+${weight}g`;
+
+            return `
+                <div class="relative w-full h-full">
+                    <img src="https://i.postimg.cc/2jMc7bHz/Vacuum-Sealed-Chicken-on-Wooden-Board.png"
+                         onerror="this.onerror=null; this.src='${fallbackUrl}';"
+                         alt="Foto Produk Dada Ayam Fillet Terpackaging ${weight}g"
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/15 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                        <span class="px-3 py-1 rounded-lg text-xs font-extrabold tracking-wide shadow-sm ${labelBg}">
+                            ${badgeText}
+                        </span>
+                        <span class="px-2.5 py-1 rounded-lg bg-white/95 text-slate-800 text-[11px] font-bold shadow-xs">
+                            Fillet Rapi • Higienis
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        let cart = [];
+        let recommendedPacks100g = 3;
+        let recommendedPacks50g = 0;
+        let sharedLocation = null; // Menyimpan { lat, lng, label, source, mapsUrl }
+
+        // Variabel Peta Interaktif
+        let pickerMap = null;
+        let pickerMarker = null;
+        let tempPickedCoords = { lat: -6.917464, lng: 107.619123, label: "Bandung, Jawa Barat" };
+
+        // Format Rupiah
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+
+        // Tampilkan Notifikasi Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Render Daftar Produk di Katalog (#produk)
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                const is100 = product.weight === 100;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-60 overflow-hidden bg-slate-100">
+                            ${getPackagingSVG(product.weight)}
+                            <div class="absolute top-4 left-4 flex gap-1.5">
+                                <span class="px-3.5 py-1.5 rounded-xl text-sm font-extrabold ${is100 ? 'bg-brand-600 text-white' : 'bg-slate-900 text-white'} shadow-md">
+                                    Kemasan ${product.weight} gram
+                                </span>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-xs text-xs font-bold text-slate-800 shadow-xs">
+                                ${product.badge}
+                            </span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center gap-2 text-xs font-bold text-emerald-700 bg-emerald-50 w-fit px-3 py-1.5 rounded-lg">
+                                <span>Protein: ${product.protein}g</span>
+                                <span>•</span>
+                                <span>${product.calories} kkal</span>
+                            </div>
+                            <h3 class="font-extrabold text-xl text-slate-900 leading-snug">${product.name}</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">${product.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-4 flex items-center justify-between border-t border-slate-100">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Harga / bungkus</span>
+                            <span class="font-extrabold text-xl text-slate-900">${formatRupiah(product.price)}</span>
+                        </div>
+                        <button onclick="addToCart('${product.id}')" class="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-600/20 transition-all flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            Tambah
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Kalkulator Konsultasi Protein
+        function calculateProtein(e) {
+            if (e) e.preventDefault();
+
+            const gender = document.getElementById('gender').value;
+            const weight = parseFloat(document.getElementById('weight').value) || 65;
+            const height = parseFloat(document.getElementById('height').value) || 170;
+            const goal = document.getElementById('goal').value;
+            const activity = document.getElementById('activity').value;
+
+            // Hitung BMI
+            const heightM = height / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+            let bmiStatus = "Ideal";
+            let bmiColor = "bg-emerald-50 text-emerald-700";
+
+            if (bmi < 18.5) {
+                bmiStatus = "Kurang";
+                bmiColor = "bg-amber-50 text-amber-700";
+            } else if (bmi >= 25 && bmi < 30) {
+                bmiStatus = "Berlebih";
+                bmiColor = "bg-orange-50 text-orange-700";
+            } else if (bmi >= 30) {
+                bmiStatus = "Obesitas";
+                bmiColor = "bg-rose-50 text-rose-700";
+            }
+
+            // Rumus Broca Berat Badan Ideal
+            let idealWeight = gender === 'male' 
+                ? (height - 100) - ((height - 100) * 0.1)
+                : (height - 100) - ((height - 100) * 0.15);
+            idealWeight = Math.round(idealWeight);
+
+            // Hitung faktor pengali protein (g / kg BB) berdasarkan kombinasi Target + Aktivitas Fisik
+            const goalBase = {
+                maintain: 1.0,
+                fat_loss: 1.4,
+                muscle_gain: 1.6
+            }[goal] ?? 1.4;
+
+            // Bobot tambahan aktivitas dibagi 4 tingkat: Mager, Ringan, Sedang, Berat
+            const activityBonus = {
+                mager: 0.0,
+                ringan: 0.15,
+                sedang: 0.3,
+                berat: 0.45
+            }[activity] ?? 0.3;
+
+            const multiplier = goalBase + activityBonus;
+
+            // Hitung Kebutuhan Protein Harian
+            const dailyProtein = Math.round(weight * multiplier);
+            
+            // Asumsi 70% protein utama diambil dari dada ayam marinasi (100g ayam = ~23g protein)
+            const proteinFromChicken = dailyProtein * 0.7;
+            const neededGrams = Math.round((proteinFromChicken / 23) * 100);
+            
+            // Konversi ke kemasan 100g & 50g
+            const packs100 = Math.floor(neededGrams / 100);
+            const remainder = neededGrams % 100;
+            const packs50 = remainder >= 25 ? 1 : 0;
+
+            recommendedPacks100g = Math.max(1, packs100);
+            recommendedPacks50g = packs50;
+
+            let packText = `<strong>${packs100} bungkus (100g)</strong>`;
+            if (packs50 > 0) {
+                packText += ` + <strong>1 bungkus (50g)</strong>`;
+            }
+
+            // Update UI
+            const bmiBadge = document.getElementById('bmi-badge');
+            bmiBadge.textContent = `BMI: ${bmi} (${bmiStatus})`;
+            bmiBadge.className = `px-2.5 py-1 rounded-lg text-xs font-bold ${bmiColor}`;
+
+            document.getElementById('protein-target').textContent = dailyProtein;
+            document.getElementById('ideal-weight').textContent = idealWeight;
+            document.getElementById('portion-recommendation').innerHTML = `
+                Untuk memenuhi target <strong>${dailyProtein}g protein/hari</strong> (70% dari ayam & sisanya lauk pendamping), Kang Asep sarankan konsumsi <strong>${(packs100 * 100) + (packs50 * 50)}g dada ayam</strong> per hari atau setara ${packText}.
+            `;
+
+            if (e) showToast("Hasil analisa protein diperbarui!");
+        }
+
+        // Masukkan Paket Rekomendasi ke Keranjang
+        function applyRecommendationToCart() {
+            for (let i = 0; i < recommendedPacks100g; i++) {
+                addToCart("ayam-100", false);
+            }
+            for (let i = 0; i < recommendedPacks50g; i++) {
+                addToCart("ayam-50", false);
+            }
+
+            const notifText = recommendedPacks50g > 0
+                ? `${recommendedPacks100g}x (100g) & ${recommendedPacks50g}x (50g) ditambahkan!`
+                : `${recommendedPacks100g}x Kemasan 100g ditambahkan!`;
+
+            showToast(notifText);
+            toggleCart();
+        }
+
+        // Manajemen Keranjang
+        function addToCart(productId, notify = true) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            if (notify) showToast(`${product.name} (${product.weight}g) masuk keranjang`);
+        }
+
+        // Ubah jumlah item di keranjang
+        function updateQty(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index === -1) return;
+
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        // Hapus item dari keranjang
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            showToast("Item dihapus dari keranjang");
+        }
+
+        // Buka / tutup drawer keranjang
+        function toggleCart() {
+            const overlay = document.getElementById('cart-overlay');
+            const drawer = document.getElementById('cart-drawer');
+            if (!overlay || !drawer) return;
+
+            const isHidden = drawer.classList.contains('translate-x-full');
+            if (isHidden) {
+                overlay.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    drawer.classList.remove('translate-x-full');
+                });
+            } else {
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Perbarui tampilan badge, daftar item, berat, protein, dan total harga keranjang
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const container = document.getElementById('cart-items');
+            const totalWeightEl = document.getElementById('cart-total-weight');
+            const totalProteinEl = document.getElementById('cart-total-protein');
+            const totalPriceEl = document.getElementById('cart-total-price');
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalWeight = cart.reduce((sum, item) => sum + (item.weight * item.qty), 0);
+            const totalProtein = cart.reduce((sum, item) => sum + (item.protein * item.qty), 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            if (badge) badge.textContent = totalQty;
+            if (totalWeightEl) totalWeightEl.textContent = `${totalWeight} gram`;
+            if (totalProteinEl) totalProteinEl.textContent = `${Math.round(totalProtein * 10) / 10} gram`;
+            if (totalPriceEl) totalPriceEl.textContent = formatRupiah(totalPrice);
+
+            if (!container) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center py-12 px-4 space-y-3">
+                        <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
+                            <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                        </div>
+                        <p class="font-bold text-slate-700">Keranjang masih kosong</p>
+                        <p class="text-xs text-slate-500 max-w-xs">Pilih kemasan dada ayam 100g atau 50g, atau gunakan hasil konsultasi protein di atas.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="p-4 rounded-2xl bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-2xs">
+                    <div class="space-y-1 min-w-0">
+                        <p class="font-bold text-sm text-slate-900 truncate">${item.name}</p>
+                        <p class="text-xs text-slate-500">${formatRupiah(item.price)} / bungkus • ${item.protein}g protein</p>
+                        <p class="text-xs font-bold text-brand-600">${formatRupiah(item.price * item.qty)}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" onclick="updateQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center transition-colors">-</button>
+                        <span class="w-6 text-center text-xs font-extrabold text-slate-900">${item.qty}</span>
+                        <button type="button" onclick="updateQty('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center transition-colors">+</button>
+                        <button type="button" onclick="removeFromCart('${item.id}')" title="Hapus" class="ml-1 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        // FITUR PEMILIH LOKASI INTERAKTIF & GPS
+        // ==========================================
+
+        function setSavedLocation(lat, lng, labelText, sourceType) {
+            const fixedLat = parseFloat(lat).toFixed(6);
+            const fixedLng = parseFloat(lng).toFixed(6);
+            const mapsUrl = `https://www.google.com/maps?q=${fixedLat},${fixedLng}`;
+
+            sharedLocation = {
+                lat: fixedLat,
+                lng: fixedLng,
+                label: labelText || `${fixedLat}, ${fixedLng}`,
+                source: sourceType,
+                mapsUrl
+            };
+
+            document.getElementById('pick-loc-label').textContent = "Ubah Titik";
+            document.getElementById('clear-loc-btn').classList.remove('hidden');
+
+            const status = document.getElementById('location-status');
+            status.innerHTML = `<span class="text-emerald-700 font-semibold">Titik antar dipilih:</span> ${sharedLocation.label} • <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="underline text-brand-600 font-semibold">Cek Maps</a>`;
+            status.className = "text-[11px] text-slate-700 leading-snug";
+
+            // Isi otomatis kolom alamat jika masih kosong
+            const addressInput = document.getElementById('customer-address');
+            if (addressInput && !addressInput.value.trim() && labelText) {
+                addressInput.value = labelText;
+            }
+
+            lucide.createIcons();
+        }
+
+        // Buka Modal Peta untuk Memilih Lokasi Tujuan (Rumah Sendiri / Teman / Kantor)
+        function openLocationPicker() {
+            const modal = document.getElementById('location-modal');
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+
+            const startLat = sharedLocation ? parseFloat(sharedLocation.lat) : tempPickedCoords.lat;
+            const startLng = sharedLocation ? parseFloat(sharedLocation.lng) : tempPickedCoords.lng;
+
+            setTimeout(() => {
+                if (!pickerMap && typeof L !== 'undefined') {
+                    pickerMap = L.map('picker-map').setView([startLat, startLng], 15);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; OpenStreetMap'
+                    }).addTo(pickerMap);
+
+                    const customIcon = L.divIcon({
+                        className: 'custom-pin-marker',
+                        html: `<div style="width:34px;height:34px;background:#ea580c;border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 6px 14px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;"><div style="width:10px;height:10px;background:#fff;border-radius:50%;transform:rotate(45deg);"></div></div>`,
+                        iconSize: [34, 34],
+                        iconAnchor: [17, 34]
+                    });
+
+                    pickerMarker = L.marker([startLat, startLng], { draggable: true, icon: customIcon }).addTo(pickerMap);
+
+                    pickerMarker.on('dragend', () => {
+                        const pos = pickerMarker.getLatLng();
+                        updatePickerPoint(pos.lat, pos.lng, true);
+                    });
+
+                    pickerMap.on('click', (e) => {
+                        pickerMarker.setLatLng(e.latlng);
+                        updatePickerPoint(e.latlng.lat, e.latlng.lng, true);
+                    });
+
+                    // Jika belum punya lokasi tersimpan, coba arahkan peta ke area sekitar pengguna tanpa memaksa
+                    if (!sharedLocation && navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (pos) => {
+                                const uLat = pos.coords.latitude;
+                                const uLng = pos.coords.longitude;
+                                pickerMap.setView([uLat, uLng], 16);
+                                pickerMarker.setLatLng([uLat, uLng]);
+                                updatePickerPoint(uLat, uLng, true);
+                            },
+                            () => {
+                                updatePickerPoint(startLat, startLng, true);
+                            },
+                            { timeout: 5000 }
+                        );
+                    } else {
+                        updatePickerPoint(startLat, startLng, !sharedLocation);
+                    }
+                } else if (pickerMap) {
+                    pickerMap.invalidateSize();
+                    pickerMap.setView([startLat, startLng], 16);
+                    pickerMarker.setLatLng([startLat, startLng]);
+                    updatePickerPoint(startLat, startLng, false);
+                }
+            }, 120);
+        }
+
+        function closeLocationPicker() {
+            document.getElementById('location-modal').classList.add('hidden');
+            document.getElementById('map-search-results').classList.add('hidden');
+        }
+
+        // Perbarui koordinat & reverse geocode nama jalan saat pin digeser/diklik
+        async function updatePickerPoint(lat, lng, fetchAddress = true) {
+            const fixedLat = parseFloat(lat).toFixed(6);
+            const fixedLng = parseFloat(lng).toFixed(6);
+
+            tempPickedCoords.lat = fixedLat;
+            tempPickedCoords.lng = fixedLng;
+
+            document.getElementById('picker-selected-coords').textContent = `${fixedLat}, ${fixedLng}`;
+
+            if (!fetchAddress && sharedLocation && sharedLocation.label) {
+                tempPickedCoords.label = sharedLocation.label;
+                document.getElementById('picker-selected-address').textContent = sharedLocation.label;
+                return;
+            }
+
+            const addrEl = document.getElementById('picker-selected-address');
+            addrEl.textContent = "Mencari nama jalan / area titik ini...";
+
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${fixedLat}&lon=${fixedLng}&accept-language=id`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const shortName = data.display_name
+                        ? data.display_name.split(',').slice(0, 3).join(', ')
+                        : `Titik (${fixedLat}, ${fixedLng})`;
+                    tempPickedCoords.label = shortName;
+                    addrEl.textContent = shortName;
+                } else {
+                    tempPickedCoords.label = `Titik Peta (${fixedLat}, ${fixedLng})`;
+                    addrEl.textContent = tempPickedCoords.label;
+                }
+            } catch {
+                tempPickedCoords.label = `Titik Peta (${fixedLat}, ${fixedLng})`;
+                addrEl.textContent = tempPickedCoords.label;
+            }
+        }
+
+        // Cari nama tempat / alamat di modal peta (misal rumah teman / kantor)
+        async function searchMapLocation() {
+            const query = document.getElementById('map-search-input').value.trim();
+            const resultsBox = document.getElementById('map-search-results');
+
+            if (!query) {
+                showToast("Ketik nama jalan atau tempat dulu ya");
+                return;
+            }
+
+            resultsBox.classList.remove('hidden');
+            resultsBox.innerHTML = `<div class="p-3 text-slate-500">Mencari "${query}"...</div>`;
+
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(query)}&limit=5&accept-language=id`);
+                const places = await res.json();
+
+                if (!places || places.length === 0) {
+                    resultsBox.innerHTML = `<div class="p-3 text-slate-500">Lokasi tidak ditemukan. Coba kata kunci lebih umum lalu geser pin di peta.</div>`;
+                    return;
+                }
+
+                resultsBox.innerHTML = places.map((place, idx) => {
+                    const shortLabel = place.display_name.split(',').slice(0, 3).join(', ');
+                    return `
+                        <button type="button" onclick="selectSearchedPlace(${place.lat}, ${place.lon}, '${shortLabel.replace(/'/g, "\\'")}')" class="w-full text-left p-2.5 hover:bg-brand-50 transition-colors flex items-start gap-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600 shrink-0 mt-0.5"></i>
+                            <span class="text-slate-700 line-clamp-2">${place.display_name}</span>
+                        </button>
+                    `;
+                }).join('');
+                lucide.createIcons();
+            } catch {
+                resultsBox.innerHTML = `<div class="p-3 text-rose-600">Gagal mencari lokasi. Geser pin langsung di peta ya.</div>`;
+            }
+        }
+
+        function selectSearchedPlace(lat, lon, label) {
+            const numLat = parseFloat(lat);
+            const numLon = parseFloat(lon);
+            document.getElementById('map-search-results').classList.add('hidden');
+
+            if (pickerMap && pickerMarker) {
+                pickerMap.setView([numLat, numLon], 17);
+                pickerMarker.setLatLng([numLat, numLon]);
+            }
+            tempPickedCoords = { lat: numLat.toFixed(6), lng: numLon.toFixed(6), label };
+            document.getElementById('picker-selected-address').textContent = label;
+            document.getElementById('picker-selected-coords').textContent = `${tempPickedCoords.lat}, ${tempPickedCoords.lng}`;
+        }
+
+        function locateMeOnMap() {
+            if (!navigator.geolocation) {
+                showToast("Browser tidak mendukung GPS");
+                return;
+            }
+            showToast("Mendeteksi posisi GPS...");
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    if (pickerMap && pickerMarker) {
+                        pickerMap.setView([lat, lng], 17);
+                        pickerMarker.setLatLng([lat, lng]);
+                    }
+                    updatePickerPoint(lat, lng, true);
+                },
+                () => {
+                    showToast("Tidak bisa mengakses GPS, silakan pilih manual di peta");
+                },
+                { enableHighAccuracy: true, timeout: 8000 }
+            );
+        }
+
+        function confirmPickedLocation() {
+            setSavedLocation(tempPickedCoords.lat, tempPickedCoords.lng, tempPickedCoords.label, 'map');
+            closeLocationPicker();
+            showToast("Titik lokasi pengantaran disimpan!");
+        }
+
+        // Shortcut Langsung Sharelok GPS Saat Ini (1 Klik)
+        function shareLocation() {
+            const label = document.getElementById('share-loc-label');
+            const status = document.getElementById('location-status');
+
+            if (!navigator.geolocation) {
+                status.textContent = "Browser tidak mendukung GPS. Gunakan tombol 'Pilih di Peta' ya.";
+                status.className = "text-[11px] text-rose-600 leading-snug";
+                showToast("Gunakan tombol Pilih di Peta");
+                return;
+            }
+
+            label.textContent = "...";
+            status.textContent = "Mengambil posisi GPS saat ini...";
+            status.className = "text-[11px] text-amber-700 leading-snug";
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    label.textContent = "GPS";
+                    setSavedLocation(lat, lng, `Posisi GPS Saat Ini (${lat.toFixed(5)}, ${lng.toFixed(5)})`, 'gps');
+                    showToast("Lokasi GPS berhasil diambil!");
+                },
+                (error) => {
+                    label.textContent = "GPS";
+                    let msg = "GPS gagal diakses. Klik 'Pilih di Peta' untuk menentukan titik tujuan.";
+                    if (error.code === error.PERMISSION_DENIED) {
+                        msg = "Akses GPS ditolak. Kamu tetap bisa klik 'Pilih di Peta' untuk pilih lokasi manual.";
+                    }
+                    status.textContent = msg;
+                    status.className = "text-[11px] text-rose-600 leading-snug";
+                    showToast("Silakan pilih titik via Peta");
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        // Hapus Lokasi Tersimpan
+        function clearLocation() {
+            sharedLocation = null;
+            document.getElementById('pick-loc-label').textContent = "Pilih di Peta";
+            document.getElementById('share-loc-label').textContent = "GPS";
+            document.getElementById('clear-loc-btn').classList.add('hidden');
+            const status = document.getElementById('location-status');
+            status.textContent = "Bisa pilih titik tujuan di peta (misal kirim ke teman/kantor) atau pakai GPS langsung.";
+            status.className = "text-[11px] text-slate-500 leading-snug";
+            showToast("Lokasi dihapus");
+        }
+
+        // Checkout ke WhatsApp
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                showToast("Keranjang masih kosong, pilih produk dulu ya!");
+                return;
+            }
+
+            const name = document.getElementById('customer-name').value.trim() || "Teman Kang Asep";
+            const address = document.getElementById('customer-address').value.trim() || "-";
+
+            let message = `Halo *Kang Asep*! Saya mau pesan Dada Ayam Marinasi:\n\n`;
+            message += `*Nama Penerima:* ${name}\n`;
+            message += `*Alamat / Patokan:* ${address}\n`;
+            if (sharedLocation) {
+                message += `*Titik Lokasi:* ${sharedLocation.label}\n`;
+                message += `*Link Google Maps:* ${sharedLocation.mapsUrl}\n`;
+            }
+            message += `\n*Detail Pesanan:*\n`;
+
+            cart.forEach((item, idx) => {
+                message += `${idx + 1}. ${item.name} (*${item.weight}g*) x ${item.qty} = ${formatRupiah(item.price * item.qty)}\n`;
+            });
+
+            const totalWeight = cart.reduce((sum, item) => sum + (item.weight * item.qty), 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            message += `\n*Total Berat:* ${totalWeight} gram\n`;
+            message += `*Total Bayar:* ${formatRupiah(totalPrice)}\n\n`;
+            message += `Mohon info ketersediaan & ongkirnya ya Kang. Terima kasih!`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Toggle Panel Customer Service
+        function toggleCSPanel() {
+            const panel = document.getElementById('cs-panel');
+            if (!panel) return;
+            panel.classList.toggle('hidden');
+            lucide.createIcons();
+        }
+
+        // Kirim pesan cepat ke CS WhatsApp
+        function openCSWhatsApp(customMessage) {
+            const message = customMessage || "Halo CS Kang Asep, saya mau bertanya.";
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Inisialisasi saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            calculateProtein();
+            updateCartUI();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
