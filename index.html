@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" class="scroll-smooth overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Kang Asep - Dada Ayam Marinasi Sehat & Praktis</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +37,7 @@
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white overflow-x-hidden w-full relative">
 
     <!-- Navbar -->
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
@@ -58,7 +58,7 @@
                 <a href="#beranda" class="hover:text-brand-600 transition-colors">Beranda</a>
                 <a href="#kalkulator" class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
                     <i data-lucide="calculator" class="w-4 h-4 text-brand-500"></i>
-                    Konsultasi Protein
+                    Kalkulator Protein
                 </a>
                 <a href="#produk" class="hover:text-brand-600 transition-colors">Menu & Harga</a>
                 <a href="#cara-masak" class="hover:text-brand-600 transition-colors">Cara Masak</a>
@@ -157,56 +157,99 @@
     <section id="kalkulator" class="py-16 bg-white border-y border-slate-200/80">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
-                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Konsultasi Nutrisi Gratis</span>
+                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Kalkulator Nutrisi Praktis</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Hitung Kebutuhan Protein Tubuhmu</h2>
-                <p class="text-slate-600 text-sm sm:text-base">Masukkan berat badan, tinggi badan, dan targetmu. Kang Asep bantu hitungkan berapa bungkus dada ayam yang pas buat kamu setiap hari!</p>
+                <p class="text-slate-600 text-sm sm:text-base">Masukkan berat badan, tinggi badan, dan targetmu. Kang Asep bantu hitungkan estimasi bungkus dada ayam yang pas buat kamu setiap hari!</p>
             </div>
 
-            <div class="grid md:grid-cols-12 gap-8 bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+            <div class="grid md:grid-cols-12 gap-8 bg-slate-50 rounded-3xl p-4 sm:p-8 border border-slate-200/80 shadow-sm items-stretch">
                 <!-- Form Input -->
-                <form id="protein-form" onsubmit="calculateProtein(event)" class="md:col-span-6 space-y-5">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Jenis Kelamin</label>
-                            <select id="gender" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
-                                <option value="male">Laki-laki</option>
-                                <option value="female">Perempuan</option>
-                            </select>
+                <form id="protein-form" onsubmit="calculateProtein(event)" class="md:col-span-6 min-w-0 bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-5">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                                <i data-lucide="user-check" class="w-3.5 h-3.5 text-brand-600"></i>
+                                Data &amp; Target Tubuh
+                            </span>
+                            <span class="text-[11px] font-medium text-slate-400">Isi sesuai kondisi</span>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Usia (Tahun)</label>
-                            <input type="number" id="age" value="25" min="15" max="80" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
-                        </div>
-                    </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Berat Badan (KG)</label>
-                            <input type="number" id="weight" value="65" min="30" max="200" step="0.5" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Jenis Kelamin</label>
+                                <input type="hidden" id="gender" value="male">
+                                <div id="gender-options" class="grid grid-cols-2 gap-2">
+                                    <button type="button" onclick="selectGenderOption('male')" data-gender="male" class="gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
+                                        <span class="block text-xs font-bold">Laki-laki</span>
+                                        <span class="block text-[10px] text-brand-600 font-medium">Pria</span>
+                                    </button>
+                                    <button type="button" onclick="selectGenderOption('female')" data-gender="female" class="gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                        <span class="block text-xs font-bold">Perempuan</span>
+                                        <span class="block text-[10px] text-slate-500">Wanita</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Usia (Tahun)</label>
+                                <input type="number" id="age" value="25" min="15" max="80" required class="w-full px-3.5 py-3 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tinggi Badan (CM)</label>
-                            <input type="number" id="height" value="170" min="120" max="230" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
-                        </div>
-                    </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Target</label>
-                            <select id="goal" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
-                                <option value="maintain">Jaga Kesehatan / Maintain</option>
-                                <option value="fat_loss" selected>Turun Berat Badan / Fat Loss</option>
-                                <option value="muscle_gain">Naik Massa Otot / Bulking</option>
-                            </select>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Berat Badan (KG)</label>
+                                <input type="number" id="weight" value="65" min="30" max="200" step="0.5" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tinggi Badan (CM)</label>
+                                <input type="number" id="height" value="170" min="120" max="230" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Aktivitas Fisik</label>
-                            <select id="activity" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
-                                <option value="mager">Mager (Minim Gerak / Rebahan)</option>
-                                <option value="ringan">Ringan (Jalan Santai / 1-2x Minggu)</option>
-                                <option value="sedang" selected>Sedang (Olahraga 3-4x / Minggu)</option>
-                                <option value="berat">Berat (Latihan Intens / Gym Rutin)</option>
-                            </select>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Target</label>
+                                <input type="hidden" id="goal" value="fat_loss">
+                                <div id="goal-options" class="grid grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectGoalOption('maintain')" data-goal="maintain" class="goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                        <span class="block text-xs font-bold">Maintain</span>
+                                        <span class="block text-[10px] text-slate-500">Jaga Sehat</span>
+                                    </button>
+                                    <button type="button" onclick="selectGoalOption('fat_loss')" data-goal="fat_loss" class="goal-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
+                                        <span class="block text-xs font-bold">Fat Loss</span>
+                                        <span class="block text-[10px] text-brand-600">Turun BB</span>
+                                    </button>
+                                    <button type="button" onclick="selectGoalOption('muscle_gain')" data-goal="muscle_gain" class="goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                        <span class="block text-xs font-bold">Bulking</span>
+                                        <span class="block text-[10px] text-slate-500">Naik Otot</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Aktivitas Fisik</label>
+                                <select id="activity" onchange="syncFormHelperPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                                    <option value="mager">Mager (Minim Gerak / Rebahan)</option>
+                                    <option value="ringan">Ringan (Jalan Santai / 1-2x Minggu)</option>
+                                    <option value="sedang" selected>Sedang (Olahraga 3-4x / Minggu)</option>
+                                    <option value="berat">Berat (Latihan Intens / Gym Rutin)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Kartu Pengisi Ruang Kosong agar Form Lebih Seimbang & Informatif -->
+                        <div class="p-4 rounded-2xl bg-slate-50/90 border border-slate-200/80 space-y-2.5">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[11px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-1.5">
+                                    <i data-lucide="info" class="w-3.5 h-3.5 text-brand-600"></i>
+                                    Acuan Rasio Terpilih
+                                </span>
+                                <span id="form-ratio-badge" class="px-2.5 py-0.5 rounded-md bg-brand-100 text-brand-700 text-[11px] font-bold">
+                                    ~1.70g / kg BB
+                                </span>
+                            </div>
+                            <p id="form-ratio-desc" class="text-xs text-slate-600 leading-relaxed">
+                                Kombinasi <strong>Turun Berat Badan</strong> &amp; <strong>Aktivitas Sedang</strong> membantu menjaga massa otot selama defisit kalori.
+                            </p>
                         </div>
                     </div>
 
@@ -217,56 +260,96 @@
                 </form>
 
                 <!-- Result Output -->
-                <div class="md:col-span-6 flex flex-col justify-between bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+                <div class="md:col-span-6 min-w-0 flex flex-col justify-between bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-xs space-y-5">
                     <div id="calc-result-container" class="space-y-4">
+                        <!-- Header Ringkas -->
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Hasil Analisa Kang Asep</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                                <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-brand-600"></i>
+                                Analisa Berdasarkan Data
+                            </span>
                             <span id="bmi-badge" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold">BMI: 22.5 (Ideal)</span>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="p-3.5 rounded-xl bg-brand-50 border border-brand-100">
-                                <span class="text-xs font-medium text-brand-700 block">Target Protein Harian</span>
-                                <div class="flex items-baseline gap-1 mt-1">
+                        <!-- Angka Utama: Target Protein & Berat Ideal (Simetris) -->
+                        <div class="grid grid-cols-2 gap-3.5">
+                            <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50/60 border border-brand-200/70 flex flex-col justify-between">
+                                <span class="text-[11px] font-bold uppercase tracking-wide text-brand-700 block">Target Protein Harian</span>
+                                <div class="flex items-baseline gap-1 mt-1.5">
                                     <span id="protein-target" class="text-2xl sm:text-3xl font-extrabold text-brand-600">104</span>
-                                    <span class="text-xs font-bold text-brand-700">gram</span>
+                                    <span class="text-xs font-bold text-brand-700">gram/hari</span>
                                 </div>
                             </div>
-                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                                <span class="text-xs font-medium text-slate-500 block">Berat Badan Ideal</span>
-                                <div class="flex items-baseline gap-1 mt-1">
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+                                <span class="text-[11px] font-bold uppercase tracking-wide text-slate-500 block">Estimasi Berat Ideal</span>
+                                <div class="flex items-baseline gap-1 mt-1.5">
                                     <span id="ideal-weight" class="text-2xl sm:text-3xl font-extrabold text-slate-800">63</span>
                                     <span class="text-xs font-bold text-slate-500">kg</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200/60 space-y-3">
+                        <!-- Kontrol Kustom Proporsi Protein Dada Ayam -->
+                        <div class="p-4 rounded-2xl bg-slate-50/90 border border-slate-200/90 space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="chicken-share-slider" class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                    <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5 text-brand-600"></i>
+                                    Porsi dari Dada Ayam
+                                </label>
+                                <div class="flex items-center gap-1">
+                                    <button type="button" onclick="setChickenSharePreset(50)" data-preset="50" class="share-preset-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-200 text-slate-600 hover:border-brand-400 hover:text-brand-600 transition-colors">50%</button>
+                                    <button type="button" onclick="setChickenSharePreset(70)" data-preset="70" class="share-preset-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 border border-brand-600 text-white transition-colors">70%</button>
+                                    <button type="button" onclick="setChickenSharePreset(100)" data-preset="100" class="share-preset-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white border border-slate-200 text-slate-600 hover:border-brand-400 hover:text-brand-600 transition-colors">100%</button>
+                                </div>
+                            </div>
+
+                            <input type="range" id="chicken-share-slider" min="10" max="100" step="5" value="70"
+                                   oninput="updateChickenShare(this.value)"
+                                   class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+
+                            <!-- Visual Bar Perbandingan Ayam vs Lauk Lain -->
+                            <div class="space-y-1.5 pt-0.5">
+                                <div class="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden flex">
+                                    <div id="chicken-share-bar" class="h-full bg-gradient-to-r from-brand-600 to-amber-500 transition-all duration-200" style="width: 70%"></div>
+                                </div>
+                                <div class="flex items-center justify-between text-[11px]">
+                                    <span id="chicken-share-badge" class="font-bold text-brand-700">
+                                        70% Dada Ayam (73g)
+                                    </span>
+                                    <span id="side-dish-share-text" class="font-medium text-slate-500">
+                                        30% Lauk Lain (31g)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kartu Ringkasan Takaran Bungkus -->
+                        <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50/90 to-orange-50/50 border border-amber-200/80 space-y-3">
                             <div class="flex items-center gap-3">
                                 <img src="https://i.postimg.cc/2jMc7bHz/Vacuum-Sealed-Chicken-on-Wooden-Board.png"
                                      onerror="this.src='https://placehold.co/160x120/fff7ed/ea580c?text=Ayam+100g+%26+50g'"
                                      alt="Foto Produk Dada Ayam Marinasi Kang Asep"
-                                     class="w-16 h-14 rounded-xl object-cover border border-amber-200 shrink-0">
-                                <div class="space-y-1">
-                                    <p class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
-                                        <i data-lucide="chef-hat" class="w-4 h-4 text-amber-600"></i>
-                                        Rekomendasi Porsi Ayam Kang Asep:
-                                    </p>
-                                    <p class="text-[11px] text-amber-800/80">Kemasan vakum 50g & 100g siap olah</p>
+                                     class="w-12 h-12 rounded-xl object-cover border border-amber-200 shrink-0 shadow-2xs">
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-[11px] font-bold uppercase tracking-wide text-amber-800">Rekomendasi Takaran Harian</p>
+                                    <p id="pack-summary-pill" class="text-sm font-extrabold text-slate-900 truncate">3x (100g) • Total 300g</p>
                                 </div>
                             </div>
-                            <p id="portion-recommendation" class="text-sm text-slate-700 leading-relaxed">
-                                Untuk memenuhi <strong>104g protein</strong> (dengan asumsi ~70% dari ayam & sisanya telur/tempe/nasi), kamu butuh sekitar <strong>300g dada ayam mentah</strong> per hari (<strong>3 bungkus 100g</strong>).
+
+                            <p id="portion-recommendation" class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                                Untuk memenuhi target <strong>104g protein/hari</strong> (70% dari dada ayam &amp; 30% dari lauk pendamping), berdasarkan perhitungan data tersebut, estimasi kebutuhanmu sekitar <strong>300g dada ayam</strong> per hari atau setara <strong>3 bungkus (100g)</strong>.
+                            </p>
+
+                            <p class="text-[11px] text-slate-500 border-t border-amber-200/70 pt-2 leading-relaxed">
+                                *Catatan: Estimasi dihitung menggunakan rumus standar (BMI &amp; rasio gram protein/kg BB), bukan saran medis atau ahli gizi.
                             </p>
                         </div>
                     </div>
 
-                    <div class="pt-4 mt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-2.5">
-                        <button type="button" onclick="applyRecommendationToCart()" class="flex-1 py-2.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold transition-colors flex items-center justify-center gap-1.5">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            Masukkan Rekomendasi ke Keranjang
-                        </button>
-                    </div>
+                    <button type="button" onclick="applyRecommendationToCart()" class="w-full py-3.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        Masukkan Rekomendasi ke Keranjang
+                    </button>
                 </div>
             </div>
         </div>
@@ -364,25 +447,25 @@
                 </div>
                 <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
                     <span>Total Harga</span>
-                    <span id="cart-total-price" class="text-brand-600">Rp 0</span>
+                    <span id="cart-total-price" class="text-brand-600">0 LE</span>
                 </div>
             </div>
 
             <div class="space-y-2.5">
                 <input type="text" id="customer-name" placeholder="Nama penerima (contoh: Budi)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
-                <input type="text" id="customer-address" placeholder="Detail alamat / patokan (blok, no rumah, dll)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
+                <input type="text" id="customer-address" placeholder="Detail alamat / patokan (distrik, blok, no rumah)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
 
-                <!-- Fitur Share Lokasi Fleksibel (Pilih di Peta atau GPS Saat Ini) -->
-                <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-2">
+                <!-- Fitur Share Lokasi Fleksibel (Buka Google Maps Asli atau GPS Saat Ini) -->
+                <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-2.5">
                     <div class="flex items-center justify-between gap-2">
                         <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600"></i>
                             Titik Lokasi Antar
                         </span>
                         <div class="flex items-center gap-1.5">
-                            <button type="button" onclick="openLocationPicker()" class="px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors flex items-center gap-1 shadow-2xs">
-                                <i data-lucide="map" class="w-3.5 h-3.5"></i>
-                                <span id="pick-loc-label">Pilih di Peta</span>
+                            <button type="button" onclick="openGoogleMapsApp()" class="px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors flex items-center gap-1 shadow-2xs">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                <span id="pick-loc-label">Buka Google Maps</span>
                             </button>
                             <button type="button" id="share-loc-btn" onclick="shareLocation()" title="Gunakan posisi GPS saat ini" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1">
                                 <i data-lucide="locate-fixed" class="w-3.5 h-3.5 text-brand-600"></i>
@@ -393,8 +476,17 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Kolom Tempel Link dari Aplikasi Google Maps -->
+                    <div class="flex items-center gap-1.5">
+                        <input type="text" id="cart-gmaps-link" onchange="applyCartGoogleMapsLink()" placeholder="Tempel link share dari Google Maps di sini..." class="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] outline-none focus:border-brand-500 focus:bg-white">
+                        <button type="button" onclick="pasteGoogleMapsFromClipboard()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-brand-600 text-white text-[11px] font-bold transition-colors shrink-0">
+                            Tempel Link
+                        </button>
+                    </div>
+
                     <p id="location-status" class="text-[11px] text-slate-500 leading-snug">
-                        Bisa pilih titik tujuan di peta (misal kirim ke teman/kantor) atau pakai GPS langsung.
+                        Klik <strong>Buka Google Maps</strong> untuk pilih titik lokasi, salin linknya, lalu tempel di atas (atau klik <strong>GPS</strong>).
                     </p>
                 </div>
             </div>
@@ -417,7 +509,7 @@
                     </div>
                     <div>
                         <h3 class="font-extrabold text-base text-slate-900 leading-tight">Pilih Titik Lokasi Pengantaran</h3>
-                        <p class="text-[11px] text-slate-500">Cari alamat atau geser pin ke rumah / lokasi teman</p>
+                        <p class="text-[11px] text-slate-500">Tampilan Google Maps • Cari alamat atau geser pin</p>
                     </div>
                 </div>
                 <button type="button" onclick="closeLocationPicker()" class="p-2 rounded-xl hover:bg-slate-100 text-slate-500">
@@ -430,7 +522,7 @@
                 <div class="flex gap-2">
                     <div class="relative flex-1">
                         <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                        <input type="text" id="map-search-input" onkeydown="if(event.key==='Enter'){event.preventDefault(); searchMapLocation();}" placeholder="Cari jalan, perumahan, kampus, atau gedung..." class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-500">
+                        <input type="text" id="map-search-input" onkeydown="if(event.key==='Enter'){event.preventDefault(); searchMapLocation();}" placeholder="Cari jalan, distrik, kampus, atau gedung di Mesir..." class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-500">
                     </div>
                     <button type="button" onclick="searchMapLocation()" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-600 text-white text-xs sm:text-sm font-bold transition-colors shrink-0">
                         Cari
@@ -444,17 +536,44 @@
                 <div id="map-search-results" class="hidden max-h-40 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-lg divide-y divide-slate-100 text-xs"></div>
             </div>
 
-            <!-- Container Peta Leaflet -->
+            <!-- Container Peta Google Maps Tiles -->
             <div class="relative w-full h-72 sm:h-80 bg-slate-100">
                 <div id="picker-map" class="w-full h-full z-10"></div>
+
+                <!-- Switcher Mode Peta Google Maps (Jalan / Satelit) & Pintasan App Google Maps -->
+                <div class="absolute top-3 right-3 z-20 flex items-center gap-1.5">
+                    <div class="bg-white/95 backdrop-blur-xs rounded-xl shadow-md border border-slate-200 p-1 flex items-center gap-1">
+                        <button type="button" id="gmap-mode-road" onclick="setGoogleMapLayer('road')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 text-white transition-colors">
+                            Peta
+                        </button>
+                        <button type="button" id="gmap-mode-hybrid" onclick="setGoogleMapLayer('hybrid')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors">
+                            Satelit
+                        </button>
+                    </div>
+                    <button type="button" onclick="openExternalGoogleMaps()" title="Buka titik ini di Google Maps" class="px-2.5 py-1.5 rounded-xl bg-white/95 hover:bg-white backdrop-blur-xs shadow-md border border-slate-200 text-[11px] font-bold text-slate-800 flex items-center gap-1 transition-colors">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5 text-brand-600"></i>
+                        <span class="hidden sm:inline">Google Maps</span>
+                    </button>
+                </div>
+
                 <div class="absolute bottom-3 left-3 z-20 px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-xs shadow-md border border-slate-200 text-[11px] font-medium text-slate-700 flex items-center gap-1.5 pointer-events-none">
                     <i data-lucide="hand" class="w-3.5 h-3.5 text-brand-600"></i>
-                    Klik peta atau geser pin oranye untuk menentukan titik tepat
+                    Klik peta atau geser pin merah Google Maps ke titik tepat
+                </div>
+            </div>
+
+            <!-- Tempel Link Share Google Maps (Opsional) -->
+            <div class="px-4 pt-3 bg-white border-t border-slate-200">
+                <div class="flex items-center gap-2">
+                    <input type="text" id="gmaps-link-input" placeholder="Atau tempel link share Google Maps / koordinat (misal: 30.0444, 31.2357)" class="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs outline-none focus:border-brand-500 focus:bg-white">
+                    <button type="button" onclick="applyGoogleMapsLink()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-brand-600 text-white text-xs font-bold transition-colors shrink-0">
+                        Pakai Link
+                    </button>
                 </div>
             </div>
 
             <!-- Info Titik Terpilih & Tombol Konfirmasi -->
-            <div class="p-4 bg-white border-t border-slate-200 space-y-3">
+            <div class="p-4 bg-white space-y-3">
                 <div class="p-3 rounded-xl bg-brand-50/70 border border-brand-100 flex items-start gap-2.5">
                     <i data-lucide="map-pin" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
                     <div class="min-w-0 flex-1 space-y-0.5">
@@ -462,7 +581,7 @@
                             Memuat titik peta...
                         </p>
                         <p id="picker-selected-coords" class="text-[11px] text-slate-500 font-mono">
-                            -6.917464, 107.619123
+                            30.044420, 31.235712
                         </p>
                     </div>
                 </div>
@@ -538,7 +657,7 @@
         // Nomor WhatsApp Kang Asep (format internasional tanpa tanda + atau spasi)
         const WHATSAPP_NUMBER = "201507035950";
 
-        // Data Produk Dada Ayam Marinasi Kang Asep (Hanya 1 Racikan Original, 2 Ukuran Kemasan)
+        // Data Produk Dada Ayam Marinasi Kang Asep (Hanya 1 Racikan Original, 2 Ukuran Kemasan - Harga dalam LE)
         const products = [
             {
                 id: "ayam-100",
@@ -546,7 +665,7 @@
                 weight: 100,
                 protein: 23,
                 calories: 120,
-                price: 12000,
+                price: 40,
                 desc: "Dada ayam fillet tanpa kulit dimarinasi bumbu spesial Kang Asep. Takaran pas 100 gram untuk porsi makan utama tinggi protein.",
                 badge: "Paling Laris"
             },
@@ -556,7 +675,7 @@
                 weight: 50,
                 protein: 11.5,
                 calories: 60,
-                price: 6500,
+                price: 25,
                 desc: "Kemasan praktis 50 gram untuk porsi ringan, tambahan lauk sarapan, atau pelengkap agar target protein harianmu pas.",
                 badge: "Porsi Praktis"
             }
@@ -591,16 +710,154 @@
         let cart = [];
         let recommendedPacks100g = 3;
         let recommendedPacks50g = 0;
+        let chickenSharePercent = 70; // Persentase protein harian dari dada ayam (10% - 100%)
         let sharedLocation = null; // Menyimpan { lat, lng, label, source, mapsUrl }
 
-        // Variabel Peta Interaktif
+        // Variabel Peta Interaktif (Default area Kairo untuk Masisir)
         let pickerMap = null;
         let pickerMarker = null;
-        let tempPickedCoords = { lat: -6.917464, lng: 107.619123, label: "Bandung, Jawa Barat" };
+        let googleRoadLayer = null;
+        let googleHybridLayer = null;
+        let currentGoogleLayerMode = 'road';
+        let tempPickedCoords = { lat: 30.044420, lng: 31.235712, label: "Kairo, Mesir" };
 
-        // Format Rupiah
+        // Format Harga dalam Pound Mesir (LE)
         function formatRupiah(angka) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+            const formatted = new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(angka);
+            return `${formatted} LE`;
+        }
+
+        // Buka Modal Peta untuk Memilih Lokasi Tujuan (Tampilan Google Maps Jalan & Satelit)
+        function openLocationPicker() {
+            const modal = document.getElementById('location-modal');
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+
+            const startLat = sharedLocation ? parseFloat(sharedLocation.lat) : tempPickedCoords.lat;
+            const startLng = sharedLocation ? parseFloat(sharedLocation.lng) : tempPickedCoords.lng;
+
+            setTimeout(() => {
+                if (!pickerMap && typeof L !== 'undefined') {
+                    pickerMap = L.map('picker-map', {
+                        zoomControl: true
+                    }).setView([startLat, startLng], 16);
+
+                    // Layer Google Maps Jalan (Roadmap) & Satelit Hybrid
+                    googleRoadLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=id&x={x}&y={y}&z={z}', {
+                        maxZoom: 21,
+                        attribution: '&copy; Google Maps'
+                    });
+
+                    googleHybridLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=y&hl=id&x={x}&y={y}&z={z}', {
+                        maxZoom: 21,
+                        attribution: '&copy; Google Maps'
+                    });
+
+                    googleRoadLayer.addTo(pickerMap);
+                    currentGoogleLayerMode = 'road';
+
+                    const customIcon = L.divIcon({
+                        className: 'custom-pin-marker',
+                        html: `<div style="width:36px;height:36px;background:#ea4335;border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 6px 16px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;"><div style="width:11px;height:11px;background:#7f1d1d;border-radius:50%;transform:rotate(45deg);"></div></div>`,
+                        iconSize: [36, 36],
+                        iconAnchor: [18, 36]
+                    });
+
+                    pickerMarker = L.marker([startLat, startLng], { draggable: true, icon: customIcon }).addTo(pickerMap);
+
+                    pickerMarker.on('dragend', () => {
+                        const pos = pickerMarker.getLatLng();
+                        updatePickerPoint(pos.lat, pos.lng, true);
+                    });
+
+                    pickerMap.on('click', (e) => {
+                        pickerMarker.setLatLng(e.latlng);
+                        updatePickerPoint(e.latlng.lat, e.latlng.lng, true);
+                    });
+
+                    // Jika belum punya lokasi tersimpan, coba arahkan peta ke area sekitar pengguna tanpa memaksa
+                    if (!sharedLocation && navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (pos) => {
+                                const uLat = pos.coords.latitude;
+                                const uLng = pos.coords.longitude;
+                                pickerMap.setView([uLat, uLng], 17);
+                                pickerMarker.setLatLng([uLat, uLng]);
+                                updatePickerPoint(uLat, uLng, true);
+                            },
+                            () => {
+                                updatePickerPoint(startLat, startLng, true);
+                            },
+                            { timeout: 5000 }
+                        );
+                    } else {
+                        updatePickerPoint(startLat, startLng, !sharedLocation);
+                    }
+                } else if (pickerMap) {
+                    pickerMap.invalidateSize();
+                    pickerMap.setView([startLat, startLng], 17);
+                    pickerMarker.setLatLng([startLat, startLng]);
+                    updatePickerPoint(startLat, startLng, false);
+                }
+            }, 120);
+        }
+
+        // Ganti tampilan Google Maps antara Peta Jalan (m) dan Satelit (y)
+        function setGoogleMapLayer(mode) {
+            if (!pickerMap || !googleRoadLayer || !googleHybridLayer) return;
+            currentGoogleLayerMode = mode;
+
+            const roadBtn = document.getElementById('gmap-mode-road');
+            const hybridBtn = document.getElementById('gmap-mode-hybrid');
+
+            if (mode === 'hybrid') {
+                if (pickerMap.hasLayer(googleRoadLayer)) pickerMap.removeLayer(googleRoadLayer);
+                if (!pickerMap.hasLayer(googleHybridLayer)) googleHybridLayer.addTo(pickerMap);
+                if (hybridBtn) hybridBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 text-white transition-colors";
+                if (roadBtn) roadBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors";
+            } else {
+                if (pickerMap.hasLayer(googleHybridLayer)) pickerMap.removeLayer(googleHybridLayer);
+                if (!pickerMap.hasLayer(googleRoadLayer)) googleRoadLayer.addTo(pickerMap);
+                if (roadBtn) roadBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 text-white transition-colors";
+                if (hybridBtn) hybridBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors";
+            }
+        }
+
+        // Buka titik saat ini langsung di tab Google Maps
+        function openExternalGoogleMaps() {
+            const url = `https://www.google.com/maps?q=${tempPickedCoords.lat},${tempPickedCoords.lng}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Parse link share Google Maps atau koordinat (lat, lng) yang ditempel pelanggan
+        function applyGoogleMapsLink() {
+            const raw = document.getElementById('gmaps-link-input')?.value.trim();
+            if (!raw) {
+                showToast("Tempel link Google Maps atau koordinat dulu ya");
+                return;
+            }
+
+            // Cocokkan pola @lat,lng atau ?q=lat,lng atau lat, lng langsung
+            const coordMatch = raw.match(/(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
+            if (!coordMatch) {
+                showToast("Koordinat tidak terbaca. Geser pin langsung di peta ya!");
+                return;
+            }
+
+            const lat = parseFloat(coordMatch[1]);
+            const lng = parseFloat(coordMatch[2]);
+
+            if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                showToast("Koordinat di luar jangkauan peta");
+                return;
+            }
+
+            if (pickerMap && pickerMarker) {
+                pickerMap.setView([lat, lng], 18);
+                pickerMarker.setLatLng([lat, lng]);
+            }
+            updatePickerPoint(lat, lng, true);
+            showToast("Titik dari Google Maps berhasil dimuat!");
         }
 
         // Tampilkan Notifikasi Toast
@@ -661,7 +918,7 @@
             lucide.createIcons();
         }
 
-        // Kalkulator Konsultasi Protein
+        // Kalkulator Estimasi Protein
         function calculateProtein(e) {
             if (e) e.preventDefault();
 
@@ -713,23 +970,37 @@
 
             // Hitung Kebutuhan Protein Harian
             const dailyProtein = Math.round(weight * multiplier);
-            
-            // Asumsi 70% protein utama diambil dari dada ayam marinasi (100g ayam = ~23g protein)
-            const proteinFromChicken = dailyProtein * 0.7;
-            const neededGrams = Math.round((proteinFromChicken / 23) * 100);
+
+            // Ambil persentase kustom dari slider (default 70%)
+            const sliderEl = document.getElementById('chicken-share-slider');
+            chickenSharePercent = sliderEl ? parseInt(sliderEl.value, 10) : 70;
+            const sideSharePercent = 100 - chickenSharePercent;
+
+            // Hitung pembagian gram protein antara dada ayam & lauk pendamping
+            const proteinFromChicken = Math.round(dailyProtein * (chickenSharePercent / 100));
+            const proteinFromSide = Math.max(0, dailyProtein - proteinFromChicken);
+            const neededGrams = Math.round(((dailyProtein * (chickenSharePercent / 100)) / 23) * 100);
             
             // Konversi ke kemasan 100g & 50g
             const packs100 = Math.floor(neededGrams / 100);
             const remainder = neededGrams % 100;
             const packs50 = remainder >= 25 ? 1 : 0;
 
-            recommendedPacks100g = Math.max(1, packs100);
-            recommendedPacks50g = packs50;
+            recommendedPacks100g = packs100 === 0 && packs50 === 0 ? 0 : packs100;
+            recommendedPacks50g = packs100 === 0 && packs50 === 0 ? 1 : packs50;
 
-            let packText = `<strong>${packs100} bungkus (100g)</strong>`;
-            if (packs50 > 0) {
-                packText += ` + <strong>1 bungkus (50g)</strong>`;
-            }
+            const finalPacks100 = recommendedPacks100g;
+            const finalPacks50 = recommendedPacks50g;
+            const totalRecommendedGrams = (finalPacks100 * 100) + (finalPacks50 * 50);
+
+            let packParts = [];
+            if (finalPacks100 > 0) packParts.push(`<strong>${finalPacks100} bungkus (100g)</strong>`);
+            if (finalPacks50 > 0) packParts.push(`<strong>${finalPacks50} bungkus (50g)</strong>`);
+            const packText = packParts.join(' + ');
+
+            const shareNote = sideSharePercent > 0
+                ? `${chickenSharePercent}% dari dada ayam & ${sideSharePercent}% dari lauk pendamping`
+                : `100% penuh dari dada ayam marinasi`;
 
             // Update UI
             const bmiBadge = document.getElementById('bmi-badge');
@@ -738,11 +1009,165 @@
 
             document.getElementById('protein-target').textContent = dailyProtein;
             document.getElementById('ideal-weight').textContent = idealWeight;
+
+            // Update UI persentase kustom
+            const shareBadgeEl = document.getElementById('chicken-share-badge');
+            if (shareBadgeEl) {
+                shareBadgeEl.textContent = `${chickenSharePercent}% Dada Ayam (${proteinFromChicken}g)`;
+            }
+
+            const shareBarEl = document.getElementById('chicken-share-bar');
+            if (shareBarEl) {
+                shareBarEl.style.width = `${chickenSharePercent}%`;
+            }
+
+            const sideTextEl = document.getElementById('side-dish-share-text');
+            if (sideTextEl) {
+                sideTextEl.textContent = sideSharePercent > 0
+                    ? `${sideSharePercent}% Lauk Lain (${proteinFromSide}g)`
+                    : `0% Lauk Lain (Full Ayam)`;
+            }
+
+            const summaryPillEl = document.getElementById('pack-summary-pill');
+            if (summaryPillEl) {
+                let pillParts = [];
+                if (finalPacks100 > 0) pillParts.push(`${finalPacks100}x (100g)`);
+                if (finalPacks50 > 0) pillParts.push(`${finalPacks50}x (50g)`);
+                summaryPillEl.textContent = `${pillParts.join(' + ')} • Total ${totalRecommendedGrams}g`;
+            }
+
             document.getElementById('portion-recommendation').innerHTML = `
-                Untuk memenuhi target <strong>${dailyProtein}g protein/hari</strong> (70% dari ayam & sisanya lauk pendamping), Kang Asep sarankan konsumsi <strong>${(packs100 * 100) + (packs50 * 50)}g dada ayam</strong> per hari atau setara ${packText}.
+                Untuk memenuhi target <strong>${dailyProtein}g protein/hari</strong> (${shareNote}), berdasarkan perhitungan data tersebut, estimasi kebutuhanmu sekitar <strong>${totalRecommendedGrams}g dada ayam</strong> per hari atau setara ${packText}.
             `;
 
+            syncFormHelperPreview(multiplier, goal, activity);
+            syncSharePresetButtons();
+            syncGenderOptionButtons();
+            syncGoalOptionButtons();
+
             if (e) showToast("Hasil analisa protein diperbarui!");
+        }
+
+        // Pilih opsi Jenis Kelamin secara terbuka (Laki-laki, Perempuan)
+        function selectGenderOption(genderValue) {
+            const genderInput = document.getElementById('gender');
+            if (genderInput) {
+                genderInput.value = genderValue;
+            }
+            syncGenderOptionButtons();
+        }
+
+        // Sinkronisasi tampilan tombol pilihan Jenis Kelamin aktif
+        function syncGenderOptionButtons() {
+            const currentGender = document.getElementById('gender')?.value || 'male';
+            document.querySelectorAll('.gender-option-btn').forEach(btn => {
+                const val = btn.getAttribute('data-gender');
+                const subText = btn.querySelector('span:nth-child(2)');
+                if (val === currentGender) {
+                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
+                    if (subText) subText.className = "block text-[10px] text-brand-600 font-medium";
+                } else {
+                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
+                    if (subText) subText.className = "block text-[10px] text-slate-500";
+                }
+            });
+        }
+
+        // Pilih opsi Target secara terbuka (Maintain, Fat Loss, Bulking)
+        function selectGoalOption(goalValue) {
+            const goalInput = document.getElementById('goal');
+            if (goalInput) {
+                goalInput.value = goalValue;
+            }
+            syncGoalOptionButtons();
+            syncFormHelperPreview(undefined, goalValue, undefined);
+        }
+
+        // Sinkronisasi tampilan tombol pilihan Target aktif
+        function syncGoalOptionButtons() {
+            const currentGoal = document.getElementById('goal')?.value || 'fat_loss';
+            document.querySelectorAll('.goal-option-btn').forEach(btn => {
+                const val = btn.getAttribute('data-goal');
+                const subText = btn.querySelector('span:nth-child(2)');
+                if (val === currentGoal) {
+                    btn.className = "goal-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
+                    if (subText) subText.className = "block text-[10px] text-brand-600 font-medium";
+                } else {
+                    btn.className = "goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
+                    if (subText) subText.className = "block text-[10px] text-slate-500";
+                }
+            });
+        }
+
+        // Perbarui info acuan rasio di bawah input Target & Aktivitas Fisik
+        function syncFormHelperPreview(customMultiplier, customGoal, customActivity) {
+            const goal = customGoal || document.getElementById('goal')?.value || 'fat_loss';
+            const activity = customActivity || document.getElementById('activity')?.value || 'sedang';
+
+            const goalBase = {
+                maintain: 1.0,
+                fat_loss: 1.4,
+                muscle_gain: 1.6
+            }[goal] ?? 1.4;
+
+            const activityBonus = {
+                mager: 0.0,
+                ringan: 0.15,
+                sedang: 0.3,
+                berat: 0.45
+            }[activity] ?? 0.3;
+
+            const multiplier = typeof customMultiplier === 'number' ? customMultiplier : (goalBase + activityBonus);
+
+            const goalLabels = {
+                maintain: "Jaga Kesehatan",
+                fat_loss: "Turun Berat Badan",
+                muscle_gain: "Naik Massa Otot"
+            };
+
+            const activityLabels = {
+                mager: "Mager",
+                ringan: "Aktivitas Ringan",
+                sedang: "Aktivitas Sedang",
+                berat: "Aktivitas Berat"
+            };
+
+            const badgeEl = document.getElementById('form-ratio-badge');
+            if (badgeEl) {
+                badgeEl.textContent = `~${multiplier.toFixed(2)}g / kg BB`;
+            }
+
+            const descEl = document.getElementById('form-ratio-desc');
+            if (descEl) {
+                descEl.textContent = `Kombinasi ${goalLabels[goal] || 'Target'} & ${activityLabels[activity] || 'Aktivitas'} dipakai untuk menghitung estimasi kebutuhan protein harianmu.`;
+            }
+        }
+
+        // Update real-time saat slider persentase digeser
+        function updateChickenShare(value) {
+            chickenSharePercent = parseInt(value, 10) || 70;
+            calculateProtein();
+        }
+
+        // Pilih cepat persentase lewat tombol preset (50%, 70%, 100%)
+        function setChickenSharePreset(percent) {
+            const sliderEl = document.getElementById('chicken-share-slider');
+            if (sliderEl) {
+                sliderEl.value = percent;
+            }
+            updateChickenShare(percent);
+        }
+
+        // Tandai tombol preset yang sedang aktif
+        function syncSharePresetButtons() {
+            document.querySelectorAll('.share-preset-btn').forEach(btn => {
+                const presetVal = parseInt(btn.getAttribute('data-preset'), 10);
+                if (presetVal === chickenSharePercent) {
+                    btn.className = "share-preset-btn px-2 py-0.5 rounded-md text-[11px] font-bold bg-brand-600 border border-brand-600 text-white transition-colors";
+                } else {
+                    btn.className = "share-preset-btn px-2 py-0.5 rounded-md text-[11px] font-bold bg-white border border-slate-200 text-slate-600 hover:border-brand-400 hover:text-brand-600 transition-colors";
+                }
+            });
         }
 
         // Masukkan Paket Rekomendasi ke Keranjang
@@ -754,9 +1179,10 @@
                 addToCart("ayam-50", false);
             }
 
-            const notifText = recommendedPacks50g > 0
-                ? `${recommendedPacks100g}x (100g) & ${recommendedPacks50g}x (50g) ditambahkan!`
-                : `${recommendedPacks100g}x Kemasan 100g ditambahkan!`;
+            let notifParts = [];
+            if (recommendedPacks100g > 0) notifParts.push(`${recommendedPacks100g}x (100g)`);
+            if (recommendedPacks50g > 0) notifParts.push(`${recommendedPacks50g}x (50g)`);
+            const notifText = `${notifParts.join(' & ')} ditambahkan!`;
 
             showToast(notifText);
             toggleCart();
@@ -844,7 +1270,7 @@
                             <i data-lucide="shopping-bag" class="w-7 h-7"></i>
                         </div>
                         <p class="font-bold text-slate-700">Keranjang masih kosong</p>
-                        <p class="text-xs text-slate-500 max-w-xs">Pilih kemasan dada ayam 100g atau 50g, atau gunakan hasil konsultasi protein di atas.</p>
+                        <p class="text-xs text-slate-500 max-w-xs">Pilih kemasan dada ayam 100g atau 50g, atau gunakan hasil kalkulator protein di atas.</p>
                     </div>
                 `;
                 lucide.createIcons();
@@ -873,13 +1299,93 @@
         }
 
         // ==========================================
-        // FITUR PEMILIH LOKASI INTERAKTIF & GPS
+        // FITUR PEMILIH LOKASI GOOGLE MAPS & GPS
         // ==========================================
 
-        function setSavedLocation(lat, lng, labelText, sourceType) {
+        // Buka langsung aplikasi / tab Google Maps asli untuk memilih titik
+        function openGoogleMapsApp() {
+            const baseQuery = (sharedLocation && sharedLocation.lat && sharedLocation.lng)
+                ? `${sharedLocation.lat},${sharedLocation.lng}`
+                : `30.044420,31.235712`;
+            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(baseQuery)}`;
+            window.open(url, '_blank', 'noopener,noreferrer');
+            showToast("Pilih titik di Google Maps, salin linknya, lalu tempel di keranjang!");
+        }
+
+        // Tempel otomatis dari clipboard atau baca input link Google Maps di keranjang
+        async function pasteGoogleMapsFromClipboard() {
+            const inputEl = document.getElementById('cart-gmaps-link');
+            if (!inputEl) return;
+
+            if (!inputEl.value.trim() && navigator.clipboard && navigator.clipboard.readText) {
+                try {
+                    const clipText = await navigator.clipboard.readText();
+                    if (clipText) {
+                        inputEl.value = clipText.trim();
+                    }
+                } catch {
+                    // Jika izin clipboard ditolak browser, fokuskan ke input agar user bisa paste manual
+                }
+            }
+
+            if (!inputEl.value.trim()) {
+                inputEl.focus();
+                showToast("Tempel (Paste) link Google Maps ke kolom ini ya!");
+                return;
+            }
+
+            applyCartGoogleMapsLink();
+        }
+
+        // Simpan link Google Maps atau koordinat yang ditempel pelanggan di keranjang
+        function applyCartGoogleMapsLink() {
+            const inputEl = document.getElementById('cart-gmaps-link');
+            const raw = inputEl?.value.trim();
+            if (!raw) return;
+
+            // Cek apakah berupa link Google Maps (maps.app.goo.gl, goo.gl/maps, google.com/maps, maps.google.com)
+            const isGoogleMapsUrl = /(https?:\/\/)?(www\.)?(maps\.app\.goo\.gl|goo\.gl\/maps|google\.com\/maps|maps\.google\.com)\S*/i.test(raw);
+            const coordMatch = raw.match(/(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
+
+            if (coordMatch) {
+                const lat = parseFloat(coordMatch[1]);
+                const lng = parseFloat(coordMatch[2]);
+                if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    const cleanUrl = isGoogleMapsUrl ? raw.match(/https?:\/\/\S+/i)?.[0] || `https://www.google.com/maps?q=${lat},${lng}` : `https://www.google.com/maps?q=${lat},${lng}`;
+                    setSavedLocation(lat, lng, `Titik Google Maps (${lat.toFixed(5)}, ${lng.toFixed(5)})`, 'gmaps_link', cleanUrl);
+                    showToast("Link titik Google Maps berhasil disimpan!");
+                    return;
+                }
+            }
+
+            if (isGoogleMapsUrl) {
+                const extractedUrl = raw.match(/https?:\/\/\S+/i)?.[0] || raw;
+                sharedLocation = {
+                    lat: "",
+                    lng: "",
+                    label: "Link Titik Google Maps",
+                    source: "gmaps_link",
+                    mapsUrl: extractedUrl
+                };
+
+                document.getElementById('pick-loc-label').textContent = "Ubah di Maps";
+                document.getElementById('clear-loc-btn').classList.remove('hidden');
+
+                const status = document.getElementById('location-status');
+                status.innerHTML = `<span class="text-emerald-700 font-semibold">Link Google Maps tersimpan!</span> • <a href="${extractedUrl}" target="_blank" rel="noopener noreferrer" class="underline text-brand-600 font-semibold">Cek Link Maps</a>`;
+                status.className = "text-[11px] text-slate-700 leading-snug";
+                lucide.createIcons();
+                showToast("Link Google Maps berhasil ditambahkan!");
+                return;
+            }
+
+            showToast("Format tidak valid. Salin link 'Bagikan / Share' dari Google Maps ya!");
+        }
+
+        function setSavedLocation(lat, lng, labelText, sourceType, customMapsUrl) {
             const fixedLat = parseFloat(lat).toFixed(6);
             const fixedLng = parseFloat(lng).toFixed(6);
-            const mapsUrl = `https://www.google.com/maps?q=${fixedLat},${fixedLng}`;
+            const mapsUrl = customMapsUrl || `https://www.google.com/maps?q=${fixedLat},${fixedLng}`;
 
             sharedLocation = {
                 lat: fixedLat,
@@ -889,7 +1395,7 @@
                 mapsUrl
             };
 
-            document.getElementById('pick-loc-label').textContent = "Ubah Titik";
+            document.getElementById('pick-loc-label').textContent = "Ubah di Maps";
             document.getElementById('clear-loc-btn').classList.remove('hidden');
 
             const status = document.getElementById('location-status');
@@ -898,74 +1404,11 @@
 
             // Isi otomatis kolom alamat jika masih kosong
             const addressInput = document.getElementById('customer-address');
-            if (addressInput && !addressInput.value.trim() && labelText) {
+            if (addressInput && !addressInput.value.trim() && labelText && !labelText.startsWith('Titik Google Maps')) {
                 addressInput.value = labelText;
             }
 
             lucide.createIcons();
-        }
-
-        // Buka Modal Peta untuk Memilih Lokasi Tujuan (Rumah Sendiri / Teman / Kantor)
-        function openLocationPicker() {
-            const modal = document.getElementById('location-modal');
-            modal.classList.remove('hidden');
-            lucide.createIcons();
-
-            const startLat = sharedLocation ? parseFloat(sharedLocation.lat) : tempPickedCoords.lat;
-            const startLng = sharedLocation ? parseFloat(sharedLocation.lng) : tempPickedCoords.lng;
-
-            setTimeout(() => {
-                if (!pickerMap && typeof L !== 'undefined') {
-                    pickerMap = L.map('picker-map').setView([startLat, startLng], 15);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        attribution: '&copy; OpenStreetMap'
-                    }).addTo(pickerMap);
-
-                    const customIcon = L.divIcon({
-                        className: 'custom-pin-marker',
-                        html: `<div style="width:34px;height:34px;background:#ea580c;border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 6px 14px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;"><div style="width:10px;height:10px;background:#fff;border-radius:50%;transform:rotate(45deg);"></div></div>`,
-                        iconSize: [34, 34],
-                        iconAnchor: [17, 34]
-                    });
-
-                    pickerMarker = L.marker([startLat, startLng], { draggable: true, icon: customIcon }).addTo(pickerMap);
-
-                    pickerMarker.on('dragend', () => {
-                        const pos = pickerMarker.getLatLng();
-                        updatePickerPoint(pos.lat, pos.lng, true);
-                    });
-
-                    pickerMap.on('click', (e) => {
-                        pickerMarker.setLatLng(e.latlng);
-                        updatePickerPoint(e.latlng.lat, e.latlng.lng, true);
-                    });
-
-                    // Jika belum punya lokasi tersimpan, coba arahkan peta ke area sekitar pengguna tanpa memaksa
-                    if (!sharedLocation && navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(
-                            (pos) => {
-                                const uLat = pos.coords.latitude;
-                                const uLng = pos.coords.longitude;
-                                pickerMap.setView([uLat, uLng], 16);
-                                pickerMarker.setLatLng([uLat, uLng]);
-                                updatePickerPoint(uLat, uLng, true);
-                            },
-                            () => {
-                                updatePickerPoint(startLat, startLng, true);
-                            },
-                            { timeout: 5000 }
-                        );
-                    } else {
-                        updatePickerPoint(startLat, startLng, !sharedLocation);
-                    }
-                } else if (pickerMap) {
-                    pickerMap.invalidateSize();
-                    pickerMap.setView([startLat, startLng], 16);
-                    pickerMarker.setLatLng([startLat, startLng]);
-                    updatePickerPoint(startLat, startLng, false);
-                }
-            }, 120);
         }
 
         function closeLocationPicker() {
@@ -1136,11 +1579,13 @@
         // Hapus Lokasi Tersimpan
         function clearLocation() {
             sharedLocation = null;
-            document.getElementById('pick-loc-label').textContent = "Pilih di Peta";
+            document.getElementById('pick-loc-label').textContent = "Buka Google Maps";
             document.getElementById('share-loc-label').textContent = "GPS";
+            const linkInput = document.getElementById('cart-gmaps-link');
+            if (linkInput) linkInput.value = "";
             document.getElementById('clear-loc-btn').classList.add('hidden');
             const status = document.getElementById('location-status');
-            status.textContent = "Bisa pilih titik tujuan di peta (misal kirim ke teman/kantor) atau pakai GPS langsung.";
+            status.innerHTML = `Klik <strong>Buka Google Maps</strong> untuk pilih titik lokasi, salin linknya, lalu tempel di atas (atau klik <strong>GPS</strong>).`;
             status.className = "text-[11px] text-slate-500 leading-snug";
             showToast("Lokasi dihapus");
         }
@@ -1197,6 +1642,8 @@
         // Inisialisasi saat halaman dimuat
         window.addEventListener('DOMContentLoaded', () => {
             renderProducts();
+            syncGenderOptionButtons();
+            syncGoalOptionButtons();
             calculateProtein();
             updateCartUI();
             lucide.createIcons();
