@@ -37,114 +37,160 @@
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white overflow-x-hidden w-full relative">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white overflow-x-hidden w-full relative pt-16">
 
-    <!-- Navbar -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <!-- Fixed Navbar ala Shopee (Selalu Menempel di Atas Saat Scroll) -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+        <div class="max-w-6xl mx-auto px-3.5 sm:px-6 h-16 flex items-center justify-between gap-2">
             <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-                    <i data-lucide="flame" class="w-6 h-6"></i>
+            <a href="#beranda" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform shrink-0">
+                    <i data-lucide="flame" class="w-5 h-5 sm:w-6 sm:h-6"></i>
                 </div>
-                <div>
-                    <span class="font-extrabold text-xl tracking-tight text-slate-900 block leading-none">Kang Asep</span>
-                    <span class="text-[11px] font-medium text-brand-600 tracking-wide uppercase">Protein Meal Prep</span>
+                <div class="min-w-0">
+                    <span class="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 block leading-none truncate">Kang Asep</span>
+                    <span class="text-[10px] sm:text-[11px] font-medium text-brand-600 tracking-wide uppercase block truncate">Protein Meal Prep</span>
                 </div>
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+            <nav class="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-medium text-slate-600">
                 <a href="#beranda" class="hover:text-brand-600 transition-colors">Beranda</a>
                 <a href="#kalkulator" class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
                     <i data-lucide="calculator" class="w-4 h-4 text-brand-500"></i>
                     Kalkulator Protein
                 </a>
-                <a href="#produk" class="hover:text-brand-600 transition-colors">Menu & Harga</a>
+                <a href="#produk" class="hover:text-brand-600 transition-colors">Menu &amp; Harga</a>
                 <a href="#cara-masak" class="hover:text-brand-600 transition-colors">Cara Masak</a>
             </nav>
 
-            <!-- Cart Button -->
-            <div class="flex items-center gap-3">
+            <!-- Cart Button (Selalu Tampil di Luar Hamburger) + Mobile Hamburger Button -->
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                 <button type="button" onclick="toggleCart()" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-600 transition-colors flex items-center gap-2">
                     <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                     <span class="hidden sm:inline text-sm font-semibold">Keranjang</span>
                     <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-brand-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
                 </button>
+
+                <button type="button" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Buka Menu Navigasi" aria-expanded="false" class="md:hidden p-2.5 rounded-xl bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-600 transition-colors flex items-center justify-center">
+                    <i id="mobile-menu-icon" data-lucide="menu" class="w-5 h-5"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/98 backdrop-blur-md border-t border-slate-200/80 shadow-lg">
+            <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1.5 text-sm font-semibold text-slate-700">
+                <a href="#beranda" onclick="closeMobileMenu()" class="px-3.5 py-2.5 rounded-xl hover:bg-brand-50 hover:text-brand-600 transition-colors flex items-center gap-2.5">
+                    <i data-lucide="home" class="w-4 h-4 text-brand-500"></i>
+                    Beranda
+                </a>
+                <a href="#kalkulator" onclick="closeMobileMenu()" class="px-3.5 py-2.5 rounded-xl hover:bg-brand-50 hover:text-brand-600 transition-colors flex items-center gap-2.5">
+                    <i data-lucide="calculator" class="w-4 h-4 text-brand-500"></i>
+                    Kalkulator Protein
+                </a>
+                <a href="#produk" onclick="closeMobileMenu()" class="px-3.5 py-2.5 rounded-xl hover:bg-brand-50 hover:text-brand-600 transition-colors flex items-center gap-2.5">
+                    <i data-lucide="utensils" class="w-4 h-4 text-brand-500"></i>
+                    Menu &amp; Harga
+                </a>
+                <a href="#cara-masak" onclick="closeMobileMenu()" class="px-3.5 py-2.5 rounded-xl hover:bg-brand-50 hover:text-brand-600 transition-colors flex items-center gap-2.5">
+                    <i data-lucide="flame" class="w-4 h-4 text-brand-500"></i>
+                    Cara Masak
+                </a>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-24">
+    <section id="beranda" class="relative overflow-hidden pt-8 pb-14 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24 scroll-mt-16">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+            <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                 <!-- Hero Text -->
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100 text-brand-700 text-xs sm:text-sm font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
-                        100% Dada Ayam Fillet Segar • Takaran Akurat
+                <div class="lg:col-span-7 min-w-0 space-y-5 sm:space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-100 text-brand-700 text-[11px] sm:text-sm font-semibold max-w-full">
+                        <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse shrink-0"></span>
+                        <span class="truncate">100% Dada Ayam Fillet Segar • Takaran Akurat</span>
                     </div>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.18]">
                         Kejar Target Protein Harian Jadi Praktis Bareng <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-amber-500">Kang Asep</span>
                     </h1>
-                    <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    <p class="text-sm sm:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                         Dada ayam fillet tanpa kulit yang sudah dimarinasi bumbu meresap. Dikemas vakum higienis per <strong>50 gram</strong> dan <strong>100 gram</strong>. Tinggal panggang 5 menit, siap santap!
                     </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
-                        <a href="#kalkulator" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-600/25 transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="activity" class="w-5 h-5"></i>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-3.5 pt-1">
+                        <a href="#kalkulator" class="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm sm:text-base font-semibold shadow-lg shadow-brand-600/25 transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="activity" class="w-5 h-5 shrink-0"></i>
                             Cek Kebutuhan Proteinmu
                         </a>
-                        <a href="#produk" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold border border-slate-200 shadow-sm transition-all flex items-center justify-center gap-2">
+                        <a href="#produk" class="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-sm sm:text-base font-semibold border border-slate-200 shadow-sm transition-all flex items-center justify-center gap-2">
                             Lihat Pilihan Kemasan
-                            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                            <i data-lucide="arrow-down" class="w-4 h-4 shrink-0"></i>
                         </a>
                     </div>
 
                     <!-- Trust Badges -->
-                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-lg mx-auto lg:mx-0">
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-4 pt-5 border-t border-slate-200/80 max-w-lg mx-auto lg:mx-0">
                         <div>
-                            <p class="text-xl sm:text-2xl font-extrabold text-slate-900">~23g</p>
-                            <p class="text-xs text-slate-500">Protein per 100g</p>
+                            <p class="text-lg sm:text-2xl font-extrabold text-slate-900">~23g</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500">Protein per 100g</p>
                         </div>
                         <div>
-                            <p class="text-xl sm:text-2xl font-extrabold text-slate-900">5 Menit</p>
-                            <p class="text-xs text-slate-500">Waktu Masak</p>
+                            <p class="text-lg sm:text-2xl font-extrabold text-slate-900">5 Menit</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500">Waktu Masak</p>
                         </div>
                         <div>
-                            <p class="text-xl sm:text-2xl font-extrabold text-slate-900">0% Ribet</p>
-                            <p class="text-xs text-slate-500">Tanpa Cuci & Potong</p>
+                            <p class="text-lg sm:text-2xl font-extrabold text-slate-900">0% Ribet</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500">Tanpa Cuci &amp; Potong</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Hero Visual Card -->
-                <div class="lg:col-span-5">
-                    <div class="relative rounded-3xl bg-gradient-to-br from-brand-500 to-amber-500 p-1.5 shadow-2xl shadow-brand-500/20">
+                <div class="lg:col-span-5 min-w-0">
+                    <div class="relative rounded-3xl bg-gradient-to-br from-brand-500 to-amber-500 p-1.5 shadow-2xl shadow-brand-500/20 max-w-md mx-auto lg:max-w-none">
                         <div class="bg-white rounded-[22px] overflow-hidden">
-                            <div class="relative w-full h-64 sm:h-72 bg-slate-100 overflow-hidden group">
+                            <div class="relative w-full h-56 sm:h-72 bg-slate-100 overflow-hidden group">
                                 <img src="https://i.postimg.cc/2jMc7bHz/Vacuum-Sealed-Chicken-on-Wooden-Board.png"
                                      onerror="this.src='https://placehold.co/800x520/fff7ed/ea580c?text=Dada+Ayam+Fillet+Kemasan+Vakum+50g+%26+100g'"
                                      alt="Dada Ayam Fillet Marinasi Kemasan Vakum Rapi Kang Asep"
                                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
-                                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
-                                    <span class="px-3 py-1 rounded-lg bg-brand-600 text-white text-xs font-extrabold tracking-wide shadow-sm">
+                                <div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2">
+                                    <span class="px-2.5 py-1 rounded-lg bg-brand-600 text-white text-[11px] sm:text-xs font-extrabold tracking-wide shadow-sm">
                                         Kemasan Vakum 50g &amp; 100g
                                     </span>
-                                    <span class="px-2.5 py-1 rounded-lg bg-white/95 text-slate-800 text-[11px] font-bold shadow-xs">
+                                    <span class="px-2.5 py-1 rounded-lg bg-white/95 text-slate-800 text-[10px] sm:text-[11px] font-bold shadow-xs">
                                         Fillet Terpackaging
                                     </span>
                                 </div>
                             </div>
-                            <div class="p-6 space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <span class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold">High Protein • Low Fat</span>
-                                    <span class="text-xs font-medium text-slate-400">Made by Order</span>
+
+                            <div class="p-4 sm:p-6 space-y-3.5 sm:space-y-4">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                    <span class="text-xs sm:text-sm font-bold text-slate-500">Contoh Takaran Harian</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-[11px] sm:text-xs font-bold">Tinggi Protein</span>
                                 </div>
-                                <h3 class="font-bold text-lg text-slate-900">Kemasan Takar 50g & 100g</h3>
-                                <p class="text-sm text-slate-600">Memudahkan kamu menghitung kalori dan makro nutrisi harian tanpa perlu timbangan dapur lagi.</p>
+
+                                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/70">
+                                    <div class="min-w-0 pr-2">
+                                        <p class="font-bold text-slate-900 text-xs sm:text-sm truncate">2x Kemasan 100g</p>
+                                        <p class="text-[11px] sm:text-xs text-slate-500">200g dada ayam fillet</p>
+                                    </div>
+                                    <span class="font-extrabold text-brand-600 text-xs sm:text-sm shrink-0">~46g Protein</span>
+                                </div>
+
+                                <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/70">
+                                    <div class="min-w-0 pr-2">
+                                        <p class="font-bold text-slate-900 text-xs sm:text-sm truncate">1x Kemasan 50g (Tambahan)</p>
+                                        <p class="text-[11px] sm:text-xs text-slate-500">50g dada ayam fillet</p>
+                                    </div>
+                                    <span class="font-extrabold text-brand-600 text-xs sm:text-sm shrink-0">~11.5g Protein</span>
+                                </div>
+
+                                <div class="pt-1 flex items-center justify-between text-xs text-slate-500 gap-2">
+                                    <span class="truncate">Halal &amp; Higienis</span>
+                                    <span class="font-semibold text-slate-700 shrink-0">Siap Masak Kapan Saja</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -153,17 +199,20 @@
         </div>
     </section>
 
-    <!-- Konsultasi & Kalkulator Protein Section -->
-    <section id="kalkulator" class="py-16 bg-white border-y border-slate-200/80">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
-                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Kalkulator Nutrisi Praktis</span>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Hitung Kebutuhan Protein Tubuhmu</h2>
-                <p class="text-slate-600 text-sm sm:text-base">Masukkan berat badan, tinggi badan, dan targetmu. Kang Asep bantu hitungkan estimasi bungkus dada ayam yang pas buat kamu setiap hari!</p>
+    <!-- Kalkulator Kebutuhan Protein Section -->
+    <section id="kalkulator" class="py-12 sm:py-16 lg:py-20 bg-white border-y border-slate-200/70 scroll-mt-16">
+        <div class="max-w-5xl mx-auto px-3.5 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+                    <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                    Kalkulator Nutrisi Pintar
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Hitung Kebutuhan Protein Harianmu</h2>
+                <p class="text-slate-600 text-xs sm:text-base">Masukkan data tubuh dan targetmu. Kang Asep bantu hitungkan estimasi protein harian dan rekomendasi jumlah bungkus (50g &amp; 100g).</p>
             </div>
 
-            <div class="grid md:grid-cols-12 gap-6 lg:gap-8 bg-slate-50 rounded-3xl p-4 sm:p-8 border border-slate-200/80 shadow-sm items-stretch">
-                <!-- Form Input (Kartu Kiri) -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 bg-slate-50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-8 border border-slate-200/80 shadow-sm items-stretch">
+                <!-- Form Input (Kolom Kiri) -->
                 <form id="protein-form" onsubmit="calculateProtein(event)" class="md:col-span-6 min-w-0 h-full bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs flex flex-col justify-between gap-5">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
@@ -171,21 +220,21 @@
                                 <i data-lucide="user-check" class="w-4 h-4 text-brand-600"></i>
                                 Data &amp; Target Tubuh
                             </span>
-                            <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[11px] font-semibold">1. Isi Data</span>
+                            <span class="text-[11px] font-semibold text-slate-400">Langkah 1/2</span>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Jenis Kelamin</label>
                                 <input type="hidden" id="gender" value="male">
                                 <div id="gender-options" class="grid grid-cols-2 gap-2">
                                     <button type="button" onclick="selectGenderOption('male')" data-gender="male" class="gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
-                                        <span class="block text-xs font-bold">Laki-laki</span>
-                                        <span class="block text-[10px] text-brand-600 font-medium">Pria</span>
+                                        <span class="block text-xs font-bold">Pria</span>
+                                        <span class="block text-[10px] text-brand-600 font-medium">Laki-laki</span>
                                     </button>
                                     <button type="button" onclick="selectGenderOption('female')" data-gender="female" class="gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
-                                        <span class="block text-xs font-bold">Perempuan</span>
-                                        <span class="block text-[10px] text-slate-500">Wanita</span>
+                                        <span class="block text-xs font-bold">Wanita</span>
+                                        <span class="block text-[10px] text-slate-500">Perempuan</span>
                                     </button>
                                 </div>
                             </div>
@@ -345,25 +394,25 @@
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Durasi Stok ke Keranjang</label>
                             <input type="hidden" id="rec-days" value="1">
-                            <div id="rec-days-options" class="grid grid-cols-3 gap-2">
-                                <button type="button" onclick="selectRecDaysOption(1)" data-days="1" class="rec-days-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
+                            <div id="rec-days-options" class="grid grid-cols-3 gap-1.5 sm:gap-2">
+                                <button type="button" onclick="selectRecDaysOption(1)" data-days="1" class="rec-days-btn px-2 sm:px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
                                     <span class="block text-xs font-bold">1 Hari</span>
                                     <span class="block text-[10px] text-brand-600 font-medium">Harian</span>
                                 </button>
-                                <button type="button" onclick="selectRecDaysOption(3)" data-days="3" class="rec-days-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                <button type="button" onclick="selectRecDaysOption(3)" data-days="3" class="rec-days-btn px-2 sm:px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
                                     <span class="block text-xs font-bold">3 Hari</span>
                                     <span class="block text-[10px] text-slate-500">Stok 3x</span>
                                 </button>
-                                <button type="button" onclick="selectRecDaysOption(7)" data-days="7" class="rec-days-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                <button type="button" onclick="selectRecDaysOption(7)" data-days="7" class="rec-days-btn px-2 sm:px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
                                     <span class="block text-xs font-bold">1 Minggu</span>
                                     <span class="block text-[10px] text-slate-500">Stok 7x</span>
                                 </button>
                             </div>
                         </div>
 
-                        <button type="button" onclick="applyRecommendationToCart()" class="w-full py-3.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            <span id="apply-rec-btn-label">Masukkan Rekomendasi 1 Hari ke Keranjang</span>
+                        <button type="button" onclick="applyRecommendationToCart()" class="w-full py-3.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2 text-center">
+                            <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i>
+                            <span id="apply-rec-btn-label" class="leading-snug">Masukkan Rekomendasi 1 Hari ke Keranjang</span>
                         </button>
                     </div>
                 </div>
@@ -372,45 +421,45 @@
     </section>
 
     <!-- Katalog Produk Section -->
-    <section id="produk" class="py-16 sm:py-20">
+    <section id="produk" class="py-12 sm:py-16 lg:py-20 scroll-mt-16">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-                <span class="text-brand-600 font-bold text-sm tracking-wider uppercase">Menu Kang Asep</span>
+            <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2">
+                <span class="text-brand-600 font-bold text-xs sm:text-sm tracking-wider uppercase">Menu Kang Asep</span>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900">Pilih Ukuran Kemasan</h2>
-                <p class="text-slate-600 text-sm sm:text-base">100% dada ayam fillet segar dengan racikan bumbu marinasi khas Kang Asep. Tersedia dalam 2 ukuran takar praktis.</p>
+                <p class="text-slate-600 text-xs sm:text-base">100% dada ayam fillet segar dengan racikan bumbu marinasi khas Kang Asep. Tersedia dalam 2 ukuran takar praktis.</p>
             </div>
 
             <!-- Grid Produk -->
-            <div id="product-grid" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                 <!-- Produk di-render via JavaScript -->
             </div>
         </div>
     </section>
 
     <!-- Cara Masak & Info Penyimpanan -->
-    <section id="cara-masak" class="py-16 bg-slate-900 text-white">
+    <section id="cara-masak" class="py-12 sm:py-16 bg-slate-900 text-white scroll-mt-16">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
-                <span class="text-brand-400 font-bold text-sm uppercase tracking-wider">Praktis & Higienis</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold">Cara Penyimpanan & Penyajian</h2>
-                <p class="text-slate-400 text-sm">Bumbu sudah meresap dari Kang Asep. Tinggal simpan sesuai kebutuhan dan masak dengan cara yang paling nyaman.</p>
+            <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2">
+                <span class="text-brand-400 font-bold text-xs sm:text-sm uppercase tracking-wider">Praktis &amp; Higienis</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold">Cara Penyimpanan &amp; Penyajian</h2>
+                <p class="text-slate-400 text-xs sm:text-sm">Bumbu sudah meresap dari Kang Asep. Tinggal simpan sesuai kebutuhan dan masak dengan cara yang paling nyaman.</p>
             </div>
 
-            <div class="grid sm:grid-cols-3 gap-6">
-                <div class="p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <div class="p-5 sm:p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
                     <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">1</div>
-                    <h3 class="font-bold text-lg">Penyimpanan Kulkas</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">Simpan di freezer untuk ketahanan sekitar <strong>2–3 minggu</strong>, atau di chiller/kulkas bawah sekitar <strong>2–3 hari</strong> untuk pemakaian dekat. Jika beku, cairkan dulu di suhu ruang atau rendam kemasan tertutup di air biasa sebelum dimasak.</p>
+                    <h3 class="font-bold text-base sm:text-lg">Penyimpanan Kulkas</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Simpan di freezer untuk ketahanan sekitar <strong>2–3 minggu</strong>, atau di chiller/kulkas bawah sekitar <strong>2–3 hari</strong> untuk pemakaian dekat. Jika beku, cairkan dulu di suhu ruang atau rendam kemasan tertutup di air biasa sebelum dimasak.</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
+                <div class="p-5 sm:p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
                     <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">2</div>
-                    <h3 class="font-bold text-lg">Proses Masak</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">Masak di atas <strong>teflon/pan anti lengket</strong> sekitar 5–7 menit per sisi hingga matang merata, atau gunakan <strong>air fryer</strong> / panggang sesuai selera tanpa perlu tambah banyak bumbu.</p>
+                    <h3 class="font-bold text-base sm:text-lg">Proses Masak</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Masak di atas <strong>teflon/pan anti lengket</strong> sekitar 5–7 menit per sisi hingga matang merata, atau gunakan <strong>air fryer</strong> / panggang sesuai selera tanpa perlu tambah banyak bumbu.</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
+                <div class="p-5 sm:p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
                     <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">3</div>
-                    <h3 class="font-bold text-lg">Siap Disajikan</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">Sajikan hangat bersama nasi, sayur, atau sumber karbohidrat favorit untuk memenuhi kebutuhan protein harian kapan saja.</p>
+                    <h3 class="font-bold text-base sm:text-lg">Siap Disajikan</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Sajikan hangat bersama nasi, sayur, atau sumber karbohidrat favorit untuk memenuhi kebutuhan protein harian kapan saja.</p>
                 </div>
             </div>
         </div>
@@ -433,9 +482,9 @@
 
     <!-- Drawer Keranjang Belanja (Slide-over) -->
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden transition-opacity"></div>
-    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col overflow-y-auto">
         <!-- Drawer Header -->
-        <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50 shrink-0">
             <div class="flex items-center gap-2.5">
                 <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center">
                     <i data-lucide="shopping-bag" class="w-5 h-5"></i>
@@ -451,12 +500,12 @@
         </div>
 
         <!-- Cart Items List -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3.5">
+        <div id="cart-items" class="p-5 space-y-3.5">
             <!-- Item di-render lewat JavaScript -->
         </div>
 
         <!-- Drawer Footer & Checkout Form -->
-        <div class="p-4 sm:p-5 border-t border-slate-200 bg-slate-50/90 space-y-4 overflow-y-auto max-h-[62vh]">
+        <div class="p-4 sm:p-5 border-t border-slate-200 bg-slate-50/90 space-y-4">
             <!-- Ringkasan Berat, Protein & Total Bayar -->
             <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2 text-xs">
                 <div class="flex items-center justify-between text-slate-600">
@@ -475,9 +524,15 @@
 
             <!-- Data Penerima, Alamat & Sharelok -->
             <div class="space-y-3">
-                <div>
-                    <label for="customer-name" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Nama Penerima</label>
-                    <input type="text" id="customer-name" placeholder="Contoh: Ahmad / Fulan" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label for="customer-name" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Nama Penerima</label>
+                        <input type="text" id="customer-name" placeholder="Contoh: Ahmad" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label for="customer-phone" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Nomor WA / HP</label>
+                        <input type="tel" id="customer-phone" placeholder="Contoh: +2010xxxxxxxx" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                    </div>
                 </div>
 
                 <div>
@@ -1230,8 +1285,76 @@
             showToast("Item dihapus dari keranjang");
         }
 
+        // Perbarui tampilan item & ringkasan keranjang
+        function updateCartUI() {
+            const badgeEl = document.getElementById('cart-badge');
+            const itemsContainer = document.getElementById('cart-items');
+            const totalWeightEl = document.getElementById('cart-total-weight');
+            const totalProteinEl = document.getElementById('cart-total-protein');
+            const totalPriceEl = document.getElementById('cart-total-price');
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalWeight = cart.reduce((sum, item) => sum + (item.weight * item.qty), 0);
+            const totalProtein = cart.reduce((sum, item) => sum + ((item.protein || 0) * item.qty), 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            if (badgeEl) {
+                badgeEl.textContent = totalQty;
+            }
+
+            if (totalWeightEl) {
+                totalWeightEl.textContent = `${totalWeight} gram`;
+            }
+
+            if (totalProteinEl) {
+                const formattedProtein = Number.isInteger(totalProtein) ? totalProtein : totalProtein.toFixed(1);
+                totalProteinEl.textContent = `${formattedProtein} gram`;
+            }
+
+            if (totalPriceEl) {
+                totalPriceEl.textContent = formatRupiah(totalPrice);
+            }
+
+            if (!itemsContainer) return;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="text-center py-12 px-4 space-y-2.5">
+                        <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+                            <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                        </div>
+                        <p class="font-bold text-slate-700 text-sm">Keranjang masih kosong</p>
+                        <p class="text-xs text-slate-500">Pilih kemasan 100g atau 50g, atau pakai rekomendasi kalkulator protein.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            itemsContainer.innerHTML = cart.map(item => `
+                <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <h4 class="font-bold text-slate-900 text-sm truncate">${item.name}</h4>
+                        <p class="text-xs text-slate-500">${item.weight}g • ~${item.protein}g protein • ${formatRupiah(item.price)}/pcs</p>
+                        <p class="text-xs font-extrabold text-brand-600 mt-1">${formatRupiah(item.price * item.qty)}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" onclick="updateQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center transition-colors">-</button>
+                        <span class="w-6 text-center text-xs font-extrabold text-slate-900">${item.qty}</span>
+                        <button type="button" onclick="updateQty('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center transition-colors">+</button>
+                        <button type="button" onclick="removeFromCart('${item.id}')" title="Hapus" class="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 transition-colors ml-0.5">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
         // Buka / tutup drawer keranjang
         function toggleCart() {
+            closeMobileMenu();
             const overlay = document.getElementById('cart-overlay');
             const drawer = document.getElementById('cart-drawer');
             if (!overlay || !drawer) return;
@@ -1250,58 +1373,35 @@
             }
         }
 
-        // Perbarui tampilan badge, daftar item, berat, protein, dan total harga keranjang
-        function updateCartUI() {
-            const badge = document.getElementById('cart-badge');
-            const container = document.getElementById('cart-items');
-            const totalWeightEl = document.getElementById('cart-total-weight');
-            const totalProteinEl = document.getElementById('cart-total-protein');
-            const totalPriceEl = document.getElementById('cart-total-price');
+        // Buka / tutup Hamburger Menu di Mobile
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!menu || !btn) return;
 
-            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalWeight = cart.reduce((sum, item) => sum + (item.weight * item.qty), 0);
-            const totalProtein = cart.reduce((sum, item) => sum + (item.protein * item.qty), 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
-            if (badge) badge.textContent = totalQty;
-            if (totalWeightEl) totalWeightEl.textContent = `${totalWeight} gram`;
-            if (totalProteinEl) totalProteinEl.textContent = `${Math.round(totalProtein * 10) / 10} gram`;
-            if (totalPriceEl) totalPriceEl.textContent = formatRupiah(totalPrice);
-
-            if (!container) return;
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="h-full flex flex-col items-center justify-center text-center py-12 px-4 space-y-3">
-                        <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
-                            <i data-lucide="shopping-bag" class="w-7 h-7"></i>
-                        </div>
-                        <p class="font-bold text-slate-700">Keranjang masih kosong</p>
-                        <p class="text-xs text-slate-500 max-w-xs">Pilih kemasan dada ayam 100g atau 50g, atau gunakan hasil kalkulator protein di atas.</p>
-                    </div>
-                `;
-                lucide.createIcons();
-                return;
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+                if (icon) icon.setAttribute('data-lucide', 'x');
+            } else {
+                menu.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+                if (icon) icon.setAttribute('data-lucide', 'menu');
             }
+            lucide.createIcons();
+        }
 
-            container.innerHTML = cart.map(item => `
-                <div class="p-4 rounded-2xl bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-2xs">
-                    <div class="space-y-1 min-w-0">
-                        <p class="font-bold text-sm text-slate-900 truncate">${item.name}</p>
-                        <p class="text-xs text-slate-500">${formatRupiah(item.price)} / bungkus • ${item.protein}g protein</p>
-                        <p class="text-xs font-bold text-brand-600">${formatRupiah(item.price * item.qty)}</p>
-                    </div>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" onclick="updateQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center transition-colors">-</button>
-                        <span class="w-6 text-center text-xs font-extrabold text-slate-900">${item.qty}</span>
-                        <button type="button" onclick="updateQty('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center transition-colors">+</button>
-                        <button type="button" onclick="removeFromCart('${item.id}')" title="Hapus" class="ml-1 p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (!menu || menu.classList.contains('hidden')) return;
 
+            menu.classList.add('hidden');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            if (icon) icon.setAttribute('data-lucide', 'menu');
             lucide.createIcons();
         }
 
@@ -1522,8 +1622,15 @@
             }
 
             const name = document.getElementById('customer-name').value.trim() || "Teman Kang Asep";
+            const phone = document.getElementById('customer-phone')?.value.trim() || "";
             const address = document.getElementById('customer-address')?.value.trim() || "";
             const note = document.getElementById('customer-note')?.value.trim() || "";
+
+            if (!phone) {
+                showToast("Isi nomor WA / HP kamu dulu ya!");
+                document.getElementById('customer-phone')?.focus();
+                return;
+            }
 
             if (!address && !sharedLocation) {
                 showToast("Isi alamat pengantaran atau pilih titik di peta dulu ya!");
@@ -1533,6 +1640,7 @@
 
             let message = `Halo *Kang Asep*! Saya mau pesan Dada Ayam Marinasi:\n\n`;
             message += `*Nama Penerima:* ${name}\n`;
+            message += `*Nomor WA / HP:* ${phone}\n`;
             if (address) {
                 message += `*Alamat / Patokan:* ${address}\n`;
             }
