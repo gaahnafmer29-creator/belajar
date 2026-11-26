@@ -500,7 +500,7 @@
         </div>
 
         <!-- Cart Items List -->
-        <div id="cart-items" class="p-5 space-y-3.5">
+        <div id="cart-items" class="p-5 space-y-3.5 overflow-visible">
             <!-- Item di-render lewat JavaScript -->
         </div>
 
@@ -1319,7 +1319,7 @@
 
             if (cart.length === 0) {
                 itemsContainer.innerHTML = `
-                    <div class="text-center py-12 px-4 space-y-2.5">
+                    <div class="text-center py-8 px-4 space-y-2 overflow-visible">
                         <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
                             <i data-lucide="shopping-bag" class="w-6 h-6"></i>
                         </div>
