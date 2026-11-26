@@ -6,7 +6,7 @@
     <title>Kang Asep - Dada Ayam Marinasi Sehat & Praktis</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -66,7 +66,7 @@
 
             <!-- Cart Button -->
             <div class="flex items-center gap-3">
-                <button onclick="toggleCart()" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-600 transition-colors flex items-center gap-2">
+                <button type="button" onclick="toggleCart()" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-600 transition-colors flex items-center gap-2">
                     <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                     <span class="hidden sm:inline text-sm font-semibold">Keranjang</span>
                     <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-brand-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
@@ -650,7 +650,7 @@
 
     <!-- Main Application Script -->
     <script>
-        // Nomor WhatsApp Admin Kang Asep (Format Internasional tanpa +)
+        // Nomor WhatsApp Admin Kang Asep (+201507035950 -> format wa.me tanpa +)
         const WHATSAPP_NUMBER = "201507035950";
 
         // Data Produk Dada Ayam Marinasi (Harga dalam Pound Mesir / LE)
@@ -916,7 +916,6 @@
             const sideProteinGrams = Math.max(0, totalProteinTarget - chickenProteinGrams);
             const sideSharePercent = Math.max(0, 100 - chickenSharePercent);
 
-            // ~23g protein per 100g dada ayam fillet -> ~4.35g dada ayam per 1g protein
             const rawChickenGrams = chickenProteinGrams * (100 / 23);
             const roundedChickenGrams = Math.max(50, Math.round(rawChickenGrams / 50) * 50);
 
@@ -967,7 +966,6 @@
         let pickerMap = null;
         let googleRoadLayer = null;
         let googleHybridLayer = null;
-        let currentGoogleLayerMode = 'road';
         let userRealLocationMarker = null;
         let userRealLocationCircle = null;
         let tempPickedCoords = { lat: 30.007413, lng: 31.491318, label: "New Cairo, Kairo, Mesir" };
@@ -978,7 +976,7 @@
             return `${formatted} LE`;
         }
 
-        // Ambil posisi GPS saat ini secara aman dengan Promise (akan memicu pop-up izin lokasi browser)
+        // Ambil posisi GPS saat ini secara aman dengan Promise
         function getCurrentGPSPosition(timeoutMs = 8000) {
             return new Promise((resolve, reject) => {
                 if (!navigator.geolocation) {
@@ -1033,7 +1031,7 @@
             }
         }
 
-        // Buka Modal Peta untuk Memilih Lokasi Tujuan (Minta izin lokasi -> tampilkan titik real -> bebas pilih titik mana pun)
+        // Buka Modal Peta untuk Memilih Lokasi Tujuan
         async function openLocationPicker() {
             const modal = document.getElementById('location-modal');
             modal.classList.remove('hidden');
@@ -1042,14 +1040,12 @@
             let startLat = (sharedLocation && sharedLocation.lat) ? parseFloat(sharedLocation.lat) : parseFloat(tempPickedCoords.lat);
             let startLng = (sharedLocation && sharedLocation.lng) ? parseFloat(sharedLocation.lng) : parseFloat(tempPickedCoords.lng);
 
-            // Inisialisasi peta segera agar user langsung melihat tampilan peta saat pop-up izin lokasi muncul
             setTimeout(() => {
                 if (!pickerMap && typeof L !== 'undefined') {
                     pickerMap = L.map('picker-map', {
                         zoomControl: true
                     }).setView([startLat, startLng], 16);
 
-                    // Layer Google Maps Jalan (Roadmap) & Satelit Hybrid
                     googleRoadLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=id&x={x}&y={y}&z={z}', {
                         maxZoom: 21,
                         attribution: '&copy; Google Maps'
@@ -1060,7 +1056,6 @@
                         attribution: '&copy; Google Maps'
                     });
 
-                    // Saat peta mulai digeser, angkat sedikit pin tengah ala Gojek/Grab
                     pickerMap.on('movestart', () => {
                         const pinWrap = document.getElementById('center-pin-wrapper');
                         const pinShadow = document.getElementById('center-pin-shadow');
@@ -1068,7 +1063,6 @@
                         if (pinShadow) pinShadow.classList.add('w-5', 'opacity-50');
                     });
 
-                    // Saat peta digeser berhenti, turunkan pin & titik tengah otomatis menjadi koordinat tujuan
                     pickerMap.on('moveend', () => {
                         const pinWrap = document.getElementById('center-pin-wrapper');
                         const pinShadow = document.getElementById('center-pin-shadow');
@@ -1079,7 +1073,6 @@
                         updatePickerPoint(center.lat, center.lng, true);
                     });
 
-                    // Jika peta diklik, geser pusat peta ke titik klik tersebut
                     pickerMap.on('click', (e) => {
                         pickerMap.panTo(e.latlng);
                     });
@@ -1091,7 +1084,6 @@
                     updatePickerPoint(startLat, startLng, !sharedLocation);
                 }
 
-                // Selalu minta izin & deteksi lokasi real customer untuk menampilkan titik biru di peta
                 requestRealLocationOnMap(!sharedLocation);
             }, 80);
         }
