@@ -162,16 +162,16 @@
                 <p class="text-slate-600 text-sm sm:text-base">Masukkan berat badan, tinggi badan, dan targetmu. Kang Asep bantu hitungkan estimasi bungkus dada ayam yang pas buat kamu setiap hari!</p>
             </div>
 
-            <div class="grid md:grid-cols-12 gap-8 bg-slate-50 rounded-3xl p-4 sm:p-8 border border-slate-200/80 shadow-sm items-stretch">
-                <!-- Form Input -->
-                <form id="protein-form" onsubmit="calculateProtein(event)" class="md:col-span-6 min-w-0 bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-5">
+            <div class="grid md:grid-cols-12 gap-6 lg:gap-8 bg-slate-50 rounded-3xl p-4 sm:p-8 border border-slate-200/80 shadow-sm items-stretch">
+                <!-- Form Input (Kartu Kiri) -->
+                <form id="protein-form" onsubmit="calculateProtein(event)" class="md:col-span-6 min-w-0 h-full bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs flex flex-col justify-between gap-5">
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                                <i data-lucide="user-check" class="w-3.5 h-3.5 text-brand-600"></i>
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                                <i data-lucide="user-check" class="w-4 h-4 text-brand-600"></i>
                                 Data &amp; Target Tubuh
                             </span>
-                            <span class="text-[11px] font-medium text-slate-400">Isi sesuai kondisi</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[11px] font-semibold">1. Isi Data</span>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -191,53 +191,52 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Usia (Tahun)</label>
-                                <input type="number" id="age" value="25" min="15" max="80" required class="w-full px-3.5 py-3 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                                <input type="number" id="age" value="25" min="15" max="80" required class="w-full px-3.5 py-3 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-semibold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Berat Badan (KG)</label>
-                                <input type="number" id="weight" value="65" min="30" max="200" step="0.5" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                                <input type="number" id="weight" value="65" min="30" max="200" step="0.5" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-semibold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tinggi Badan (CM)</label>
-                                <input type="number" id="height" value="170" min="120" max="230" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                                <input type="number" id="height" value="170" min="120" max="230" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-semibold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
                             </div>
                         </div>
 
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Target</label>
-                                <input type="hidden" id="goal" value="fat_loss">
-                                <div id="goal-options" class="grid grid-cols-3 gap-2">
-                                    <button type="button" onclick="selectGoalOption('maintain')" data-goal="maintain" class="goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
-                                        <span class="block text-xs font-bold">Maintain</span>
-                                        <span class="block text-[10px] text-slate-500">Jaga Sehat</span>
-                                    </button>
-                                    <button type="button" onclick="selectGoalOption('fat_loss')" data-goal="fat_loss" class="goal-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
-                                        <span class="block text-xs font-bold">Fat Loss</span>
-                                        <span class="block text-[10px] text-brand-600">Turun BB</span>
-                                    </button>
-                                    <button type="button" onclick="selectGoalOption('muscle_gain')" data-goal="muscle_gain" class="goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
-                                        <span class="block text-xs font-bold">Bulking</span>
-                                        <span class="block text-[10px] text-slate-500">Naik Otot</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Aktivitas Fisik</label>
-                                <select id="activity" onchange="syncFormHelperPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
-                                    <option value="mager">Mager (Minim Gerak / Rebahan)</option>
-                                    <option value="ringan">Ringan (Jalan Santai / 1-2x Minggu)</option>
-                                    <option value="sedang" selected>Sedang (Olahraga 3-4x / Minggu)</option>
-                                    <option value="berat">Berat (Latihan Intens / Gym Rutin)</option>
-                                </select>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Aktivitas Fisik</label>
+                            <select id="activity" onchange="syncFormHelperPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50/70 border border-slate-300 text-sm font-semibold text-slate-800 focus:bg-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-colors">
+                                <option value="mager">Mager (Minim Gerak / Rebahan)</option>
+                                <option value="ringan">Ringan (Jalan Santai / 1-2x Minggu)</option>
+                                <option value="sedang" selected>Sedang (Olahraga 3-4x / Minggu)</option>
+                                <option value="berat">Berat (Latihan Intens / Gym Rutin)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Target</label>
+                            <input type="hidden" id="goal" value="fat_loss">
+                            <div id="goal-options" class="grid grid-cols-3 gap-2">
+                                <button type="button" onclick="selectGoalOption('maintain')" data-goal="maintain" class="goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                    <span class="block text-xs font-bold">Maintain</span>
+                                    <span class="block text-[10px] text-slate-500">Jaga Sehat</span>
+                                </button>
+                                <button type="button" onclick="selectGoalOption('fat_loss')" data-goal="fat_loss" class="goal-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
+                                    <span class="block text-xs font-bold">Fat Loss</span>
+                                    <span class="block text-[10px] text-brand-600">Turun BB</span>
+                                </button>
+                                <button type="button" onclick="selectGoalOption('muscle_gain')" data-goal="muscle_gain" class="goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                    <span class="block text-xs font-bold">Bulking</span>
+                                    <span class="block text-[10px] text-slate-500">Naik Otot</span>
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Kartu Pengisi Ruang Kosong agar Form Lebih Seimbang & Informatif -->
-                        <div class="p-4 rounded-2xl bg-slate-50/90 border border-slate-200/80 space-y-2.5">
+                        <!-- Kartu Acuan Rasio Terpilih -->
+                        <div class="p-4 rounded-2xl bg-slate-50/90 border border-slate-200/80 space-y-2">
                             <div class="flex items-center justify-between gap-2">
                                 <span class="text-[11px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-1.5">
                                     <i data-lucide="info" class="w-3.5 h-3.5 text-brand-600"></i>
@@ -253,39 +252,35 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-brand-600 text-white font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-slate-900 hover:bg-brand-600 text-white font-bold text-sm shadow-md transition-colors flex items-center justify-center gap-2 mt-auto">
                         <i data-lucide="sparkles" class="w-4 h-4"></i>
                         Analisa Kebutuhan Protein Saya
                     </button>
                 </form>
 
-                <!-- Result Output -->
-                <div class="md:col-span-6 min-w-0 flex flex-col justify-between bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/80 shadow-xs space-y-5">
+                <!-- Result Output (Kartu Kanan) -->
+                <div class="md:col-span-6 min-w-0 h-full bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs flex flex-col justify-between gap-5">
                     <div id="calc-result-container" class="space-y-4">
                         <!-- Header Ringkas -->
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                                <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-brand-600"></i>
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                                <i data-lucide="bar-chart-3" class="w-4 h-4 text-brand-600"></i>
                                 Analisa Berdasarkan Data
                             </span>
                             <span id="bmi-badge" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold">BMI: 22.5 (Ideal)</span>
                         </div>
 
-                        <!-- Angka Utama: Target Protein & Berat Ideal (Simetris) -->
-                        <div class="grid grid-cols-2 gap-3.5">
-                            <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50/60 border border-brand-200/70 flex flex-col justify-between">
+                        <!-- Angka Utama: Target Protein -->
+                        <div class="p-4 rounded-2xl bg-gradient-to-br from-brand-50 to-amber-50/60 border border-brand-200/70 flex items-center justify-between gap-3">
+                            <div>
                                 <span class="text-[11px] font-bold uppercase tracking-wide text-brand-700 block">Target Protein Harian</span>
-                                <div class="flex items-baseline gap-1 mt-1.5">
-                                    <span id="protein-target" class="text-2xl sm:text-3xl font-extrabold text-brand-600">104</span>
-                                    <span class="text-xs font-bold text-brand-700">gram/hari</span>
+                                <div class="flex items-baseline gap-1.5 mt-1">
+                                    <span id="protein-target" class="text-3xl sm:text-4xl font-extrabold text-brand-600">104</span>
+                                    <span class="text-xs sm:text-sm font-bold text-brand-700">gram/hari</span>
                                 </div>
                             </div>
-                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
-                                <span class="text-[11px] font-bold uppercase tracking-wide text-slate-500 block">Estimasi Berat Ideal</span>
-                                <div class="flex items-baseline gap-1 mt-1.5">
-                                    <span id="ideal-weight" class="text-2xl sm:text-3xl font-extrabold text-slate-800">63</span>
-                                    <span class="text-xs font-bold text-slate-500">kg</span>
-                                </div>
+                            <div class="w-11 h-11 rounded-2xl bg-brand-100/80 text-brand-600 flex items-center justify-center shrink-0">
+                                <i data-lucide="flame" class="w-5 h-5"></i>
                             </div>
                         </div>
 
@@ -324,7 +319,7 @@
                         </div>
 
                         <!-- Kartu Ringkasan Takaran Bungkus -->
-                        <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50/90 to-orange-50/50 border border-amber-200/80 space-y-3">
+                        <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50/90 to-orange-50/50 border border-amber-200/80 space-y-2.5">
                             <div class="flex items-center gap-3">
                                 <img src="https://i.postimg.cc/2jMc7bHz/Vacuum-Sealed-Chicken-on-Wooden-Board.png"
                                      onerror="this.src='https://placehold.co/160x120/fff7ed/ea580c?text=Ayam+100g+%26+50g'"
@@ -332,12 +327,12 @@
                                      class="w-12 h-12 rounded-xl object-cover border border-amber-200 shrink-0 shadow-2xs">
                                 <div class="min-w-0 flex-1">
                                     <p class="text-[11px] font-bold uppercase tracking-wide text-amber-800">Rekomendasi Takaran Harian</p>
-                                    <p id="pack-summary-pill" class="text-sm font-extrabold text-slate-900 truncate">3x (100g) • Total 300g</p>
+                                    <p id="pack-summary-pill" class="text-sm font-extrabold text-slate-900">3x (100g) • Total 300g</p>
                                 </div>
                             </div>
 
                             <p id="portion-recommendation" class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                                Untuk memenuhi target <strong>104g protein/hari</strong> (70% dari dada ayam &amp; 30% dari lauk pendamping), berdasarkan perhitungan data tersebut, estimasi kebutuhanmu sekitar <strong>300g dada ayam</strong> per hari atau setara <strong>3 bungkus (100g)</strong>.
+                                Untuk memenuhi target <strong>104g protein/hari</strong> (70% dari dada ayam &amp; 30% dari lauk pendamping), estimasi kebutuhanmu sekitar <strong>300g dada ayam</strong> per hari atau setara <strong>3 bungkus (100g)</strong>.
                             </p>
 
                             <p class="text-[11px] text-slate-500 border-t border-amber-200/70 pt-2 leading-relaxed">
@@ -346,10 +341,31 @@
                         </div>
                     </div>
 
-                    <button type="button" onclick="applyRecommendationToCart()" class="w-full py-3.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        Masukkan Rekomendasi ke Keranjang
-                    </button>
+                    <div class="space-y-3 mt-auto">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Durasi Stok ke Keranjang</label>
+                            <input type="hidden" id="rec-days" value="1">
+                            <div id="rec-days-options" class="grid grid-cols-3 gap-2">
+                                <button type="button" onclick="selectRecDaysOption(1)" data-days="1" class="rec-days-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
+                                    <span class="block text-xs font-bold">1 Hari</span>
+                                    <span class="block text-[10px] text-brand-600 font-medium">Harian</span>
+                                </button>
+                                <button type="button" onclick="selectRecDaysOption(3)" data-days="3" class="rec-days-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                    <span class="block text-xs font-bold">3 Hari</span>
+                                    <span class="block text-[10px] text-slate-500">Stok 3x</span>
+                                </button>
+                                <button type="button" onclick="selectRecDaysOption(7)" data-days="7" class="rec-days-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                    <span class="block text-xs font-bold">1 Minggu</span>
+                                    <span class="block text-[10px] text-slate-500">Stok 7x</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="applyRecommendationToCart()" class="w-full py-3.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span id="apply-rec-btn-label">Masukkan Rekomendasi 1 Hari ke Keranjang</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -410,283 +426,263 @@
                 <span class="font-bold text-slate-900">Dada Ayam Marinasi Kang Asep</span>
             </div>
             <p class="text-xs text-slate-500 text-center sm:text-right">
-                Fresh Homemade Meal Prep • Kemasan 50g & 100g • Pesan Antar Area Sekitar
+                Fresh Homemade Meal Prep • Kemasan 50g &amp; 100g • Pesan Antar Area Kairo &amp; Sekitar
             </p>
         </div>
     </footer>
 
     <!-- Drawer Keranjang Belanja (Slide-over) -->
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden transition-opacity"></div>
-    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
-        <!-- Header Cart -->
-        <div class="p-5 border-b border-slate-200 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-600"></i>
-                <h3 class="font-extrabold text-lg text-slate-900">Keranjang Pesanan</h3>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Drawer Header -->
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-base">Keranjang Pesanan</h3>
+                    <p class="text-xs text-slate-500">Checkout cepat via WhatsApp</p>
+                </div>
             </div>
-            <button onclick="toggleCart()" class="p-2 rounded-lg hover:bg-slate-100 text-slate-500">
+            <button type="button" onclick="toggleCart()" class="p-2 rounded-xl hover:bg-slate-200/70 text-slate-500 transition-colors">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
 
-        <!-- Cart Items -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
-            <!-- Item keranjang dirender lewat JS -->
+        <!-- Cart Items List -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3.5">
+            <!-- Item di-render lewat JavaScript -->
         </div>
 
-        <!-- Checkout Form & Total -->
-        <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-4">
-            <div class="space-y-2 text-sm">
-                <div class="flex justify-between text-slate-600">
+        <!-- Drawer Footer & Checkout Form -->
+        <div class="p-4 sm:p-5 border-t border-slate-200 bg-slate-50/90 space-y-4 overflow-y-auto max-h-[62vh]">
+            <!-- Ringkasan Berat, Protein & Total Bayar -->
+            <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2 text-xs">
+                <div class="flex items-center justify-between text-slate-600">
                     <span>Total Berat Ayam</span>
-                    <span id="cart-total-weight" class="font-bold text-slate-800">0 gram</span>
+                    <span id="cart-total-weight" class="font-bold text-slate-900">0 gram</span>
                 </div>
-                <div class="flex justify-between text-slate-600">
+                <div class="flex items-center justify-between text-slate-600">
                     <span>Estimasi Total Protein</span>
-                    <span id="cart-total-protein" class="font-bold text-emerald-600">0 gram</span>
+                    <span id="cart-total-protein" class="font-bold text-emerald-700">0 gram</span>
                 </div>
-                <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
-                    <span>Total Harga</span>
-                    <span id="cart-total-price" class="text-brand-600">0 LE</span>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <span class="text-[11px] font-extrabold uppercase tracking-wide text-slate-700">Total Bayar</span>
+                    <span id="cart-total-price" class="text-base sm:text-lg font-extrabold text-brand-600 whitespace-nowrap">0 LE</span>
                 </div>
             </div>
 
-            <div class="space-y-2.5">
-                <input type="text" id="customer-name" placeholder="Nama penerima (contoh: Budi)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
-                <input type="text" id="customer-address" placeholder="Detail alamat / patokan (distrik, blok, no rumah)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-sm outline-none focus:border-brand-500">
+            <!-- Data Penerima, Alamat & Sharelok -->
+            <div class="space-y-3">
+                <div>
+                    <label for="customer-name" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Nama Penerima</label>
+                    <input type="text" id="customer-name" placeholder="Contoh: Ahmad / Fulan" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                </div>
 
-                <!-- Fitur Share Lokasi Fleksibel (Buka Google Maps Asli atau GPS Saat Ini) -->
-                <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-2.5">
+                <div>
+                    <label for="customer-address" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Alamat Lengkap / Patokan Gedung</label>
+                    <textarea id="customer-address" rows="2" placeholder="Contoh: Hay Asyir, Gate 3, Gedung No. 12 Lt. 2 Pintu 4 (Sebelah Masjid)" class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label for="customer-note" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Catatan Pesanan / Pengantaran (Opsional)</label>
+                    <input type="text" id="customer-note" placeholder="Contoh: Titip di satpam / Kirim sore jam 5" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                </div>
+
+                <!-- Kartu Pin Google Maps (Opsional Pendukung Alamat) -->
+                <div class="rounded-2xl bg-white border border-slate-200/90 shadow-2xs p-3.5 space-y-2.5">
                     <div class="flex items-center justify-between gap-2">
-                        <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600"></i>
-                            Titik Lokasi Antar
+                        <span class="text-[11px] font-bold uppercase tracking-wide text-slate-600 flex items-center gap-1.5">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600 shrink-0"></i>
+                            Pin Google Maps (Opsional)
                         </span>
-                        <div class="flex items-center gap-1.5">
-                <!-- Fitur Share Lokasi Fleksibel (Pilih Pin di Peta Google Maps atau GPS 1 Klik) -->
-                <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-2.5">
-                    <div class="flex items-center justify-between gap-2">
-                        <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600"></i>
-                            Titik Lokasi Antar
-                        </span>
-                        <div class="flex items-center gap-1.5">
-                            <button type="button" onclick="openLocationPicker()" class="px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors flex items-center gap-1 shadow-2xs">
-                                <i data-lucide="map-pinned" class="w-3.5 h-3.5"></i>
-                                <span id="pick-loc-label">Pilih di Peta</span>
-                            </button>
-                            <button type="button" id="share-loc-btn" onclick="shareLocation()" title="Gunakan posisi GPS saat ini" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1">
-                                <i data-lucide="locate-fixed" class="w-3.5 h-3.5 text-brand-600"></i>
-                                <span id="share-loc-label">GPS</span>
-                            </button>
-                            <button type="button" id="clear-loc-btn" onclick="clearLocation()" title="Hapus lokasi" class="hidden p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition-colors">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                            </button>
-                        </div>
+                        <span id="pin-status-badge" class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-[10px] font-bold shrink-0">Belum Dipin</span>
                     </div>
 
-                    <p id="location-status" class="text-[11px] text-slate-500 leading-snug">
-                        Klik <strong>Pilih di Peta</strong> untuk geser pin Google Maps ke titik rumah/tujuan otomatis jadi sharelok, atau klik <strong>GPS</strong>.
-                    </p>
+                    <!-- Dua Tombol Aksi Peta Sejajar (Grid 2 Kolom) -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="openLocationPicker()" class="py-2.5 px-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <i data-lucide="map" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span id="pick-loc-label">Pilih di Peta</span>
+                        </button>
+                        <button type="button" onclick="shareLocation()" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-800 border border-slate-200/80 text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
+                            <i data-lucide="crosshair" class="w-3.5 h-3.5 text-brand-600 shrink-0"></i>
+                            <span id="share-loc-label">GPS Saat Ini</span>
+                        </button>
+                    </div>
+
+                    <!-- Status Pin Sharelok -->
+                    <div id="location-status-box" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start justify-between gap-2">
+                        <div class="flex items-start gap-2 min-w-0">
+                            <i data-lucide="navigation" class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5"></i>
+                            <p id="location-status" class="text-[11px] text-slate-500 leading-relaxed">
+                                Bisa isi alamat manual di atas, atau tambahkan pin titik lewat <strong>Pilih di Peta</strong> / <strong>GPS Saat Ini</strong>.
+                            </p>
+                        </div>
+                        <button type="button" id="clear-loc-btn" onclick="clearLocation()" title="Hapus Titik" class="hidden p-1 rounded-lg text-rose-500 hover:bg-rose-100/70 transition-colors shrink-0">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <button onclick="checkoutWhatsApp()" class="w-full py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
-                <i data-lucide="message-circle" class="w-5 h-5"></i>
-                Pesan Sekarang via WhatsApp
+            <!-- Tombol Checkout WhatsApp -->
+            <button type="button" onclick="checkoutWhatsApp()" class="w-full py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4 shrink-0"></i>
+                <span>Pesan Sekarang via WhatsApp</span>
             </button>
         </div>
     </aside>
 
-    <!-- Modal Pemilih Lokasi Interaktif (Pin Peta Google Maps -> Otomatis Sharelok) -->
-    <div id="location-modal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5">
-        <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
-            <!-- Modal Header -->
-            <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-white">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
-                        <i data-lucide="map-pinned" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-extrabold text-base text-slate-900 leading-tight">Tentukan Titik Sharelok</h3>
-                        <p class="text-[11px] text-slate-500">Geser peta atau ketuk titik tujuan untuk membuat sharelok otomatis</p>
+    <!-- Modal Pemilih Lokasi Google Maps Interaktif -->
+    <div id="location-modal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-0 sm:p-4">
+        <div class="relative w-full h-full sm:h-[85vh] sm:max-w-2xl bg-slate-100 sm:rounded-3xl overflow-hidden flex flex-col shadow-2xl">
+            <!-- Header Search Melayang ala Gojek / Grab -->
+            <div class="absolute top-3 left-3 right-3 z-[700] flex flex-col gap-2">
+                <div class="flex items-center gap-2 bg-white rounded-2xl p-2 shadow-lg border border-slate-200/90">
+                    <button type="button" onclick="closeLocationPicker()" class="p-2 rounded-xl hover:bg-slate-100 text-slate-700 transition-colors shrink-0" title="Tutup Peta">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    </button>
+                    <input type="text" id="map-search-input" onkeydown="if(event.key==='Enter'){event.preventDefault();searchMapLocation();}" placeholder="Cari jalan, distrik, atau patokan di Kairo..." class="flex-1 min-w-0 bg-transparent text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none">
+                    <button type="button" onclick="searchMapLocation()" class="px-3 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shrink-0 transition-colors">
+                        Cari
+                    </button>
+                </div>
+                <div id="map-search-results" class="hidden bg-white rounded-2xl shadow-xl border border-slate-200 divide-y divide-slate-100 max-h-48 overflow-y-auto text-xs"></div>
+            </div>
+
+            <!-- Area Peta Interaktif -->
+            <div class="relative flex-1 w-full bg-slate-200">
+                <div id="picker-map" class="w-full h-full z-10"></div>
+
+                <!-- Pin Tengah Tetap (Geser Peta untuk Menentukan Titik) -->
+                <div class="pointer-events-none absolute inset-0 z-[500] flex items-center justify-center">
+                    <div class="relative flex flex-col items-center -mt-10">
+                        <div id="center-pin-wrapper" class="transition-all duration-150 flex flex-col items-center">
+                            <span class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[10px] font-bold shadow-md mb-1 whitespace-nowrap">
+                                Titik Antar
+                            </span>
+                            <div class="w-9 h-9 rounded-full bg-rose-600 border-4 border-white shadow-xl flex items-center justify-center text-white">
+                                <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            </div>
+                            <div class="w-1 h-3 bg-slate-800 rounded-b-full"></div>
+                        </div>
+                        <div id="center-pin-shadow" class="w-3.5 h-1.5 rounded-full bg-slate-900/35 blur-[1px] transition-all duration-150 mt-0.5"></div>
                     </div>
                 </div>
-                <button type="button" onclick="closeLocationPicker()" class="p-2 rounded-xl hover:bg-slate-100 text-slate-500">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+
+                <!-- Tombol Floating GPS Saya -->
+                <button type="button" onclick="locateMeOnMap()" title="Lokasi Saya Saat Ini" class="absolute bottom-4 right-4 z-[600] w-11 h-11 rounded-full bg-white hover:bg-slate-50 text-brand-600 shadow-lg border border-slate-200 flex items-center justify-center transition-transform active:scale-95">
+                    <i data-lucide="locate-fixed" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <!-- Bar Pencarian Tempat / Alamat -->
-            <div class="p-3.5 bg-slate-50 border-b border-slate-200 space-y-2 relative">
-                <div class="flex gap-2">
-                    <div class="relative flex-1">
-                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                        <input type="text" id="map-search-input" onkeydown="if(event.key==='Enter'){event.preventDefault(); searchMapLocation();}" placeholder="Cari distrik, jalan, masjid, atau gedung (misal: Nasr City)..." class="w-full pl-9 pr-3 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-500">
-                    </div>
-                    <button type="button" onclick="searchMapLocation()" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-600 text-white text-xs sm:text-sm font-bold transition-colors shrink-0">
-                        Cari
-                    </button>
-                    <button type="button" onclick="locateMeOnMap()" title="Ke posisi GPS saya saat ini" class="px-3 py-2.5 rounded-xl bg-white hover:bg-brand-50 border border-slate-300 text-brand-600 font-bold text-xs flex items-center gap-1 shrink-0">
-                        <i data-lucide="locate-fixed" class="w-4 h-4"></i>
-                    </button>
-                </div>
+            <!-- Bottom Sheet Konfirmasi Titik ala Gojek / Grab -->
+            <div class="relative z-[700] bg-white rounded-t-3xl -mt-4 p-4 sm:p-5 shadow-[0_-8px_24px_rgba(15,23,42,0.1)] border-t border-slate-100 space-y-3.5">
+                <div class="w-10 h-1 rounded-full bg-slate-200 mx-auto"></div>
 
-                <!-- Dropdown Hasil Pencarian Alamat -->
-                <div id="map-search-results" class="hidden max-h-40 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-lg divide-y divide-slate-100 text-xs"></div>
-            </div>
-
-            <!-- Container Peta Google Maps Tiles dengan Pin Tengah Presisi (ala Grab/GoSend) -->
-            <div class="relative w-full h-72 sm:h-80 bg-slate-100">
-                <div id="picker-map" class="w-full h-full z-10"></div>
-
-                <!-- Pin Merah Tetap di Tengah Peta agar super mudah diarahkan -->
-                <div class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-                    <div class="-translate-y-4 flex flex-col items-center">
-                        <div class="w-9 h-9 bg-[#ea4335] border-[3px] border-white rounded-full rounded-bl-none -rotate-45 shadow-lg flex items-center justify-center">
-                            <div class="w-2.5 h-2.5 bg-[#7f1d1d] rounded-full rotate-45"></div>
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-start gap-2.5 min-w-0">
+                        <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="navigation" class="w-4 h-4"></i>
                         </div>
-                        <div class="w-2.5 h-1 bg-slate-900/35 rounded-full mt-0.5 blur-[0.5px]"></div>
-                    </div>
-                </div>
-
-                <!-- Switcher Mode Peta Google Maps (Jalan / Satelit) -->
-                <div class="absolute top-3 right-3 z-20 bg-white/95 backdrop-blur-xs rounded-xl shadow-md border border-slate-200 p-1 flex items-center gap-1">
-                    <button type="button" id="gmap-mode-road" onclick="setGoogleMapLayer('road')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 text-white transition-colors">
-                        Peta
-                    </button>
-                    <button type="button" id="gmap-mode-hybrid" onclick="setGoogleMapLayer('hybrid')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors">
-                        Satelit
-                    </button>
-                </div>
-
-                <div class="absolute bottom-3 left-3 z-20 px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-xs shadow-md border border-slate-200 text-[11px] font-medium text-slate-700 flex items-center gap-1.5 pointer-events-none">
-                    <i data-lucide="move" class="w-3.5 h-3.5 text-brand-600"></i>
-                    Geser peta hingga pin merah tepat di titik antar
-                </div>
-            </div>
-
-            <!-- Info Titik Terpilih & Tombol Konfirmasi Sharelok -->
-            <div class="p-4 bg-white border-t border-slate-200 space-y-3">
-                <div class="p-3 rounded-xl bg-brand-50/70 border border-brand-100 flex items-start justify-between gap-2.5">
-                    <div class="flex items-start gap-2.5 min-w-0 flex-1">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
-                        <div class="min-w-0 flex-1 space-y-0.5">
-                            <p id="picker-selected-address" class="text-xs font-bold text-slate-800 line-clamp-2">
-                                Memuat titik peta...
-                            </p>
-                            <p id="picker-selected-coords" class="text-[11px] text-slate-500 font-mono">
-                                30.044420, 31.235712
-                            </p>
+                        <div class="min-w-0">
+                            <p class="text-[11px] font-bold uppercase tracking-wide text-slate-400">Lokasi Pengantaran Terpilih</p>
+                            <p id="picker-selected-address" class="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2">New Cairo, Kairo, Mesir</p>
+                            <p id="picker-selected-coords" class="text-[11px] font-mono text-slate-500 mt-0.5">30.007413, 31.491318</p>
                         </div>
                     </div>
-                    <button type="button" onclick="openExternalGoogleMaps()" title="Pratinjau di Google Maps" class="px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-[11px] font-bold text-brand-600 flex items-center gap-1 shrink-0">
+                    <a id="picker-gmaps-link" href="https://www.google.com/maps/search/?api=1&query=30.007413,31.491318" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold shrink-0 flex items-center gap-1">
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                         Cek Maps
-                    </button>
+                    </a>
                 </div>
 
-                <div class="flex items-center gap-2.5">
-                    <button type="button" onclick="closeLocationPicker()" class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition-colors">
-                        Batal
-                    </button>
-                    <button type="button" onclick="confirmPickedLocation()" class="flex-1 py-3 px-5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-600/20 transition-colors flex items-center justify-center gap-2">
-                        <i data-lucide="check" class="w-4 h-4"></i>
-                        Gunakan Titik Sharelok Ini
-                    </button>
-                </div>
+                <button type="button" onclick="confirmPickedLocation()" class="w-full py-3.5 px-5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm shadow-lg shadow-brand-600/25 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    Simpan &amp; Kembali ke Keranjang
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification (Pengganti alert) -->
-    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-medium flex items-center gap-2.5 opacity-0 pointer-events-none transition-all duration-300">
-        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-        <span id="toast-message">Ditambahkan ke keranjang</span>
-    </div>
-
-    <!-- Floating Customer Service (CS) Widget -->
-    <div id="cs-widget" class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
-        <!-- Pop-up Panel CS -->
-        <div id="cs-panel" class="hidden w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transition-all">
-            <div class="bg-gradient-to-r from-brand-600 to-amber-500 p-4 text-white flex items-center justify-between">
+    <!-- Floating Customer Service Button & Panel -->
+    <div class="fixed bottom-5 right-4 sm:right-6 z-40 flex flex-col items-end gap-2.5">
+        <div id="cs-panel" class="hidden w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+            <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
-                        <i data-lucide="headphones" class="w-5 h-5"></i>
-                    </div>
+                    <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs">CS</div>
                     <div>
-                        <p class="font-bold text-sm leading-tight">CS Kang Asep</p>
-                        <p class="text-[11px] text-orange-100 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
-                            Siap bantu tanya stok & order
-                        </p>
+                        <p class="text-xs font-bold">Admin Kang Asep</p>
+                        <p class="text-[10px] text-emerald-400">Online • Siap Bantu Masisir</p>
                     </div>
                 </div>
-                <button type="button" onclick="toggleCSPanel()" class="p-1 rounded-lg hover:bg-white/15 transition-colors">
+                <button type="button" onclick="toggleCSPanel()" class="text-slate-400 hover:text-white">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
-            <div class="p-4 space-y-2.5 text-xs">
-                <p class="text-slate-600 leading-relaxed">Halo! Ada yang bisa Kang Asep bantu terkait dada ayam marinasi 50g / 100g atau konsultasi protein?</p>
-                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau tanya ketersediaan stok & jadwal pengiriman dada ayam marinasi.')" class="w-full text-left px-3 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-200 text-slate-700 hover:text-brand-700 font-semibold transition-colors flex items-center justify-between">
-                    <span>Tanya stok & jadwal kirim</span>
-                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <div class="p-3.5 space-y-2 bg-slate-50 text-xs">
+                <p class="text-slate-600 mb-2">Ada yang ingin ditanyakan seputar stok, jadwal antar, atau pemesanan?</p>
+                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau tanya ketersediaan stok dada ayam marinasi hari ini.')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-brand-50 border border-slate-200 text-slate-800 font-medium transition-colors">
+                    Tanya Stok Hari Ini
                 </button>
-                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau konsultasi kebutuhan protein harian dan porsi ayamnya.')" class="w-full text-left px-3 py-2.5 rounded-xl bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-200 text-slate-700 hover:text-brand-700 font-semibold transition-colors flex items-center justify-between">
-                    <span>Konsultasi porsi & protein</span>
-                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau tanya ongkir ke area saya di Kairo.')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-brand-50 border border-slate-200 text-slate-800 font-medium transition-colors">
+                    Tanya Ongkir Area Kairo
                 </button>
-                <button type="button" onclick="openCSWhatsApp('Halo CS Kang Asep, saya ingin terhubung langsung.')" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-colors flex items-center justify-center gap-2">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    Chat WhatsApp Sekarang
+                <button type="button" onclick="openCSWhatsApp('Halo Kang Asep, saya mau order paket meal prep mingguan.')" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-brand-50 border border-slate-200 text-slate-800 font-medium transition-colors">
+                    Pesan Paket Mingguan
                 </button>
             </div>
         </div>
 
-        <!-- Tombol Lambang CS Mengambang -->
-        <button type="button" onclick="toggleCSPanel()" aria-label="Buka Customer Service Kang Asep" class="group flex items-center gap-2.5 bg-slate-900 hover:bg-brand-600 text-white px-4 py-3 rounded-full shadow-xl shadow-slate-900/20 hover:shadow-brand-600/30 transition-all active:scale-95">
-            <span class="relative flex items-center justify-center">
-                <i data-lucide="headphones" class="w-5 h-5"></i>
-                <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-900 group-hover:ring-brand-600"></span>
-            </span>
-            <span class="text-xs sm:text-sm font-bold pr-0.5">CS</span>
+        <button type="button" onclick="toggleCSPanel()" class="px-4 py-3 rounded-full bg-slate-900 hover:bg-brand-600 text-white shadow-xl flex items-center gap-2 text-xs font-bold transition-all">
+            <i data-lucide="headphones" class="w-4 h-4 text-brand-400"></i>
+            <span>Tanya Kang Asep</span>
         </button>
     </div>
 
-    <script>
-        // Nomor WhatsApp Kang Asep (format internasional tanpa tanda + atau spasi)
-        const WHATSAPP_NUMBER = "201507035950";
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-900/95 text-white text-xs font-semibold shadow-xl flex items-center gap-2 opacity-0 pointer-events-none translate-y-2 transition-all duration-200 whitespace-nowrap">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+        <span id="toast-message">Berhasil ditambahkan!</span>
+    </div>
 
-        // Data Produk Dada Ayam Marinasi Kang Asep (Hanya 1 Racikan Original, 2 Ukuran Kemasan - Harga dalam LE)
+    <!-- Main Application Script -->
+    <script>
+        // Nomor WhatsApp Admin Kang Asep (Format Internasional tanpa +)
+        const WHATSAPP_NUMBER = "6281234567890";
+
+        // Data Produk Dada Ayam Marinasi (Harga dalam Pound Mesir / LE)
         const products = [
             {
                 id: "ayam-100",
-                name: "Dada Ayam Marinasi (100g)",
+                name: "Dada Ayam Marinasi 100g",
                 weight: 100,
+                price: 40,
                 protein: 23,
                 calories: 120,
-                price: 40,
-                desc: "Dada ayam fillet tanpa kulit dimarinasi bumbu spesial Kang Asep. Takaran pas 100 gram untuk porsi makan utama tinggi protein.",
-                badge: "Paling Laris"
+                badge: "Paling Laris",
+                desc: "Porsi pas untuk makan utama harian. Dada ayam fillet tanpa kulit dengan marinasi meresap dan kemasan vakum higienis."
             },
             {
                 id: "ayam-50",
-                name: "Dada Ayam Marinasi (50g)",
+                name: "Dada Ayam Marinasi 50g",
                 weight: 50,
+                price: 25,
                 protein: 11.5,
                 calories: 60,
-                price: 25,
-                desc: "Kemasan praktis 50 gram untuk porsi ringan, tambahan lauk sarapan, atau pelengkap agar target protein harianmu pas.",
-                badge: "Porsi Praktis"
+                badge: "Praktis Tambahan",
+                desc: "Ukuran ringkas untuk pelengkap protein tambahan atau campuran sarapan & snack sehat harian."
             }
         ];
 
-        // Foto Produk Dada Ayam Marinasi (100g vs 50g) untuk Katalog Produk
+        // Visual Kemasan Produk 100g & 50g
         function getPackagingSVG(weight) {
             const is100 = weight === 100;
-            const labelBg = is100 ? "bg-brand-600 text-white" : "bg-slate-900 text-white";
-            const badgeText = is100 ? "KEMASAN VAKUM 100g" : "KEMASAN VAKUM 50g";
-            const fallbackUrl = `https://placehold.co/800x480/fff7ed/ea580c?text=Dada+Ayam+Fillet+Terpackaging+${weight}g`;
+            const badgeText = is100 ? 'Kemasan Vakum 100g' : 'Kemasan Vakum 50g';
+            const labelBg = is100 ? 'bg-brand-600 text-white' : 'bg-amber-500 text-slate-950';
+            const fallbackUrl = `https://placehold.co/600x400/fff7ed/ea580c?text=Dada+Ayam+${weight}g`;
 
             return `
                 <div class="relative w-full h-full">
@@ -700,25 +696,281 @@
                             ${badgeText}
                         </span>
                         <span class="px-2.5 py-1 rounded-lg bg-white/95 text-slate-800 text-[11px] font-bold shadow-xs">
-                            Fillet Rapi • Higienis
+                            ${weight}g • ~${is100 ? '23' : '11.5'}g Protein
                         </span>
                     </div>
                 </div>
             `;
         }
 
+        // State Aplikasi
         let cart = [];
+        let sharedLocation = null;
+        let chickenSharePercent = 70;
         let recommendedPacks100g = 3;
         let recommendedPacks50g = 0;
-        let chickenSharePercent = 70; // Persentase protein harian dari dada ayam (10% - 100%)
-        let sharedLocation = null; // Menyimpan { lat, lng, label, source, mapsUrl }
+        let selectedRecDays = 1;
 
-        // Variabel Peta Interaktif (Default area Kairo untuk Masisir)
+        // Render Katalog Produk (100g & 50g)
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            if (!grid) return;
+
+            grid.innerHTML = products.map(product => `
+                <article class="bg-white rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-brand-300 transition-all duration-300 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-56 sm:h-60 bg-slate-100 overflow-hidden">
+                            ${getPackagingSVG(product.weight)}
+                            <span class="absolute top-3.5 left-3.5 z-10 px-3 py-1 rounded-full bg-white/95 text-slate-900 text-xs font-extrabold shadow-xs">
+                                ${product.badge}
+                            </span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-start justify-between gap-3">
+                                <h3 class="font-extrabold text-xl text-slate-900">${product.name}</h3>
+                                <span class="text-lg font-extrabold text-brand-600 shrink-0">${formatRupiah(product.price)}</span>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">${product.desc}</p>
+                            <div class="grid grid-cols-3 gap-2 pt-2 text-center">
+                                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                                    <p class="text-xs font-extrabold text-slate-900">${product.weight}g</p>
+                                    <p class="text-[10px] text-slate-500">Berat Bersih</p>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/70">
+                                    <p class="text-xs font-extrabold text-emerald-700">~${product.protein}g</p>
+                                    <p class="text-[10px] text-emerald-700/80">Protein</p>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/70">
+                                    <p class="text-xs font-extrabold text-amber-800">~${product.calories} kkal</p>
+                                    <p class="text-[10px] text-amber-800/80">Kalori</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <button type="button" onclick="addToCart('${product.id}')" class="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-brand-600 text-white font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            Tambah ke Keranjang • ${formatRupiah(product.price)}
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // Tampilkan notifikasi toast singkat
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            if (!toast || !msgEl) return;
+
+            msgEl.textContent = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+            }, 2600);
+        }
+
+        // Pilih Jenis Kelamin
+        function selectGenderOption(genderValue) {
+            const input = document.getElementById('gender');
+            if (input) input.value = genderValue;
+            syncGenderOptionButtons();
+            syncFormHelperPreview();
+            calculateProtein();
+        }
+
+        function syncGenderOptionButtons() {
+            const currentGender = document.getElementById('gender')?.value || 'male';
+            document.querySelectorAll('.gender-option-btn').forEach(btn => {
+                const isSelected = btn.getAttribute('data-gender') === currentGender;
+                const spans = btn.querySelectorAll('span');
+                if (isSelected) {
+                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
+                    if (spans[1]) spans[1].className = "block text-[10px] text-brand-600 font-medium";
+                } else {
+                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
+                    if (spans[1]) spans[1].className = "block text-[10px] text-slate-500";
+                }
+            });
+        }
+
+        // Pilih Target
+        function selectGoalOption(goalValue) {
+            const input = document.getElementById('goal');
+            if (input) input.value = goalValue;
+            syncGoalOptionButtons();
+            syncFormHelperPreview();
+            calculateProtein();
+        }
+
+        function syncGoalOptionButtons() {
+            const currentGoal = document.getElementById('goal')?.value || 'fat_loss';
+            document.querySelectorAll('.goal-option-btn').forEach(btn => {
+                const isSelected = btn.getAttribute('data-goal') === currentGoal;
+                const spans = btn.querySelectorAll('span');
+                if (isSelected) {
+                    btn.className = "goal-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
+                    if (spans[1]) spans[1].className = "block text-[10px] text-brand-600 font-medium";
+                } else {
+                    btn.className = "goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
+                    if (spans[1]) spans[1].className = "block text-[10px] text-slate-500";
+                }
+            });
+        }
+
+        // Perbarui kartu acuan rasio di bawah Target & Aktivitas Fisik
+        function syncFormHelperPreview() {
+            const goal = document.getElementById('goal')?.value || 'fat_loss';
+            const activity = document.getElementById('activity')?.value || 'sedang';
+            const badgeEl = document.getElementById('form-ratio-badge');
+            const descEl = document.getElementById('form-ratio-desc');
+
+            const baseMultiplier = {
+                maintain: 1.4,
+                fat_loss: 1.6,
+                muscle_gain: 1.8
+            }[goal] || 1.6;
+
+            const activityAdd = {
+                mager: -0.1,
+                ringan: 0.0,
+                sedang: 0.1,
+                berat: 0.25
+            }[activity] || 0.1;
+
+            const ratio = Math.max(1.1, Math.round((baseMultiplier + activityAdd) * 100) / 100);
+
+            const goalLabel = {
+                maintain: "Jaga Berat & Sehat",
+                fat_loss: "Turun Berat Badan",
+                muscle_gain: "Naik Massa Otot"
+            }[goal] || "Turun Berat Badan";
+
+            const activityLabel = {
+                mager: "Aktivitas Mager",
+                ringan: "Aktivitas Ringan",
+                sedang: "Aktivitas Sedang",
+                berat: "Aktivitas Berat"
+            }[activity] || "Aktivitas Sedang";
+
+            if (badgeEl) badgeEl.textContent = `~${ratio.toFixed(2)}g / kg BB`;
+            if (descEl) {
+                descEl.innerHTML = `Kombinasi <strong>${goalLabel}</strong> &amp; <strong>${activityLabel}</strong> menyesuaikan estimasi asupan protein harianmu.`;
+            }
+        }
+
+        // Hitung Kebutuhan Protein Harian & Rekomendasi Bungkus Ayam
+        function calculateProtein(event) {
+            if (event) event.preventDefault();
+
+            const gender = document.getElementById('gender')?.value || 'male';
+            const weight = parseFloat(document.getElementById('weight')?.value) || 65;
+            const height = parseFloat(document.getElementById('height')?.value) || 170;
+            const goal = document.getElementById('goal')?.value || 'fat_loss';
+            const activity = document.getElementById('activity')?.value || 'sedang';
+
+            const heightM = height / 100;
+            const bmi = weight / (heightM * heightM);
+            const bmiRounded = Math.round(bmi * 10) / 10;
+
+            let bmiStatus = "Ideal";
+            let bmiBadgeClass = "px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold";
+            if (bmi < 18.5) {
+                bmiStatus = "Kurus";
+                bmiBadgeClass = "px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 text-xs font-bold";
+            } else if (bmi >= 25 && bmi < 30) {
+                bmiStatus = "Overweight";
+                bmiBadgeClass = "px-2.5 py-1 rounded-lg bg-orange-50 text-orange-700 text-xs font-bold";
+            } else if (bmi >= 30) {
+                bmiStatus = "Obesitas";
+                bmiBadgeClass = "px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 text-xs font-bold";
+            }
+
+            const idealFactor = gender === 'female' ? 21.5 : 22.5;
+            const idealWeight = Math.round(idealFactor * heightM * heightM);
+
+            const baseMultiplier = {
+                maintain: 1.4,
+                fat_loss: 1.6,
+                muscle_gain: 1.8
+            }[goal] || 1.6;
+
+            const activityAdd = {
+                mager: -0.1,
+                ringan: 0.0,
+                sedang: 0.1,
+                berat: 0.25
+            }[activity] || 0.1;
+
+            const effectiveWeight = bmi >= 28 ? Math.max(weight * 0.85, idealWeight) : weight;
+            const totalProteinTarget = Math.max(45, Math.round(effectiveWeight * (baseMultiplier + activityAdd)));
+
+            const chickenProteinGrams = Math.round(totalProteinTarget * (chickenSharePercent / 100));
+            const sideProteinGrams = Math.max(0, totalProteinTarget - chickenProteinGrams);
+            const sideSharePercent = Math.max(0, 100 - chickenSharePercent);
+
+            // ~23g protein per 100g dada ayam fillet -> ~4.35g dada ayam per 1g protein
+            const rawChickenGrams = chickenProteinGrams * (100 / 23);
+            const roundedChickenGrams = Math.max(50, Math.round(rawChickenGrams / 50) * 50);
+
+            recommendedPacks100g = Math.floor(roundedChickenGrams / 100);
+            recommendedPacks50g = (roundedChickenGrams % 100) >= 50 ? 1 : 0;
+
+            if (recommendedPacks100g === 0 && recommendedPacks50g === 0) {
+                recommendedPacks50g = 1;
+            }
+
+            const bmiBadgeEl = document.getElementById('bmi-badge');
+            if (bmiBadgeEl) {
+                bmiBadgeEl.textContent = `BMI: ${bmiRounded} (${bmiStatus})`;
+                bmiBadgeEl.className = bmiBadgeClass;
+            }
+
+            const proteinTargetEl = document.getElementById('protein-target');
+            if (proteinTargetEl) proteinTargetEl.textContent = totalProteinTarget;
+
+            const shareBarEl = document.getElementById('chicken-share-bar');
+            if (shareBarEl) shareBarEl.style.width = `${chickenSharePercent}%`;
+
+            const shareBadgeEl = document.getElementById('chicken-share-badge');
+            if (shareBadgeEl) shareBadgeEl.textContent = `${chickenSharePercent}% Dada Ayam (${chickenProteinGrams}g)`;
+
+            const sideTextEl = document.getElementById('side-dish-share-text');
+            if (sideTextEl) sideTextEl.textContent = `${sideSharePercent}% Lauk Lain (${sideProteinGrams}g)`;
+
+            syncSharePresetButtons();
+
+            const packParts = [];
+            if (recommendedPacks100g > 0) packParts.push(`${recommendedPacks100g}x (100g)`);
+            if (recommendedPacks50g > 0) packParts.push(`${recommendedPacks50g}x (50g)`);
+            const packComboText = packParts.join(' + ');
+
+            const summaryPillEl = document.getElementById('pack-summary-pill');
+            if (summaryPillEl) {
+                summaryPillEl.textContent = `${packComboText} • Total ${roundedChickenGrams}g`;
+            }
+
+            const recEl = document.getElementById('portion-recommendation');
+            if (recEl) {
+                recEl.innerHTML = `Untuk memenuhi target <strong>${totalProteinTarget}g protein/hari</strong> (${chickenSharePercent}% dari dada ayam &amp; ${sideSharePercent}% dari lauk pendamping), estimasi kebutuhanmu sekitar <strong>${roundedChickenGrams}g dada ayam</strong> per hari atau setara <strong>${packComboText}</strong>.`;
+            }
+        }
+
+        // Variabel Peta Interaktif (Default area New Cairo / Kairo untuk Masisir)
         let pickerMap = null;
         let googleRoadLayer = null;
         let googleHybridLayer = null;
         let currentGoogleLayerMode = 'road';
-        let tempPickedCoords = { lat: 30.044420, lng: 31.235712, label: "Kairo, Mesir" };
+        let userRealLocationMarker = null;
+        let userRealLocationCircle = null;
+        let tempPickedCoords = { lat: 30.007413, lng: 31.491318, label: "New Cairo, Kairo, Mesir" };
 
         // Format Harga dalam Pound Mesir (LE)
         function formatRupiah(angka) {
@@ -726,15 +978,71 @@
             return `${formatted} LE`;
         }
 
-        // Buka Modal Peta untuk Memilih Lokasi Tujuan (Tampilan Google Maps + Pin Tengah Otomatis Sharelok)
-        function openLocationPicker() {
+        // Ambil posisi GPS saat ini secara aman dengan Promise (akan memicu pop-up izin lokasi browser)
+        function getCurrentGPSPosition(timeoutMs = 8000) {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error("NO_GEO"));
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => resolve(pos.coords),
+                    (err) => reject(err),
+                    { enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 0 }
+                );
+            });
+        }
+
+        // Tampilkan atau perbarui titik biru lokasi real customer di peta
+        function renderUserRealLocationMarker(lat, lng, accuracy = 35) {
+            if (!pickerMap || typeof L === 'undefined') return;
+
+            const realLatLng = [lat, lng];
+
+            if (userRealLocationCircle) {
+                userRealLocationCircle.setLatLng(realLatLng);
+                userRealLocationCircle.setRadius(Math.min(Math.max(accuracy, 20), 150));
+            } else {
+                userRealLocationCircle = L.circle(realLatLng, {
+                    radius: Math.min(Math.max(accuracy, 20), 150),
+                    color: '#2563eb',
+                    fillColor: '#3b82f6',
+                    fillOpacity: 0.16,
+                    weight: 1.5
+                }).addTo(pickerMap);
+            }
+
+            const blueDotIcon = L.divIcon({
+                className: '',
+                html: `
+                    <div class="relative flex items-center justify-center w-6 h-6">
+                        <span class="absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-35 animate-ping"></span>
+                        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-blue-600 border-2 border-white shadow-md"></span>
+                    </div>
+                `,
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
+            });
+
+            if (userRealLocationMarker) {
+                userRealLocationMarker.setLatLng(realLatLng);
+            } else {
+                userRealLocationMarker = L.marker(realLatLng, { icon: blueDotIcon, interactive: true })
+                    .addTo(pickerMap)
+                    .bindPopup('<span class="text-xs font-bold text-slate-800">Lokasi Real Kamu Sekarang</span>');
+            }
+        }
+
+        // Buka Modal Peta untuk Memilih Lokasi Tujuan (Minta izin lokasi -> tampilkan titik real -> bebas pilih titik mana pun)
+        async function openLocationPicker() {
             const modal = document.getElementById('location-modal');
             modal.classList.remove('hidden');
             lucide.createIcons();
 
-            const startLat = (sharedLocation && sharedLocation.lat) ? parseFloat(sharedLocation.lat) : parseFloat(tempPickedCoords.lat);
-            const startLng = (sharedLocation && sharedLocation.lng) ? parseFloat(sharedLocation.lng) : parseFloat(tempPickedCoords.lng);
+            let startLat = (sharedLocation && sharedLocation.lat) ? parseFloat(sharedLocation.lat) : parseFloat(tempPickedCoords.lat);
+            let startLng = (sharedLocation && sharedLocation.lng) ? parseFloat(sharedLocation.lng) : parseFloat(tempPickedCoords.lng);
 
+            // Inisialisasi peta segera agar user langsung melihat tampilan peta saat pop-up izin lokasi muncul
             setTimeout(() => {
                 if (!pickerMap && typeof L !== 'undefined') {
                     pickerMap = L.map('picker-map', {
@@ -745,18 +1053,28 @@
                     googleRoadLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=m&hl=id&x={x}&y={y}&z={z}', {
                         maxZoom: 21,
                         attribution: '&copy; Google Maps'
-                    });
+                    }).addTo(pickerMap);
 
                     googleHybridLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=y&hl=id&x={x}&y={y}&z={z}', {
                         maxZoom: 21,
                         attribution: '&copy; Google Maps'
                     });
 
-                    googleRoadLayer.addTo(pickerMap);
-                    currentGoogleLayerMode = 'road';
+                    // Saat peta mulai digeser, angkat sedikit pin tengah ala Gojek/Grab
+                    pickerMap.on('movestart', () => {
+                        const pinWrap = document.getElementById('center-pin-wrapper');
+                        const pinShadow = document.getElementById('center-pin-shadow');
+                        if (pinWrap) pinWrap.classList.add('-translate-y-8', 'scale-105');
+                        if (pinShadow) pinShadow.classList.add('w-5', 'opacity-50');
+                    });
 
-                    // Saat peta digeser, titik tengah otomatis menjadi koordinat tujuan
+                    // Saat peta digeser berhenti, turunkan pin & titik tengah otomatis menjadi koordinat tujuan
                     pickerMap.on('moveend', () => {
+                        const pinWrap = document.getElementById('center-pin-wrapper');
+                        const pinShadow = document.getElementById('center-pin-shadow');
+                        if (pinWrap) pinWrap.classList.remove('-translate-y-8', 'scale-105');
+                        if (pinShadow) pinShadow.classList.remove('w-5', 'opacity-50');
+
                         const center = pickerMap.getCenter();
                         updatePickerPoint(center.lat, center.lng, true);
                     });
@@ -766,369 +1084,44 @@
                         pickerMap.panTo(e.latlng);
                     });
 
-                    // Jika belum punya lokasi tersimpan, coba arahkan peta ke area sekitar pengguna tanpa memaksa
-                    if (!sharedLocation && navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(
-                            (pos) => {
-                                const uLat = pos.coords.latitude;
-                                const uLng = pos.coords.longitude;
-                                pickerMap.setView([uLat, uLng], 17);
-                                updatePickerPoint(uLat, uLng, true);
-                            },
-                            () => {
-                                updatePickerPoint(startLat, startLng, true);
-                            },
-                            { timeout: 5000 }
-                        );
-                    } else {
-                        updatePickerPoint(startLat, startLng, !sharedLocation);
-                    }
+                    updatePickerPoint(startLat, startLng, !sharedLocation);
                 } else if (pickerMap) {
                     pickerMap.invalidateSize();
-                    pickerMap.setView([startLat, startLng], 17);
-                    updatePickerPoint(startLat, startLng, false);
+                    pickerMap.setView([startLat, startLng], 16);
+                    updatePickerPoint(startLat, startLng, !sharedLocation);
                 }
-            }, 120);
+
+                // Selalu minta izin & deteksi lokasi real customer untuk menampilkan titik biru di peta
+                requestRealLocationOnMap(!sharedLocation);
+            }, 80);
         }
 
-        // Ganti tampilan Google Maps antara Peta Jalan (m) dan Satelit (y)
-        function setGoogleMapLayer(mode) {
-            if (!pickerMap || !googleRoadLayer || !googleHybridLayer) return;
-            currentGoogleLayerMode = mode;
-
-            const roadBtn = document.getElementById('gmap-mode-road');
-            const hybridBtn = document.getElementById('gmap-mode-hybrid');
-
-            if (mode === 'hybrid') {
-                if (pickerMap.hasLayer(googleRoadLayer)) pickerMap.removeLayer(googleRoadLayer);
-                if (!pickerMap.hasLayer(googleHybridLayer)) googleHybridLayer.addTo(pickerMap);
-                if (hybridBtn) hybridBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 text-white transition-colors";
-                if (roadBtn) roadBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors";
-            } else {
-                if (pickerMap.hasLayer(googleHybridLayer)) pickerMap.removeLayer(googleHybridLayer);
-                if (!pickerMap.hasLayer(googleRoadLayer)) googleRoadLayer.addTo(pickerMap);
-                if (roadBtn) roadBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold bg-brand-600 text-white transition-colors";
-                if (hybridBtn) hybridBtn.className = "px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-700 hover:bg-slate-100 transition-colors";
-            }
-        }
-
-        // Pratinjau titik saat ini di Google Maps
-        function openExternalGoogleMaps() {
-            const url = `https://www.google.com/maps?q=${tempPickedCoords.lat},${tempPickedCoords.lng}`;
-            window.open(url, '_blank', 'noopener,noreferrer');
-        }
-
-        // Parse link share Google Maps atau koordinat (lat, lng) yang ditempel pelanggan
-        function applyGoogleMapsLink() {
-            const raw = document.getElementById('gmaps-link-input')?.value.trim();
-            if (!raw) {
-                showToast("Tempel link Google Maps atau koordinat dulu ya");
-                return;
+        // Minta izin lokasi browser, tampilkan titik biru real-time, dan arahkan pin jika diminta
+        async function requestRealLocationOnMap(centerPinToReal = true) {
+            const addrEl = document.getElementById('picker-selected-address');
+            if (centerPinToReal && addrEl) {
+                addrEl.textContent = "Meminta izin & mendeteksi lokasi real kamu...";
             }
 
-            // Cocokkan pola @lat,lng atau ?q=lat,lng atau lat, lng langsung
-            const coordMatch = raw.match(/(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
-            if (!coordMatch) {
-                showToast("Koordinat tidak terbaca. Geser pin langsung di peta ya!");
-                return;
-            }
+            try {
+                const coords = await getCurrentGPSPosition(9000);
+                const realLat = coords.latitude;
+                const realLng = coords.longitude;
 
-            const lat = parseFloat(coordMatch[1]);
-            const lng = parseFloat(coordMatch[2]);
+                renderUserRealLocationMarker(realLat, realLng, coords.accuracy);
 
-            if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-                showToast("Koordinat di luar jangkauan peta");
-                return;
-            }
-
-            if (pickerMap && pickerMarker) {
-                pickerMap.setView([lat, lng], 18);
-                pickerMarker.setLatLng([lat, lng]);
-            }
-            updatePickerPoint(lat, lng, true);
-            showToast("Titik dari Google Maps berhasil dimuat!");
-        }
-
-        // Tampilkan Notifikasi Toast
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = msg;
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 2500);
-        }
-
-        // Render Daftar Produk di Katalog (#produk)
-        function renderProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = '';
-
-            products.forEach(product => {
-                const is100 = product.weight === 100;
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group";
-                card.innerHTML = `
-                    <div>
-                        <div class="relative h-60 overflow-hidden bg-slate-100">
-                            ${getPackagingSVG(product.weight)}
-                            <div class="absolute top-4 left-4 flex gap-1.5">
-                                <span class="px-3.5 py-1.5 rounded-xl text-sm font-extrabold ${is100 ? 'bg-brand-600 text-white' : 'bg-slate-900 text-white'} shadow-md">
-                                    Kemasan ${product.weight} gram
-                                </span>
-                            </div>
-                            <span class="absolute top-4 right-4 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-xs text-xs font-bold text-slate-800 shadow-xs">
-                                ${product.badge}
-                            </span>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <div class="flex items-center gap-2 text-xs font-bold text-emerald-700 bg-emerald-50 w-fit px-3 py-1.5 rounded-lg">
-                                <span>Protein: ${product.protein}g</span>
-                                <span>•</span>
-                                <span>${product.calories} kkal</span>
-                            </div>
-                            <h3 class="font-extrabold text-xl text-slate-900 leading-snug">${product.name}</h3>
-                            <p class="text-sm text-slate-600 leading-relaxed">${product.desc}</p>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-4 flex items-center justify-between border-t border-slate-100">
-                        <div>
-                            <span class="text-xs text-slate-400 block">Harga / bungkus</span>
-                            <span class="font-extrabold text-xl text-slate-900">${formatRupiah(product.price)}</span>
-                        </div>
-                        <button onclick="addToCart('${product.id}')" class="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md shadow-brand-600/20 transition-all flex items-center gap-2">
-                            <i data-lucide="plus" class="w-4 h-4"></i>
-                            Tambah
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-            lucide.createIcons();
-        }
-
-        // Kalkulator Estimasi Protein
-        function calculateProtein(e) {
-            if (e) e.preventDefault();
-
-            const gender = document.getElementById('gender').value;
-            const weight = parseFloat(document.getElementById('weight').value) || 65;
-            const height = parseFloat(document.getElementById('height').value) || 170;
-            const goal = document.getElementById('goal').value;
-            const activity = document.getElementById('activity').value;
-
-            // Hitung BMI
-            const heightM = height / 100;
-            const bmi = (weight / (heightM * heightM)).toFixed(1);
-            let bmiStatus = "Ideal";
-            let bmiColor = "bg-emerald-50 text-emerald-700";
-
-            if (bmi < 18.5) {
-                bmiStatus = "Kurang";
-                bmiColor = "bg-amber-50 text-amber-700";
-            } else if (bmi >= 25 && bmi < 30) {
-                bmiStatus = "Berlebih";
-                bmiColor = "bg-orange-50 text-orange-700";
-            } else if (bmi >= 30) {
-                bmiStatus = "Obesitas";
-                bmiColor = "bg-rose-50 text-rose-700";
-            }
-
-            // Rumus Broca Berat Badan Ideal
-            let idealWeight = gender === 'male' 
-                ? (height - 100) - ((height - 100) * 0.1)
-                : (height - 100) - ((height - 100) * 0.15);
-            idealWeight = Math.round(idealWeight);
-
-            // Hitung faktor pengali protein (g / kg BB) berdasarkan kombinasi Target + Aktivitas Fisik
-            const goalBase = {
-                maintain: 1.0,
-                fat_loss: 1.4,
-                muscle_gain: 1.6
-            }[goal] ?? 1.4;
-
-            // Bobot tambahan aktivitas dibagi 4 tingkat: Mager, Ringan, Sedang, Berat
-            const activityBonus = {
-                mager: 0.0,
-                ringan: 0.15,
-                sedang: 0.3,
-                berat: 0.45
-            }[activity] ?? 0.3;
-
-            const multiplier = goalBase + activityBonus;
-
-            // Hitung Kebutuhan Protein Harian
-            const dailyProtein = Math.round(weight * multiplier);
-
-            // Ambil persentase kustom dari slider (default 70%)
-            const sliderEl = document.getElementById('chicken-share-slider');
-            chickenSharePercent = sliderEl ? parseInt(sliderEl.value, 10) : 70;
-            const sideSharePercent = 100 - chickenSharePercent;
-
-            // Hitung pembagian gram protein antara dada ayam & lauk pendamping
-            const proteinFromChicken = Math.round(dailyProtein * (chickenSharePercent / 100));
-            const proteinFromSide = Math.max(0, dailyProtein - proteinFromChicken);
-            const neededGrams = Math.round(((dailyProtein * (chickenSharePercent / 100)) / 23) * 100);
-            
-            // Konversi ke kemasan 100g & 50g
-            const packs100 = Math.floor(neededGrams / 100);
-            const remainder = neededGrams % 100;
-            const packs50 = remainder >= 25 ? 1 : 0;
-
-            recommendedPacks100g = packs100 === 0 && packs50 === 0 ? 0 : packs100;
-            recommendedPacks50g = packs100 === 0 && packs50 === 0 ? 1 : packs50;
-
-            const finalPacks100 = recommendedPacks100g;
-            const finalPacks50 = recommendedPacks50g;
-            const totalRecommendedGrams = (finalPacks100 * 100) + (finalPacks50 * 50);
-
-            let packParts = [];
-            if (finalPacks100 > 0) packParts.push(`<strong>${finalPacks100} bungkus (100g)</strong>`);
-            if (finalPacks50 > 0) packParts.push(`<strong>${finalPacks50} bungkus (50g)</strong>`);
-            const packText = packParts.join(' + ');
-
-            const shareNote = sideSharePercent > 0
-                ? `${chickenSharePercent}% dari dada ayam & ${sideSharePercent}% dari lauk pendamping`
-                : `100% penuh dari dada ayam marinasi`;
-
-            // Update UI
-            const bmiBadge = document.getElementById('bmi-badge');
-            bmiBadge.textContent = `BMI: ${bmi} (${bmiStatus})`;
-            bmiBadge.className = `px-2.5 py-1 rounded-lg text-xs font-bold ${bmiColor}`;
-
-            document.getElementById('protein-target').textContent = dailyProtein;
-            document.getElementById('ideal-weight').textContent = idealWeight;
-
-            // Update UI persentase kustom
-            const shareBadgeEl = document.getElementById('chicken-share-badge');
-            if (shareBadgeEl) {
-                shareBadgeEl.textContent = `${chickenSharePercent}% Dada Ayam (${proteinFromChicken}g)`;
-            }
-
-            const shareBarEl = document.getElementById('chicken-share-bar');
-            if (shareBarEl) {
-                shareBarEl.style.width = `${chickenSharePercent}%`;
-            }
-
-            const sideTextEl = document.getElementById('side-dish-share-text');
-            if (sideTextEl) {
-                sideTextEl.textContent = sideSharePercent > 0
-                    ? `${sideSharePercent}% Lauk Lain (${proteinFromSide}g)`
-                    : `0% Lauk Lain (Full Ayam)`;
-            }
-
-            const summaryPillEl = document.getElementById('pack-summary-pill');
-            if (summaryPillEl) {
-                let pillParts = [];
-                if (finalPacks100 > 0) pillParts.push(`${finalPacks100}x (100g)`);
-                if (finalPacks50 > 0) pillParts.push(`${finalPacks50}x (50g)`);
-                summaryPillEl.textContent = `${pillParts.join(' + ')} • Total ${totalRecommendedGrams}g`;
-            }
-
-            document.getElementById('portion-recommendation').innerHTML = `
-                Untuk memenuhi target <strong>${dailyProtein}g protein/hari</strong> (${shareNote}), berdasarkan perhitungan data tersebut, estimasi kebutuhanmu sekitar <strong>${totalRecommendedGrams}g dada ayam</strong> per hari atau setara ${packText}.
-            `;
-
-            syncFormHelperPreview(multiplier, goal, activity);
-            syncSharePresetButtons();
-            syncGenderOptionButtons();
-            syncGoalOptionButtons();
-
-            if (e) showToast("Hasil analisa protein diperbarui!");
-        }
-
-        // Pilih opsi Jenis Kelamin secara terbuka (Laki-laki, Perempuan)
-        function selectGenderOption(genderValue) {
-            const genderInput = document.getElementById('gender');
-            if (genderInput) {
-                genderInput.value = genderValue;
-            }
-            syncGenderOptionButtons();
-        }
-
-        // Sinkronisasi tampilan tombol pilihan Jenis Kelamin aktif
-        function syncGenderOptionButtons() {
-            const currentGender = document.getElementById('gender')?.value || 'male';
-            document.querySelectorAll('.gender-option-btn').forEach(btn => {
-                const val = btn.getAttribute('data-gender');
-                const subText = btn.querySelector('span:nth-child(2)');
-                if (val === currentGender) {
-                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
-                    if (subText) subText.className = "block text-[10px] text-brand-600 font-medium";
-                } else {
-                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
-                    if (subText) subText.className = "block text-[10px] text-slate-500";
+                if (centerPinToReal && pickerMap) {
+                    pickerMap.setView([realLat, realLng], 17);
+                    await updatePickerPoint(realLat, realLng, true);
+                    showToast("Lokasi real terdeteksi! Geser peta jika ingin pilih titik lain");
                 }
-            });
-        }
-
-        // Pilih opsi Target secara terbuka (Maintain, Fat Loss, Bulking)
-        function selectGoalOption(goalValue) {
-            const goalInput = document.getElementById('goal');
-            if (goalInput) {
-                goalInput.value = goalValue;
-            }
-            syncGoalOptionButtons();
-            syncFormHelperPreview(undefined, goalValue, undefined);
-        }
-
-        // Sinkronisasi tampilan tombol pilihan Target aktif
-        function syncGoalOptionButtons() {
-            const currentGoal = document.getElementById('goal')?.value || 'fat_loss';
-            document.querySelectorAll('.goal-option-btn').forEach(btn => {
-                const val = btn.getAttribute('data-goal');
-                const subText = btn.querySelector('span:nth-child(2)');
-                if (val === currentGoal) {
-                    btn.className = "goal-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
-                    if (subText) subText.className = "block text-[10px] text-brand-600 font-medium";
-                } else {
-                    btn.className = "goal-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
-                    if (subText) subText.className = "block text-[10px] text-slate-500";
+            } catch (err) {
+                if (centerPinToReal) {
+                    await updatePickerPoint(tempPickedCoords.lat, tempPickedCoords.lng, true);
+                    if (err && err.code === err.PERMISSION_DENIED) {
+                        showToast("Izin lokasi nonaktif • Silakan geser atau cari lokasi di peta");
+                    }
                 }
-            });
-        }
-
-        // Perbarui info acuan rasio di bawah input Target & Aktivitas Fisik
-        function syncFormHelperPreview(customMultiplier, customGoal, customActivity) {
-            const goal = customGoal || document.getElementById('goal')?.value || 'fat_loss';
-            const activity = customActivity || document.getElementById('activity')?.value || 'sedang';
-
-            const goalBase = {
-                maintain: 1.0,
-                fat_loss: 1.4,
-                muscle_gain: 1.6
-            }[goal] ?? 1.4;
-
-            const activityBonus = {
-                mager: 0.0,
-                ringan: 0.15,
-                sedang: 0.3,
-                berat: 0.45
-            }[activity] ?? 0.3;
-
-            const multiplier = typeof customMultiplier === 'number' ? customMultiplier : (goalBase + activityBonus);
-
-            const goalLabels = {
-                maintain: "Jaga Kesehatan",
-                fat_loss: "Turun Berat Badan",
-                muscle_gain: "Naik Massa Otot"
-            };
-
-            const activityLabels = {
-                mager: "Mager",
-                ringan: "Aktivitas Ringan",
-                sedang: "Aktivitas Sedang",
-                berat: "Aktivitas Berat"
-            };
-
-            const badgeEl = document.getElementById('form-ratio-badge');
-            if (badgeEl) {
-                badgeEl.textContent = `~${multiplier.toFixed(2)}g / kg BB`;
-            }
-
-            const descEl = document.getElementById('form-ratio-desc');
-            if (descEl) {
-                descEl.textContent = `Kombinasi ${goalLabels[goal] || 'Target'} & ${activityLabels[activity] || 'Aktivitas'} dipakai untuk menghitung estimasi kebutuhan protein harianmu.`;
             }
         }
 
@@ -1159,19 +1152,52 @@
             });
         }
 
-        // Masukkan Paket Rekomendasi ke Keranjang
+        // Pilih durasi stok rekomendasi (1 Hari, 3 Hari, atau 1 Minggu)
+        function selectRecDaysOption(daysValue) {
+            selectedRecDays = parseInt(daysValue, 10) || 1;
+            const input = document.getElementById('rec-days');
+            if (input) input.value = selectedRecDays;
+            syncRecDaysOptionButtons();
+        }
+
+        function syncRecDaysOptionButtons() {
+            document.querySelectorAll('.rec-days-btn').forEach(btn => {
+                const btnDays = parseInt(btn.getAttribute('data-days'), 10);
+                const isSelected = btnDays === selectedRecDays;
+                const spans = btn.querySelectorAll('span');
+                if (isSelected) {
+                    btn.className = "rec-days-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
+                    if (spans[1]) spans[1].className = "block text-[10px] text-brand-600 font-medium";
+                } else {
+                    btn.className = "rec-days-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
+                    if (spans[1]) spans[1].className = "block text-[10px] text-slate-500";
+                }
+            });
+
+            const btnLabelEl = document.getElementById('apply-rec-btn-label');
+            if (btnLabelEl) {
+                const durationText = selectedRecDays === 7 ? "1 Minggu (7 Hari)" : `${selectedRecDays} Hari`;
+                btnLabelEl.textContent = `Masukkan Rekomendasi ${durationText} ke Keranjang`;
+            }
+        }
+
+        // Masukkan Paket Rekomendasi ke Keranjang sesuai durasi terpilih
         function applyRecommendationToCart() {
-            for (let i = 0; i < recommendedPacks100g; i++) {
+            const total100g = recommendedPacks100g * selectedRecDays;
+            const total50g = recommendedPacks50g * selectedRecDays;
+
+            for (let i = 0; i < total100g; i++) {
                 addToCart("ayam-100", false);
             }
-            for (let i = 0; i < recommendedPacks50g; i++) {
+            for (let i = 0; i < total50g; i++) {
                 addToCart("ayam-50", false);
             }
 
             let notifParts = [];
-            if (recommendedPacks100g > 0) notifParts.push(`${recommendedPacks100g}x (100g)`);
-            if (recommendedPacks50g > 0) notifParts.push(`${recommendedPacks50g}x (50g)`);
-            const notifText = `${notifParts.join(' & ')} ditambahkan!`;
+            if (total100g > 0) notifParts.push(`${total100g}x (100g)`);
+            if (total50g > 0) notifParts.push(`${total50g}x (50g)`);
+            const durationText = selectedRecDays === 7 ? "1 Minggu" : `${selectedRecDays} Hari`;
+            const notifText = `Stok ${durationText}: ${notifParts.join(' & ')} ditambahkan!`;
 
             showToast(notifText);
             toggleCart();
@@ -1304,72 +1330,99 @@
                 mapsUrl
             };
 
-            document.getElementById('pick-loc-label').textContent = "Ubah Titik";
-            document.getElementById('clear-loc-btn').classList.remove('hidden');
+            const pickLabel = document.getElementById('pick-loc-label');
+            const clearBtn = document.getElementById('clear-loc-btn');
+            if (pickLabel) pickLabel.textContent = "Ubah Titik";
+            if (clearBtn) clearBtn.classList.remove('hidden');
+
+            const pinBadge = document.getElementById('pin-status-badge');
+            if (pinBadge) {
+                pinBadge.textContent = "Pin Terpasang";
+                pinBadge.className = "px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 text-[10px] font-bold";
+            }
+
+            const statusBox = document.getElementById('location-status-box');
+            if (statusBox) {
+                statusBox.className = "p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-start justify-between gap-2";
+            }
 
             const status = document.getElementById('location-status');
-            status.innerHTML = `<span class="text-emerald-700 font-semibold">Sharelok siap kirim:</span> ${sharedLocation.label} • <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="underline text-brand-600 font-semibold">Cek Google Maps</a>`;
-            status.className = "text-[11px] text-slate-700 leading-snug";
-
-            // Isi otomatis kolom alamat jika masih kosong
-            const addressInput = document.getElementById('customer-address');
-            if (addressInput && !addressInput.value.trim() && labelText && !labelText.startsWith('Titik Peta')) {
-                addressInput.value = labelText;
+            if (status) {
+                status.innerHTML = `<span class="font-bold text-slate-800 block">${sharedLocation.label}</span><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="text-emerald-700 underline font-semibold">Lihat di Google Maps</a>`;
+                status.className = "text-[11px] text-slate-600 leading-relaxed";
             }
-
-            lucide.createIcons();
         }
 
-        function closeLocationPicker() {
-            document.getElementById('location-modal').classList.add('hidden');
-            document.getElementById('map-search-results').classList.add('hidden');
-        }
-
-        // Perbarui koordinat & reverse geocode nama jalan saat pin digeser/diklik
-        async function updatePickerPoint(lat, lng, fetchAddress = true) {
-            const fixedLat = parseFloat(lat).toFixed(6);
-            const fixedLng = parseFloat(lng).toFixed(6);
-
-            tempPickedCoords.lat = fixedLat;
-            tempPickedCoords.lng = fixedLng;
-
-            document.getElementById('picker-selected-coords').textContent = `${fixedLat}, ${fixedLng}`;
-
-            if (!fetchAddress && sharedLocation && sharedLocation.label) {
-                tempPickedCoords.label = sharedLocation.label;
-                document.getElementById('picker-selected-address').textContent = sharedLocation.label;
-                return;
-            }
-
-            const addrEl = document.getElementById('picker-selected-address');
-            addrEl.textContent = "Mencari nama jalan / area titik ini...";
+        // Ambil GPS langsung dari tombol "GPS Saat Ini" di keranjang
+        async function shareLocation() {
+            const labelEl = document.getElementById('share-loc-label');
+            if (labelEl) labelEl.textContent = "Mencari...";
 
             try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${fixedLat}&lon=${fixedLng}&accept-language=id`);
-                if (res.ok) {
-                    const data = await res.json();
-                    const shortName = data.display_name
-                        ? data.display_name.split(',').slice(0, 3).join(', ')
-                        : `Titik (${fixedLat}, ${fixedLng})`;
-                    tempPickedCoords.label = shortName;
-                    addrEl.textContent = shortName;
-                } else {
-                    tempPickedCoords.label = `Titik Peta (${fixedLat}, ${fixedLng})`;
-                    addrEl.textContent = tempPickedCoords.label;
-                }
-            } catch {
-                tempPickedCoords.label = `Titik Peta (${fixedLat}, ${fixedLng})`;
-                addrEl.textContent = tempPickedCoords.label;
+                const coords = await getCurrentGPSPosition(9000);
+                const label = await reverseGeocodeCoords(coords.latitude, coords.longitude);
+                setSavedLocation(coords.latitude, coords.longitude, label, "gps");
+                showToast("Lokasi GPS saat ini berhasil dipasang!");
+            } catch (err) {
+                showToast("Gagal mengambil GPS. Coba gunakan Pilih di Peta.");
+            } finally {
+                if (labelEl) labelEl.textContent = "GPS Saat Ini";
             }
         }
 
-        // Cari nama tempat / alamat di modal peta (misal rumah teman / kantor)
-        async function searchMapLocation() {
-            const query = document.getElementById('map-search-input').value.trim();
-            const resultsBox = document.getElementById('map-search-results');
+        // Reverse geocode koordinat menjadi nama jalan/distrik
+        async function reverseGeocodeCoords(lat, lng) {
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lng)}&accept-language=id,en`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!res.ok) throw new Error("Geocode failed");
+                const data = await res.json();
+                if (data && data.display_name) {
+                    const parts = data.display_name.split(',').map(s => s.trim()).filter(Boolean);
+                    return parts.slice(0, 3).join(', ');
+                }
+            } catch (e) {
+                // Abaikan jika jaringan geocode gagal, pakai fallback koordinat
+            }
+            return `Titik Peta (${parseFloat(lat).toFixed(5)}, ${parseFloat(lng).toFixed(5)})`;
+        }
 
+        // Perbarui tampilan alamat, koordinat, dan link Google Maps di modal peta
+        let geocodeDebounceTimer = null;
+        async function updatePickerPoint(lat, lng, fetchAddress = true) {
+            const numLat = parseFloat(lat);
+            const numLng = parseFloat(lng);
+            tempPickedCoords.lat = numLat;
+            tempPickedCoords.lng = numLng;
+
+            const coordsEl = document.getElementById('picker-selected-coords');
+            const gmapsLinkEl = document.getElementById('picker-gmaps-link');
+            const addrEl = document.getElementById('picker-selected-address');
+
+            if (coordsEl) coordsEl.textContent = `${numLat.toFixed(6)}, ${numLng.toFixed(6)}`;
+            if (gmapsLinkEl) gmapsLinkEl.href = `https://www.google.com/maps/search/?api=1&query=${numLat.toFixed(6)},${numLng.toFixed(6)}`;
+
+            if (!fetchAddress) return;
+
+            if (addrEl) addrEl.textContent = "Memuat nama lokasi...";
+            clearTimeout(geocodeDebounceTimer);
+            geocodeDebounceTimer = setTimeout(async () => {
+                const label = await reverseGeocodeCoords(numLat, numLng);
+                tempPickedCoords.label = label;
+                if (addrEl) addrEl.textContent = label;
+            }, 250);
+        }
+
+        // Cari lokasi berdasarkan kata kunci di kolom pencarian peta
+        async function searchMapLocation() {
+            const input = document.getElementById('map-search-input');
+            const resultsBox = document.getElementById('map-search-results');
+            if (!input || !resultsBox) return;
+
+            const query = input.value.trim();
             if (!query) {
-                showToast("Ketik nama jalan atau tempat dulu ya");
+                showToast("Ketik nama jalan atau distrik dulu ya");
                 return;
             }
 
@@ -1377,121 +1430,95 @@
             resultsBox.innerHTML = `<div class="p-3 text-slate-500">Mencari "${query}"...</div>`;
 
             try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(query)}&limit=5&accept-language=id`);
-                const places = await res.json();
+                const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(query)}&limit=5&accept-language=id,en`;
+                const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+                const list = await res.json();
 
-                if (!places || places.length === 0) {
-                    resultsBox.innerHTML = `<div class="p-3 text-slate-500">Lokasi tidak ditemukan. Coba kata kunci lebih umum lalu geser pin di peta.</div>`;
+                if (!Array.isArray(list) || list.length === 0) {
+                    resultsBox.innerHTML = `<div class="p-3 text-slate-500">Lokasi tidak ditemukan. Coba geser peta manual.</div>`;
                     return;
                 }
 
-                resultsBox.innerHTML = places.map((place, idx) => {
-                    const shortLabel = place.display_name.split(',').slice(0, 3).join(', ');
+                resultsBox.innerHTML = list.map(item => {
+                    const safeTitle = (item.display_name || '').replace(/'/g, "\\'");
                     return `
-                        <button type="button" onclick="selectSearchedPlace(${place.lat}, ${place.lon}, '${shortLabel.replace(/'/g, "\\'")}')" class="w-full text-left p-2.5 hover:bg-brand-50 transition-colors flex items-start gap-2">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-600 shrink-0 mt-0.5"></i>
-                            <span class="text-slate-700 line-clamp-2">${place.display_name}</span>
+                        <button type="button" onclick="selectSearchResult(${parseFloat(item.lat)}, ${parseFloat(item.lon)}, '${safeTitle}')" class="w-full text-left p-3 hover:bg-brand-50 transition-colors flex items-start gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-brand-600 shrink-0 mt-0.5"></i>
+                            <span class="text-slate-700 leading-snug line-clamp-2">${item.display_name}</span>
                         </button>
                     `;
                 }).join('');
                 lucide.createIcons();
-            } catch {
-                resultsBox.innerHTML = `<div class="p-3 text-rose-600">Gagal mencari lokasi. Geser pin langsung di peta ya.</div>`;
+            } catch (e) {
+                resultsBox.innerHTML = `<div class="p-3 text-rose-500">Gagal mencari lokasi. Coba lagi ya.</div>`;
             }
         }
 
-        function selectSearchedPlace(lat, lon, label) {
-            const numLat = parseFloat(lat);
-            const numLon = parseFloat(lon);
-            document.getElementById('map-search-results').classList.add('hidden');
+        // Pilih salah satu hasil pencarian dan pindahkan pusat peta ke sana
+        function selectSearchResult(lat, lng, label) {
+            const resultsBox = document.getElementById('map-search-results');
+            if (resultsBox) resultsBox.classList.add('hidden');
 
+            tempPickedCoords.label = label || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
             if (pickerMap) {
-                pickerMap.setView([numLat, numLon], 17);
+                pickerMap.setView([lat, lng], 17);
             }
-            tempPickedCoords = { lat: numLat.toFixed(6), lng: numLon.toFixed(6), label };
-            document.getElementById('picker-selected-address').textContent = label;
-            document.getElementById('picker-selected-coords').textContent = `${tempPickedCoords.lat}, ${tempPickedCoords.lng}`;
+            updatePickerPoint(lat, lng, false);
+            const addrEl = document.getElementById('picker-selected-address');
+            if (addrEl) addrEl.textContent = tempPickedCoords.label;
         }
 
-        function locateMeOnMap() {
-            if (!navigator.geolocation) {
-                showToast("Browser tidak mendukung GPS");
-                return;
-            }
-            showToast("Mendeteksi posisi GPS...");
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    const lat = pos.coords.latitude;
-                    const lng = pos.coords.longitude;
-                    if (pickerMap) {
-                        pickerMap.setView([lat, lng], 17);
-                    }
-                    updatePickerPoint(lat, lng, true);
-                },
-                () => {
-                    showToast("Tidak bisa mengakses GPS, geser peta secara manual ya");
-                },
-                { enableHighAccuracy: true, timeout: 8000 }
-            );
+        // Tombol floating GPS di dalam peta
+        async function locateMeOnMap() {
+            await requestRealLocationOnMap(true);
         }
 
+        // Konfirmasi titik pin dan simpan ke keranjang
         function confirmPickedLocation() {
-            setSavedLocation(tempPickedCoords.lat, tempPickedCoords.lng, tempPickedCoords.label, 'map');
+            const addrEl = document.getElementById('picker-selected-address');
+            const label = (addrEl && addrEl.textContent && !addrEl.textContent.includes("Memuat"))
+                ? addrEl.textContent
+                : tempPickedCoords.label;
+
+            setSavedLocation(tempPickedCoords.lat, tempPickedCoords.lng, label, "map");
             closeLocationPicker();
-            showToast("Titik sharelok berhasil disimpan!");
+            showToast("Titik sharelok berhasil disimpan ke keranjang!");
         }
 
-        // Shortcut Langsung Sharelok GPS Saat Ini (1 Klik)
-        function shareLocation() {
-            const label = document.getElementById('share-loc-label');
-            const status = document.getElementById('location-status');
-
-            if (!navigator.geolocation) {
-                status.textContent = "Browser tidak mendukung GPS. Gunakan tombol 'Pilih di Peta' ya.";
-                status.className = "text-[11px] text-rose-600 leading-snug";
-                showToast("Gunakan tombol Pilih di Peta");
-                return;
-            }
-
-            label.textContent = "...";
-            status.textContent = "Mengambil posisi GPS saat ini...";
-            status.className = "text-[11px] text-amber-700 leading-snug";
-
-            navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
-                    label.textContent = "GPS";
-                    setSavedLocation(lat, lng, `Posisi GPS Saat Ini (${lat.toFixed(5)}, ${lng.toFixed(5)})`, 'gps');
-                    showToast("Lokasi GPS berhasil diambil!");
-                },
-                (error) => {
-                    label.textContent = "GPS";
-                    let msg = "GPS gagal diakses. Klik 'Pilih di Peta' untuk menentukan titik tujuan.";
-                    if (error.code === error.PERMISSION_DENIED) {
-                        msg = "Akses GPS ditolak. Kamu tetap bisa klik 'Pilih di Peta' untuk pilih lokasi manual.";
-                    }
-                    status.textContent = msg;
-                    status.className = "text-[11px] text-rose-600 leading-snug";
-                    showToast("Silakan pilih titik via Peta");
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0
-                }
-            );
+        // Tutup modal pemilih lokasi
+        function closeLocationPicker() {
+            const modal = document.getElementById('location-modal');
+            const resultsBox = document.getElementById('map-search-results');
+            if (resultsBox) resultsBox.classList.add('hidden');
+            if (modal) modal.classList.add('hidden');
         }
 
         // Hapus Lokasi Tersimpan
         function clearLocation() {
             sharedLocation = null;
-            document.getElementById('pick-loc-label').textContent = "Pilih di Peta";
-            document.getElementById('share-loc-label').textContent = "GPS";
-            document.getElementById('clear-loc-btn').classList.add('hidden');
+            const pickLabel = document.getElementById('pick-loc-label');
+            const shareLabel = document.getElementById('share-loc-label');
+            const clearBtn = document.getElementById('clear-loc-btn');
+            if (pickLabel) pickLabel.textContent = "Pilih di Peta";
+            if (shareLabel) shareLabel.textContent = "GPS Saat Ini";
+            if (clearBtn) clearBtn.classList.add('hidden');
+
+            const pinBadge = document.getElementById('pin-status-badge');
+            if (pinBadge) {
+                pinBadge.textContent = "Belum Dipin";
+                pinBadge.className = "px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-[10px] font-bold";
+            }
+
+            const statusBox = document.getElementById('location-status-box');
+            if (statusBox) {
+                statusBox.className = "p-2.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start justify-between gap-2";
+            }
+
             const status = document.getElementById('location-status');
-            status.innerHTML = `Klik <strong>Pilih di Peta</strong> untuk geser pin Google Maps ke titik rumah/tujuan otomatis jadi sharelok, atau klik <strong>GPS</strong>.`;
-            status.className = "text-[11px] text-slate-500 leading-snug";
+            if (status) {
+                status.innerHTML = `Bisa isi alamat manual di atas, atau tambahkan pin titik lewat <strong>Pilih di Peta</strong> / <strong>GPS Saat Ini</strong>.`;
+                status.className = "text-[11px] text-slate-500 leading-relaxed";
+            }
             showToast("Lokasi dihapus");
         }
 
@@ -1503,14 +1530,26 @@
             }
 
             const name = document.getElementById('customer-name').value.trim() || "Teman Kang Asep";
-            const address = document.getElementById('customer-address').value.trim() || "-";
+            const address = document.getElementById('customer-address')?.value.trim() || "";
+            const note = document.getElementById('customer-note')?.value.trim() || "";
+
+            if (!address && !sharedLocation) {
+                showToast("Isi alamat pengantaran atau pilih titik di peta dulu ya!");
+                document.getElementById('customer-address')?.focus();
+                return;
+            }
 
             let message = `Halo *Kang Asep*! Saya mau pesan Dada Ayam Marinasi:\n\n`;
             message += `*Nama Penerima:* ${name}\n`;
-            message += `*Alamat / Patokan:* ${address}\n`;
+            if (address) {
+                message += `*Alamat / Patokan:* ${address}\n`;
+            }
             if (sharedLocation) {
                 message += `*Titik Lokasi:* ${sharedLocation.label}\n`;
                 message += `*Link Google Maps:* ${sharedLocation.mapsUrl}\n`;
+            }
+            if (note) {
+                message += `*Catatan:* ${note}\n`;
             }
             message += `\n*Detail Pesanan:*\n`;
 
@@ -1549,6 +1588,7 @@
             renderProducts();
             syncGenderOptionButtons();
             syncGoalOptionButtons();
+            syncRecDaysOptionButtons();
             calculateProtein();
             updateCartUI();
             lucide.createIcons();
