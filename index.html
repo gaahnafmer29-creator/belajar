@@ -139,9 +139,15 @@
                             <p class="text-[11px] sm:text-xs text-slate-500">Waktu Masak</p>
                         </div>
                         <div>
-                            <p class="text-lg sm:text-2xl font-extrabold text-slate-900">0% Ribet</p>
-                            <p class="text-[11px] sm:text-xs text-slate-500">Tanpa Cuci &amp; Potong</p>
+                            <p class="text-lg sm:text-2xl font-extrabold text-slate-900">Halal 100%</p>
+                            <p class="text-[11px] sm:text-xs text-slate-500">Segar &amp; Higienis</p>
                         </div>
+                    </div>
+
+                    <!-- Info Ringkas Jadwal Pengiriman -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-900 text-xs font-medium max-w-full">
+                        <i data-lucide="truck" class="w-4 h-4 text-brand-600 shrink-0"></i>
+                        <span><strong>Jadwal Pengiriman:</strong> Setiap hari pukul <strong>16.00 – 20.00 CLT</strong> (Pre-order H-1)</span>
                     </div>
                 </div>
 
@@ -228,13 +234,11 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Jenis Kelamin</label>
                                 <input type="hidden" id="gender" value="male">
                                 <div id="gender-options" class="grid grid-cols-2 gap-2">
-                                    <button type="button" onclick="selectGenderOption('male')" data-gender="male" class="gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
+                                    <button type="button" onclick="selectGenderOption('male')" data-gender="male" class="gender-option-btn px-3 py-3 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center">
                                         <span class="block text-xs font-bold">Pria</span>
-                                        <span class="block text-[10px] text-brand-600 font-medium">Laki-laki</span>
                                     </button>
-                                    <button type="button" onclick="selectGenderOption('female')" data-gender="female" class="gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
+                                    <button type="button" onclick="selectGenderOption('female')" data-gender="female" class="gender-option-btn px-3 py-3 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center">
                                         <span class="block text-xs font-bold">Wanita</span>
-                                        <span class="block text-[10px] text-slate-500">Perempuan</span>
                                     </button>
                                 </div>
                             </div>
@@ -459,7 +463,7 @@
                 <div class="p-5 sm:p-6 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-3">
                     <div class="w-11 h-11 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center font-extrabold text-lg">3</div>
                     <h3 class="font-bold text-base sm:text-lg">Siap Disajikan</h3>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Sajikan hangat bersama nasi, sayur, atau sumber karbohidrat favorit untuk memenuhi kebutuhan protein harian kapan saja.</p>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Sajikan hangat bersama nasi atau sayur favorit untuk menu sehat tinggi protein setiap hari.</p>
                 </div>
             </div>
         </div>
@@ -475,7 +479,7 @@
                 <span class="font-bold text-slate-900">Dada Ayam Marinasi Kang Asep</span>
             </div>
             <p class="text-xs text-slate-500 text-center sm:text-right">
-                Fresh Homemade Meal Prep • Kemasan 50g &amp; 100g • Pesan Antar Area Kairo &amp; Sekitar
+                Fresh Homemade Meal Prep • Kemasan 50g &amp; 100g • Pengiriman Setiap Hari 16.00 – 20.00 CLT (Pre-order H-1)
             </p>
         </div>
     </footer>
@@ -524,6 +528,12 @@
 
             <!-- Data Penerima, Alamat & Sharelok -->
             <div class="space-y-3">
+                <!-- Info Jadwal Pengiriman di Keranjang -->
+                <div class="px-3.5 py-2.5 rounded-xl bg-amber-50/90 border border-amber-200/80 flex items-center gap-2 text-[11px] text-amber-950">
+                    <i data-lucide="clock" class="w-4 h-4 text-brand-600 shrink-0"></i>
+                    <span><strong>Jadwal Kirim:</strong> Setiap hari pukul <strong>16.00 – 20.00 CLT</strong> • Pre-order H-1</span>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
                         <label for="customer-name" class="block text-[11px] font-bold uppercase tracking-wide text-slate-600 mb-1">Nama Penerima</label>
@@ -845,13 +855,10 @@
             const currentGender = document.getElementById('gender')?.value || 'male';
             document.querySelectorAll('.gender-option-btn').forEach(btn => {
                 const isSelected = btn.getAttribute('data-gender') === currentGender;
-                const spans = btn.querySelectorAll('span');
                 if (isSelected) {
-                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
-                    if (spans[1]) spans[1].className = "block text-[10px] text-brand-600 font-medium";
+                    btn.className = "gender-option-btn px-3 py-3 rounded-xl border border-brand-600 bg-brand-50 text-brand-700 ring-1 ring-brand-600 transition-all text-center";
                 } else {
-                    btn.className = "gender-option-btn px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
-                    if (spans[1]) spans[1].className = "block text-[10px] text-slate-500";
+                    btn.className = "gender-option-btn px-3 py-3 rounded-xl border border-slate-200 bg-slate-50/70 text-slate-700 hover:border-brand-400 hover:text-brand-600 transition-all text-center";
                 }
             });
         }
