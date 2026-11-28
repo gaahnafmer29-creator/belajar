@@ -677,27 +677,27 @@
                         </div>
                     </div>
                     <div class="w-1 h-2.5 bg-slate-900 rounded-b-full -mt-0.5"></div>
-                </div>
-
-                <!-- Pengalih Tampilan Peta / Satelit Google Maps -->
-                <div id="map-layer-switcher" class="absolute top-3 right-3 z-[1000] flex rounded-xl overflow-hidden shadow-lg border border-blue-200 bg-white text-[11px] font-bold">
-                    <button type="button" id="btn-layer-roadmap" onclick="setGoogleMapLayer('roadmap')" class="px-3 py-2 bg-blue-600 text-white transition-colors">Peta</button>
-                    <button type="button" id="btn-layer-hybrid" onclick="setGoogleMapLayer('hybrid')" class="px-3 py-2 bg-white text-slate-700 hover:bg-slate-50 transition-colors">Satelit</button>
-                </div>
-
-                <!-- Banner Peringatan Jika Lokasi Belum Aktif (Langsung minta izin GPS saat diklik) -->
-                <button type="button" id="gps-banner-btn" onclick="requestAndCenterGPS(false)" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-500 hover:bg-amber-600 active:scale-[0.99] text-slate-950 rounded-2xl px-4 py-3 shadow-xl flex items-center justify-between gap-2 transition-all">
-                    <div class="flex items-center gap-2.5 text-left">
-                        <span class="w-7 h-7 rounded-full bg-slate-950/10 flex items-center justify-center shrink-0">
-                            <i data-lucide="navigation" class="w-4 h-4"></i>
+                <!-- Banner Peringatan Jika Lokasi Belum Aktif -->
+                <div id="gps-banner-box" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-500 text-slate-950 rounded-2xl p-3.5 shadow-xl space-y-2.5">
+                    <div class="flex items-start gap-2.5">
+                        <span class="w-8 h-8 rounded-xl bg-slate-950/15 flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="locate-off" class="w-4 h-4"></i>
                         </span>
-                        <div>
-                            <span id="gps-banner-title" class="font-display font-bold text-xs sm:text-sm block leading-tight">Aktifkan lokasi saya</span>
-                            <span id="gps-banner-sub" class="text-[10px] text-slate-900/80 font-medium block">Ketuk untuk bagikan lokasi atau geser peta manual</span>
+                        <div class="flex-1">
+                            <span id="gps-banner-title" class="font-display font-extrabold text-xs sm:text-sm block leading-tight">GPS / Lokasi HP Belum Aktif</span>
+                            <span id="gps-banner-sub" class="text-[11px] text-slate-900/90 font-medium block mt-0.5 leading-snug">Nyalakan ikon Lokasi di panel cepat HP Anda, lalu ketuk tombol di bawah.</span>
                         </div>
                     </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 shrink-0"></i>
-                </button>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="requestAndCenterGPS(false)" class="flex-1 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
+                            <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                            <span>Bagikan Lokasi Sekarang</span>
+                        </button>
+                        <button type="button" onclick="useManualMapMode()" class="py-2 px-3 rounded-xl bg-white/80 hover:bg-white text-slate-900 font-bold text-xs transition-all">
+                            Geser Manual
+                        </button>
+                    </div>
+                </div>
 
                 <!-- Tombol Panah Lokasi Saya di Pojok Kanan Bawah -->
                 <button type="button" onclick="requestAndCenterGPS(false)" aria-label="Ke lokasi saya" class="absolute bottom-24 right-3 z-[1000] w-11 h-11 rounded-full bg-white shadow-lg border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-50 active:scale-95 transition-all">
@@ -1139,166 +1139,23 @@
         }
 
         function toggleGpsBanner(show) {
-            const banner = document.getElementById('gps-banner-btn');
+            const banner = document.getElementById('gps-banner-box');
             const switcher = document.getElementById('map-layer-switcher');
             if (!banner || !switcher) return;
             banner.classList.toggle('hidden', !show);
-            switcher.classList.toggle('top-16', show);
+            switcher.classList.toggle('top-28', show);
             switcher.classList.toggle('top-3', !show);
         }
 
-        function markUserGpsPosition(lat, lng) {
-            if (!pickerMap) return;
-            if (userLocationCircle) pickerMap.removeLayer(userLocationCircle);
-            if (userLocationDot) pickerMap.removeLayer(userLocationDot);
-
-            userLocationCircle = L.circle([lat, lng], {
-                radius: 45,
-                color: '#2563eb',
-                fillColor: '#3b82f6',
-                fillOpacity: 0.18,
-                weight: 1.5
-            }).addTo(pickerMap);
-
-            userLocationDot = L.circleMarker([lat, lng], {
-                radius: 7,
-                color: '#ffffff',
-                weight: 2.5,
-                fillColor: '#2563eb',
-                fillOpacity: 1
-            }).addTo(pickerMap);
+        function useManualMapMode() {
+            toggleGpsBanner(false);
+            onMapMoved();
         }
-
-        // Ambil koordinat GPS dengan fallback cepat (high accuracy -> network/Wi-Fi)
-        function fetchCustomerGPS() {
-            return new Promise((resolve, reject) => {
-                if (!navigator.geolocation) {
-                    reject(new Error('UNSUPPORTED'));
-                    return;
-                }
-
-                let settled = false;
-                const finish = (fn, val) => {
-                    if (settled) return;
-                    settled = true;
-                    fn(val);
-                };
-
-                navigator.geolocation.getCurrentPosition(
-                    pos => finish(resolve, { lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                    err => {
-                        if (err && err.code === 1) {
-                            finish(reject, err);
-                            return;
-                        }
-                        navigator.geolocation.getCurrentPosition(
-                            pos => finish(resolve, { lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                            err2 => finish(reject, err2),
-                            { enableHighAccuracy: false, timeout: 6000, maximumAge: 60000 }
-                        );
-                    },
-                    { enableHighAccuracy: true, timeout: 6000, maximumAge: 30000 }
-                );
-            });
-        }
-        // Langsung buka peta & otomatis minta izin lokasi browser
-        function openMapPicker() {
-            const modal = document.getElementById('map-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.getElementById('map-detail').value = selectedLocation?.detail || '';
-
-            const initialCenter = selectedLocation ? [selectedLocation.lat, selectedLocation.lng] : CAIRO_CENTER;
-            const initialZoom = selectedLocation ? 17 : 15;
-
-            if (!pickerMap) {
-                pickerMap = L.map('map-picker', { zoomControl: false }).setView(initialCenter, initialZoom);
-
-                googleTileLayer = L.tileLayer(GOOGLE_TILE_URLS.roadmap, {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                    attribution: 'Data Peta &copy; Google Maps'
-                }).addTo(pickerMap);
-
-                pickerMap.on('movestart', () => {
-                    setPinSearchingState(true, 'Menentukan titik...', 'Menggeser peta');
-                });
-                pickerMap.on('moveend', onMapMoved);
-            }
-
-            requestAnimationFrame(() => {
-                pickerMap.invalidateSize();
-                pickerMap.setView(initialCenter, initialZoom, { animate: false });
-                setTimeout(() => pickerMap.invalidateSize(), 200);
-
-                // Jika belum pernah memilih lokasi, otomatis minta izin GPS & arahkan ke lokasi customer
-                if (!selectedLocation) {
-                    hasCenteredOnGps = false;
-                    requestAndCenterGPS(true);
-                } else {
-                    onMapMoved();
-                }
-            });
-
-            lucide.createIcons();
-        }
-
-        function closeMapPicker() {
-            const modal = document.getElementById('map-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            stopGpsWatcher();
-            hideSearchResults();
-        }
-
-        // Otomatis coba ulang GPS jika customer baru kembali dari Pengaturan HP setelah menyalakan Lokasi
-        function retryGpsIfPending() {
-            const modal = document.getElementById('map-modal');
-            if (!modal || modal.classList.contains('hidden')) return;
-            if (!hasCenteredOnGps) {
-                requestAndCenterGPS(true);
-            }
-        }
-        window.addEventListener('focus', retryGpsIfPending);
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') retryGpsIfPending();
-        });
-
-        // Pantau otomatis: begitu customer menyalakan GPS HP dari panel notifikasi, peta langsung terbang ke posisinya
-        function startGpsWatcher() {
-            if (!navigator.geolocation || gpsWatchId !== null) return;
-            gpsWatchId = navigator.geolocation.watchPosition(
-                pos => {
-                    const lat = pos.coords.latitude;
-                    const lng = pos.coords.longitude;
-                    lastGpsErrorCode = null;
-                    toggleGpsBanner(false);
-
-                    if (pickerMap) {
-                        markUserGpsPosition(lat, lng);
-                        if (!hasCenteredOnGps) {
-                            hasCenteredOnGps = true;
-                            pickerMap.flyTo([lat, lng], 17, { duration: 0.9 });
-                            showToast('GPS aktif! Peta diarahkan ke lokasimu.');
-                        }
-                    }
-                },
-                () => { /* Abaikan error background watcher */ },
-                { enableHighAccuracy: true, maximumAge: 10000 }
-            );
-        }
-
-        function stopGpsWatcher() {
-            if (gpsWatchId !== null && navigator.geolocation) {
-                navigator.geolocation.clearWatch(gpsWatchId);
-                gpsWatchId = null;
-            }
-        }
-
+// ... existing code ... -->
         // Meminta izin lokasi browser & otomatis terbangkan peta ke lokasi customer
         async function requestAndCenterGPS(isAutoOnOpen = false) {
             toggleGpsBanner(false);
-            setPinSearchingState(true, 'Mencari lokasi Anda...', 'Meminta izin lokasi...');
+            setPinSearchingState(true, 'Mencari lokasi Anda...', 'Meminta izin akses lokasi...');
             startGpsWatcher();
 
             try {
@@ -1320,230 +1177,18 @@
                 const bannerTitle = document.getElementById('gps-banner-title');
                 const bannerSub = document.getElementById('gps-banner-sub');
 
-                bannerTitle.textContent = 'Aktifkan lokasi saya';
-                bannerSub.textContent = lastGpsErrorCode === 1
-                    ? 'Izinkan lokasi di browser atau geser peta manual'
-                    : 'Nyalakan GPS HP lalu ketuk di sini, atau geser peta';
+                if (lastGpsErrorCode === 1) {
+                    bannerTitle.textContent = 'Izin Lokasi Diblokir Browser';
+                    bannerSub.textContent = 'Ketuk ikon gembok di bilah alamat browser → izinkan Lokasi → ketuk Bagikan Lokasi Sekarang.';
+                    setPinSearchingState(false, 'Izin lokasi diblokir', 'Aktifkan izin atau geser peta');
+                } else {
+                    bannerTitle.textContent = 'Lokasi (GPS) HP Belum Menyala';
+                    bannerSub.textContent = 'Tarik layar HP dari atas → nyalakan ikon Lokasi (GPS) → ketuk Bagikan Lokasi Sekarang.';
+                    setPinSearchingState(false, 'GPS HP belum menyala', 'Nyalakan GPS atau geser peta');
+                }
 
                 toggleGpsBanner(true);
-                onMapMoved();
-
-                if (!isAutoOnOpen) {
-                    const msg = lastGpsErrorCode === 1
-                        ? 'Izin lokasi diblokir browser. Izinkan akses lokasi di pengaturan situs (ikon gembok) atau geser peta manual.'
-                        : 'GPS HP belum aktif. Nyalakan Lokasi di HP lalu ketuk kembali, atau geser peta manual.';
-                    showToast(msg, 'warning');
-                }
+                lucide.createIcons();
             }
         }
-
-        // Update titik pin & ambil alamat saat peta berhenti digeser
-        function onMapMoved() {
-            if (!pickerMap) return;
-            const c = pickerMap.getCenter();
-            pickerDraft = { lat: c.lat, lng: c.lng, address: null, shortName: null };
-            setText('map-coords-label', `${c.lat.toFixed(6)}, ${c.lng.toFixed(6)}`);
-            setPinSearchingState(true, 'Titik pengantaran', 'Memuat nama jalan...');
-            setAddressText('Mencari alamat titik lokasi...');
-            setConfirmEnabled(true);
-
-            clearTimeout(reverseTimer);
-            reverseTimer = setTimeout(() => reverseGeocode(c.lat, c.lng), 500);
-        }
-
-        async function reverseGeocode(lat, lng) {
-            if (reverseAbort) reverseAbort.abort();
-            reverseAbort = new AbortController();
-            try {
-                const url = `${NOMINATIM}/reverse?format=json&zoom=18&addressdetails=1&accept-language=id&lat=${lat}&lon=${lng}`;
-                const res = await fetch(url, { signal: reverseAbort.signal });
-                const data = await res.json();
-                if (pickerDraft && pickerDraft.lat === lat && pickerDraft.lng === lng) {
-                    const addr = data.address || {};
-                    const road = addr.road || addr.pedestrian || addr.suburb || addr.neighbourhood || addr.city_district;
-                    const houseNo = addr.house_number ? ` ${addr.house_number}` : '';
-                    const shortName = road ? `${road}${houseNo}` : (data.name || 'Titik Terpilih');
-
-                    pickerDraft.address = data.display_name || null;
-                    pickerDraft.shortName = shortName;
-
-                    setPinSearchingState(false, 'Titik pengantaran', shortName);
-                    setAddressText(pickerDraft.address || 'Alamat tidak ditemukan, titik Google Maps tetap bisa dipakai.');
-                }
-            } catch (err) {
-                if (err.name === 'AbortError') return;
-                if (pickerDraft) {
-                    pickerDraft.address = null;
-                    setPinSearchingState(false, 'Titik pengantaran', `${lat.toFixed(5)}, ${lng.toFixed(5)}`);
-                    setAddressText('Gagal memuat nama jalan. Titik koordinat tetap bisa dipakai.');
-                }
-            }
-        }
-
-        function setAddressText(text) {
-            setText('map-address', text);
-        }
-
-        function setConfirmEnabled(enabled) {
-            document.getElementById('map-confirm-btn').disabled = !enabled;
-        }
-
-        // Pencarian alamat / lokasi di Mesir
-        async function searchAddress() {
-            const q = getValue('map-search');
-            if (q.length < 3) {
-                hideSearchResults();
-                return;
-            }
-            try {
-                const url = `${NOMINATIM}/search?format=json&limit=5&countrycodes=eg&accept-language=id&q=${encodeURIComponent(q)}`;
-                const res = await fetch(url);
-                const data = await res.json();
-                renderSearchResults(data);
-            } catch (err) {
-                showToast('Pencarian lokasi gagal. Coba lagi.', 'warning');
-            }
-        }
-
-        function renderSearchResults(items) {
-            const box = document.getElementById('map-search-results');
-            if (!items.length) {
-                box.innerHTML = `<p class="px-3.5 py-2.5 text-xs text-slate-500">Lokasi tidak ditemukan. Coba geser peta langsung.</p>`;
-                box.classList.remove('hidden');
-                return;
-            }
-            box.innerHTML = items.map(item => `
-                <button type="button" onclick="pickSearchResult(${Number(item.lat)}, ${Number(item.lon)})" class="w-full text-left px-3.5 py-2.5 text-xs text-slate-700 hover:bg-blue-50 flex items-start gap-2">
-                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5"></i>
-                    <span>${escapeHtml(item.display_name)}</span>
-                </button>
-            `).join('');
-            box.classList.remove('hidden');
-            lucide.createIcons();
-        }
-
-        function pickSearchResult(lat, lng) {
-            hideSearchResults();
-            if (pickerMap) {
-                pickerMap.flyTo([lat, lng], 17, { duration: 0.8 });
-            }
-        }
-
-        function hideSearchResults() {
-            document.getElementById('map-search-results')?.classList.add('hidden');
-        }
-
-        const mapSearchInput = document.getElementById('map-search');
-        mapSearchInput.addEventListener('input', () => {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(searchAddress, 500);
-        });
-        mapSearchInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                clearTimeout(searchTimer);
-                searchAddress();
-            }
-        });
-
-        // Simpan lokasi pengantaran dan tampilkan tautan Google Maps di form
-        function saveLocation(loc) {
-            selectedLocation = loc;
-            const statusEl = document.getElementById('location-status');
-            statusEl.className = 'text-[11px] font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-xl p-2.5 leading-relaxed';
-            statusEl.textContent = `📍 ${loc.address}${loc.detail ? ' (' + loc.detail + ')' : ''}`;
-
-            const previewLink = document.getElementById('gmaps-preview-link');
-            previewLink.href = loc.googleMapsUrl;
-            previewLink.classList.remove('hidden');
-
-            const addrField = document.getElementById('cust-address');
-            if (!addrField.value.trim()) {
-                addrField.value = loc.detail ? `${loc.address} (${loc.detail})` : loc.address;
-            }
-        }
-
-        function confirmMapPicker() {
-            if (!pickerDraft) return;
-            const detail = getValue('map-detail');
-            const address = pickerDraft.address || `Titik Google Maps (${pickerDraft.lat.toFixed(6)}, ${pickerDraft.lng.toFixed(6)})`;
-            const googleMapsUrl = buildGoogleMapsUrl(pickerDraft.lat, pickerDraft.lng);
-            saveLocation({
-                lat: pickerDraft.lat,
-                lng: pickerDraft.lng,
-                address,
-                detail,
-                googleMapsUrl
-            });
-            closeMapPicker();
-            showToast('Titik Google Maps berhasil disimpan!');
-        }
-
-        // Checkout via WhatsApp
-        function checkoutWhatsApp() {
-            if (cart.length === 0) return;
-
-            const requiredFields = [
-                ['cust-name', 'Mohon isi Nama Customer terlebih dahulu!'],
-                ['cust-phone', 'Mohon isi Nomor WhatsApp / Telepon!'],
-                ['cust-address', 'Mohon isi Alamat Lengkap pengiriman!'],
-            ];
-            for (const [id, message] of requiredFields) {
-                if (!getValue(id)) {
-                    showToast(message, 'warning');
-                    document.getElementById(id).focus();
-                    return;
-                }
-            }
-
-            if (!selectedLocation) {
-                showToast('Mohon pilih titik lokasi pengantaran di Google Maps terlebih dahulu!', 'warning');
-                return;
-            }
-
-            const custName = getValue('cust-name');
-            const custPhone = getValue('cust-phone');
-            const custAddress = getValue('cust-address');
-            const note = getValue('order-note');
-            const mapsLink = selectedLocation.googleMapsUrl || buildGoogleMapsUrl(selectedLocation.lat, selectedLocation.lng);
-
-            let totalPrice = 0;
-            let totalProtein = 0;
-            const lines = cart.map((item, index) => {
-                const p = findProduct(item.productId);
-                const sub = p.price * item.qty;
-                totalPrice += sub;
-                totalProtein += p.protein * item.qty;
-                return `${index + 1}. ${p.name} (${p.weight}g) x ${item.qty} = ${formatPrice(sub)}`;
-            });
-
-            let message = `Halo *Provit*! Saya ingin memesan paket dada ayam fillet sehat:\n\n`;
-            message += `*DATA PEMESAN*\n`;
-            message += `• Nama: ${custName}\n`;
-            message += `• No. HP/WA: ${custPhone}\n`;
-            message += `• Alamat: ${custAddress}\n`;
-            message += `• Titik Lokasi: ${selectedLocation.address}${selectedLocation.detail ? ' (' + selectedLocation.detail + ')' : ''}\n`;
-            message += `• Link Google Maps: ${mapsLink}\n`;
-            message += `\n*DETAIL PESANAN*\n`;
-            message += lines.join('\n');
-            message += `\n\n*Total Protein:* ${totalProtein}g\n`;
-            message += `*Total Pembayaran:* ${formatPrice(totalPrice)}\n`;
-            if (note) {
-                message += `*Catatan:* ${note}\n`;
-            }
-            message += `\nMohon info ketersediaan stok & pengiriman ya. Terima kasih!`;
-
-            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(waUrl, '_blank', 'noopener,noreferrer');
-        }
-
-        // Inisialisasi
-        document.addEventListener('DOMContentLoaded', () => {
-            renderMenu();
-            calculateNutrition();
-            updateCartUI();
-            lucide.createIcons();
-        });
-    </script>
-</body>
-</html>
+// ... existing code ... -->
