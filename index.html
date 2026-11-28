@@ -685,45 +685,19 @@
                     <button type="button" id="btn-layer-hybrid" onclick="setGoogleMapLayer('hybrid')" class="px-3 py-2 bg-white text-slate-700 hover:bg-slate-50 transition-colors">Satelit</button>
                 </div>
 
-                <!-- Banner Peringatan Jika Lokasi Belum Aktif -->
-                <button type="button" id="gps-banner-btn" onclick="openGpsPromptSheet()" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white rounded-2xl px-4 py-3 shadow-xl flex items-center justify-between gap-2 transition-all">
+                <!-- Banner Peringatan Jika Lokasi Belum Aktif (Langsung minta izin GPS saat diklik) -->
+                <button type="button" id="gps-banner-btn" onclick="requestAndCenterGPS(false)" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-500 hover:bg-amber-600 active:scale-[0.99] text-slate-950 rounded-2xl px-4 py-3 shadow-xl flex items-center justify-between gap-2 transition-all">
                     <div class="flex items-center gap-2.5 text-left">
-                        <span class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                        <span class="w-7 h-7 rounded-full bg-slate-950/10 flex items-center justify-center shrink-0">
                             <i data-lucide="navigation" class="w-4 h-4"></i>
                         </span>
                         <div>
-                            <span id="gps-banner-title" class="font-display font-bold text-xs sm:text-sm block leading-tight">Aktifkan pencarian lokasi otomatis</span>
-                            <span id="gps-banner-sub" class="text-[10px] text-amber-100 block">Ketuk untuk nyalakan GPS / izin lokasi</span>
+                            <span id="gps-banner-title" class="font-display font-bold text-xs sm:text-sm block leading-tight">Aktifkan lokasi saya</span>
+                            <span id="gps-banner-sub" class="text-[10px] text-slate-900/80 font-medium block">Ketuk untuk bagikan lokasi atau geser peta manual</span>
                         </div>
                     </div>
                     <i data-lucide="chevron-right" class="w-4 h-4 shrink-0"></i>
                 </button>
-
-                <!-- Bottom Sheet Instruksi Nyalakan Lokasi HP (Muncul saat GPS HP mati / izin ditolak) -->
-                <div id="gps-prompt-sheet" class="hidden absolute inset-0 z-[1005] bg-slate-950/60 backdrop-blur-[2px] flex items-end p-3">
-                    <div class="w-full bg-white rounded-3xl p-5 shadow-2xl space-y-4 border border-blue-100">
-                        <div class="flex items-start gap-3">
-                            <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                                <i data-lucide="locate-off" class="w-6 h-6"></i>
-                            </div>
-                            <div class="space-y-1">
-                                <h4 id="gps-sheet-title" class="font-display font-extrabold text-base text-slate-900">Lokasi (GPS) di HP Belum Nyala</h4>
-                                <p id="gps-sheet-desc" class="text-xs text-slate-600 leading-relaxed">
-                                    Tarik layar HP dari atas ke bawah lalu nyalakan ikon <strong>Lokasi / GPS</strong>, kemudian tekan tombol <strong>Coba Lagi</strong> di bawah ini.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2.5 pt-1">
-                            <button type="button" onclick="closeGpsPromptSheet()" class="py-3 px-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition-all">
-                                Pilih Manual
-                            </button>
-                            <button type="button" onclick="retryGpsFromSheet()" class="py-3 px-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-blue-600/20 flex items-center justify-center gap-1.5 transition-all">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                <span>Coba Lagi</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Tombol Panah Lokasi Saya di Pojok Kanan Bawah -->
                 <button type="button" onclick="requestAndCenterGPS(false)" aria-label="Ke lokasi saya" class="absolute bottom-24 right-3 z-[1000] w-11 h-11 rounded-full bg-white shadow-lg border border-blue-200 text-blue-600 flex items-center justify-center hover:bg-blue-50 active:scale-95 transition-all">
@@ -1273,35 +1247,8 @@
             const modal = document.getElementById('map-modal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            closeGpsPromptSheet();
             stopGpsWatcher();
             hideSearchResults();
-        }
-
-        function openGpsPromptSheet() {
-            const sheet = document.getElementById('gps-prompt-sheet');
-            const titleEl = document.getElementById('gps-sheet-title');
-            const descEl = document.getElementById('gps-sheet-desc');
-
-            if (lastGpsErrorCode === 1) {
-                titleEl.textContent = 'Izin Lokasi Browser Diblokir';
-                descEl.innerHTML = 'Ketuk ikon <strong>gembok / pengaturan situs</strong> di bilah alamat browser, ubah <strong>Lokasi</strong> menjadi <strong>Izinkan</strong>, lalu tekan <strong>Coba Lagi</strong>.';
-            } else {
-                titleEl.textContent = 'Lokasi (GPS) di HP Belum Nyala';
-                descEl.innerHTML = 'Tarik panel cepat HP dari atas ke bawah lalu nyalakan ikon <strong>Lokasi / GPS</strong>. Peta akan otomatis mengarah ke posisimu atau tekan <strong>Coba Lagi</strong>.';
-            }
-
-            sheet.classList.remove('hidden');
-            lucide.createIcons();
-        }
-
-        function closeGpsPromptSheet() {
-            document.getElementById('gps-prompt-sheet')?.classList.add('hidden');
-        }
-
-        function retryGpsFromSheet() {
-            closeGpsPromptSheet();
-            requestAndCenterGPS(false);
         }
 
         // Otomatis coba ulang GPS jika customer baru kembali dari Pengaturan HP setelah menyalakan Lokasi
@@ -1326,7 +1273,6 @@
                     const lng = pos.coords.longitude;
                     lastGpsErrorCode = null;
                     toggleGpsBanner(false);
-                    closeGpsPromptSheet();
 
                     if (pickerMap) {
                         markUserGpsPosition(lat, lng);
@@ -1352,7 +1298,7 @@
         // Meminta izin lokasi browser & otomatis terbangkan peta ke lokasi customer
         async function requestAndCenterGPS(isAutoOnOpen = false) {
             toggleGpsBanner(false);
-            setPinSearchingState(true, 'Mencari lokasi Anda...', 'Memeriksa GPS & izin lokasi...');
+            setPinSearchingState(true, 'Mencari lokasi Anda...', 'Meminta izin lokasi...');
             startGpsWatcher();
 
             try {
@@ -1360,7 +1306,6 @@
                 lastGpsErrorCode = null;
                 hasCenteredOnGps = true;
                 toggleGpsBanner(false);
-                closeGpsPromptSheet();
 
                 if (pickerMap) {
                     pickerMap.invalidateSize();
@@ -1375,19 +1320,19 @@
                 const bannerTitle = document.getElementById('gps-banner-title');
                 const bannerSub = document.getElementById('gps-banner-sub');
 
-                if (lastGpsErrorCode === 1) {
-                    bannerTitle.textContent = 'Izin lokasi diblokir browser';
-                    bannerSub.textContent = 'Ketuk untuk cara mengizinkan atau geser peta manual';
-                } else {
-                    bannerTitle.textContent = 'GPS HP belum menyala';
-                    bannerSub.textContent = 'Nyalakan Lokasi di HP atau geser peta untuk pilih titik';
-                }
+                bannerTitle.textContent = 'Aktifkan lokasi saya';
+                bannerSub.textContent = lastGpsErrorCode === 1
+                    ? 'Izinkan lokasi di browser atau geser peta manual'
+                    : 'Nyalakan GPS HP lalu ketuk di sini, atau geser peta';
 
                 toggleGpsBanner(true);
                 onMapMoved();
 
                 if (!isAutoOnOpen) {
-                    openGpsPromptSheet();
+                    const msg = lastGpsErrorCode === 1
+                        ? 'Izin lokasi diblokir browser. Izinkan akses lokasi di pengaturan situs (ikon gembok) atau geser peta manual.'
+                        : 'GPS HP belum aktif. Nyalakan Lokasi di HP lalu ketuk kembali, atau geser peta manual.';
+                    showToast(msg, 'warning');
                 }
             }
         }
