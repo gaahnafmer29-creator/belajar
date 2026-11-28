@@ -29,7 +29,7 @@
         }
     </script>
     <style>
-        /* Custom smooth transitions and subtle animations */
+        /* Transisi halaman dan animasi halus */
         body {
             background-color: #eff6ff;
             color: #0f172a;
@@ -62,7 +62,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-        /* Google Maps style control adjustments */
+        /* Penyesuaian atribusi peta */
         .leaflet-control-attribution {
             font-size: 10px !important;
             background: rgba(255, 255, 255, 0.85) !important;
@@ -72,13 +72,13 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-blue-200 selection:text-blue-900">
 
-    <!-- Toast Notification Container (No alert() used) -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <!-- Container Notifikasi Toast -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[70] flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- ==================== HEADER ==================== -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-blue-200/80 shadow-sm">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
-            <!-- Brand Logo (Klik untuk kembali ke Beranda) -->
+            <!-- Logo Brand -->
             <button onclick="navigateTo('home')" class="flex items-center gap-2.5 text-left group focus:outline-none">
                 <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white shadow-md shadow-blue-600/20 group-hover:scale-105 transition-transform">
                     <i data-lucide="flame" class="w-6 h-6 text-sky-300 fill-sky-300"></i>
@@ -90,7 +90,7 @@
                 </div>
             </button>
 
-            <!-- Right Controls: Back button (muncul di sub-halaman) + Cart Button -->
+            <!-- Kontrol Kanan: Tombol Kembali + Tombol Keranjang -->
             <div class="flex items-center gap-2.5">
                 <button id="header-back-btn" onclick="navigateTo('home')" class="hidden items-center gap-1.5 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 px-3.5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm transition-all">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -106,7 +106,7 @@
         </div>
     </header>
 
-    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <!-- ==================== AREA KONTEN UTAMA ==================== -->
     <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-12">
 
         <!-- =========================================================
@@ -114,14 +114,12 @@
              ========================================================= -->
         <section id="view-home" class="page-view space-y-8 sm:space-y-10">
             
-            <!-- Hero / Banner Gambar Produk -->
+            <!-- Hero / Banner Produk -->
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white shadow-xl shadow-blue-950/15 border border-blue-700/50">
-                <!-- Decorative background blobs -->
                 <div class="absolute -top-24 -right-24 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-sky-400/20 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 sm:p-10 lg:p-12 items-center">
-                    <!-- Copywriting -->
                     <div class="lg:col-span-7 space-y-4 sm:space-y-5 text-center lg:text-left">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm text-blue-100 text-xs sm:text-sm font-medium">
                             <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
@@ -143,7 +141,6 @@
                         </div>
                     </div>
 
-                    <!-- Gambar Produk Visual Card -->
                     <div class="lg:col-span-5">
                         <div class="relative rounded-2xl overflow-hidden bg-blue-950/50 border-2 border-white/15 shadow-2xl group">
                             <img 
@@ -152,7 +149,6 @@
                                 onerror="this.onerror=null; this.src='https://placehold.co/600x420/065f46/ffffff?text=Provit+Fillet';"
                                 class="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                             >
-                            <!-- Floating Nutrition Pill -->
                             <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md text-slate-900 p-3 rounded-xl shadow-lg flex items-center justify-between">
                                 <div>
                                     <p class="text-[11px] font-bold uppercase tracking-wider text-blue-600">Dada Fillet Packing</p>
@@ -168,7 +164,7 @@
                 </div>
             </div>
 
-            <!-- TIGA TOMBOL NAVIGASI UTAMA -->
+            <!-- Tiga Menu Navigasi Utama -->
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <h2 class="font-display font-bold text-lg sm:text-xl text-slate-800">Mulai Perjalanan Sehatmu</h2>
@@ -176,7 +172,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                    <!-- Tombol 1: Seputar Kita -->
+                    <!-- Menu 1: Seputar Kita -->
                     <button onclick="navigateTo('about')" class="group relative text-left bg-white hover:bg-blue-50/60 border-2 border-blue-200/90 hover:border-blue-500 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-600/10 transition-all duration-300 flex flex-col justify-between active:scale-[0.99]">
                         <div class="space-y-4">
                             <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
@@ -197,7 +193,7 @@
                         </div>
                     </button>
 
-                    <!-- Tombol 2: Kalkulator Nutrisi -->
+                    <!-- Menu 2: Kalkulator Nutrisi -->
                     <button onclick="navigateTo('calculator')" class="group relative text-left bg-white hover:bg-sky-50/50 border-2 border-blue-500/40 hover:border-sky-500 rounded-3xl p-6 shadow-md shadow-blue-900/5 hover:shadow-xl hover:shadow-sky-500/15 transition-all duration-300 flex flex-col justify-between active:scale-[0.99]">
                         <div class="absolute top-4 right-4 bg-sky-100 text-sky-800 text-[11px] font-bold px-2.5 py-1 rounded-full">
                             Rekomendasi Pintar
@@ -221,7 +217,7 @@
                         </div>
                     </button>
 
-                    <!-- Tombol 3: Menu & Harga -->
+                    <!-- Menu 3: Menu & Harga -->
                     <button onclick="navigateTo('menu')" class="group relative text-left bg-white hover:bg-blue-50/60 border-2 border-blue-200/90 hover:border-blue-500 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-600/10 transition-all duration-300 flex flex-col justify-between active:scale-[0.99]">
                         <div class="space-y-4">
                             <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
@@ -244,7 +240,7 @@
                 </div>
             </div>
 
-            <!-- BAGIAN 'HUBUNGI KAMI' (hanya ikon WA, IG, TikTok) -->
+            <!-- Kanal Resmi Sosial Media -->
             <div class="max-w-2xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border border-blue-200/80 shadow-sm">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
                     <div class="text-center sm:text-left">
@@ -252,15 +248,12 @@
                         <p class="text-sm text-slate-500 mt-1">Terhubung langsung dengan kami melalui kanal resmi berikut.</p>
                     </div>
                     <div class="flex items-center justify-center gap-4">
-                        <!-- WhatsApp Icon Only -->
                         <a href="https://wa.me/201507035950" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-11 h-11 rounded-2xl text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all bg-[#25D366] hover:bg-[#1ebe5a]">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                         </a>
-                        <!-- Instagram Icon Only -->
                         <a href="https://www.instagram.com/kangasepresto?utm_source=ig_web_button_share_sheet&jplx=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-11 h-11 rounded-2xl text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 hover:opacity-90">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="0.9" fill="currentColor"/></svg>
                         </a>
-                        <!-- TikTok Icon Only -->
                         <a href="https://www.tiktok.com/@kang.asep.resto?_r=1&_t=ZS-9BlIgy8iEFE" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-11 h-11 rounded-2xl text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all bg-slate-900 hover:bg-slate-800">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
                         </a>
@@ -273,7 +266,6 @@
              HALAMAN 2: SEPUTAR KITA
              ========================================================= -->
         <section id="view-about" class="page-view hidden space-y-6">
-            <!-- Hero & 3 Keunggulan Ringkas -->
             <div class="bg-white rounded-3xl p-6 sm:p-10 border border-blue-200/80 shadow-sm space-y-6">
                 <div class="max-w-2xl space-y-3">
                     <span class="inline-block text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-3 py-1 rounded-full">Seputar Kita</span>
@@ -285,7 +277,6 @@
                     </p>
                 </div>
 
-                <!-- 3 Poin Keunggulan Ringkas -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                     <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-5 space-y-2">
                         <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center">
@@ -318,7 +309,6 @@
                     </div>
                 </div>
 
-                <!-- Ikon sosial media -->
                 <div class="pt-5 border-t border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p class="font-display font-bold text-sm sm:text-base text-slate-800">Ikuti & Hubungi Kami</p>
                     <div class="flex items-center gap-3.5">
@@ -340,13 +330,12 @@
              HALAMAN 3: KALKULATOR NUTRISI
              ========================================================= -->
         <section id="view-calculator" class="page-view hidden space-y-6">
-            <!-- Back Header -->
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-sky-800 bg-sky-100 px-3 py-1 rounded-full">Analisa Tubuh & Protein</span>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <!-- Kolom kiri: form data tubuh -->
+                <!-- Form Data Tubuh -->
                 <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-blue-200/80 shadow-sm space-y-5">
                     <div>
                         <h1 class="font-display font-extrabold text-2xl text-slate-900">Kalkulator Nutrisi</h1>
@@ -354,7 +343,6 @@
                     </div>
 
                     <form id="nutrition-form" onsubmit="event.preventDefault();" oninput="calculateNutrition();" onchange="calculateNutrition();" class="space-y-4">
-                        <!-- Jenis Kelamin -->
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Jenis Kelamin</label>
                             <div class="grid grid-cols-2 gap-3">
@@ -373,7 +361,6 @@
                             </div>
                         </div>
 
-                        <!-- Usia, Berat Badan, Tinggi Badan -->
                         <div class="grid grid-cols-3 gap-3">
                             <div>
                                 <label for="input-age" class="block text-xs font-bold text-slate-600 mb-1.5">Usia (thn)</label>
@@ -389,7 +376,6 @@
                             </div>
                         </div>
 
-                        <!-- Aktivitas Fisik -->
                         <div>
                             <label for="input-activity" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Aktivitas Fisik</label>
                             <select id="input-activity" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-blue-200 font-semibold text-sm text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
@@ -401,7 +387,6 @@
                             </select>
                         </div>
 
-                        <!-- Target: turun, jaga, naik berat badan -->
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Target Kamu</label>
                             <div class="grid grid-cols-3 gap-2.5">
@@ -428,7 +413,7 @@
                     </form>
                 </div>
 
-                <!-- Kolom kanan: hasil analisa -->
+                <!-- Hasil Analisa & Rekomendasi -->
                 <div class="lg:col-span-6 space-y-5">
                     <div class="bg-gradient-to-br from-blue-900 to-blue-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
                         <div class="flex items-center justify-between border-b border-white/10 pb-4">
@@ -441,7 +426,6 @@
                             </div>
                         </div>
 
-                        <!-- Highlight Target Protein Harian -->
                         <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-5 flex items-center justify-between">
                             <div>
                                 <p class="text-xs font-medium text-blue-200">Target Protein Harian</p>
@@ -454,7 +438,6 @@
                             </div>
                         </div>
 
-                        <!-- Estimasi Kalori & Berat Ideal -->
                         <div class="grid grid-cols-2 gap-3 text-sm">
                             <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
                                 <p class="text-xs text-blue-200/80">Kebutuhan Kalori</p>
@@ -466,7 +449,6 @@
                             </div>
                         </div>
 
-                        <!-- Rekomendasi takaran dada ayam -->
                         <div class="bg-white text-slate-900 rounded-2xl p-6 space-y-5 shadow-md">
                             <div class="space-y-2">
                                 <span class="text-[11px] font-extrabold uppercase tracking-wider text-blue-600 block">Rekomendasi</span>
@@ -477,7 +459,7 @@
                                     Menyuplai ~108.5g protein murni (98% target harianmu terpenuhi praktis!)
                                 </p>
                             </div>
-                            <!-- Pilihan Durasi Stok (1 Hari / 3 Hari / 1 Minggu) -->
+
                             <div class="pt-4 border-t border-blue-100 space-y-3">
                                 <label class="block text-xs font-bold text-slate-600">Pilih Durasi Stok ke Keranjang:</label>
                                 <div class="grid grid-cols-3 gap-2.5">
@@ -509,7 +491,6 @@
              HALAMAN 4: MENU & HARGA
              ========================================================= -->
         <section id="view-menu" class="page-view hidden space-y-6">
-            <!-- Back Header -->
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-blue-800 bg-blue-100 px-3 py-1 rounded-full">Katalog Dada Fillet</span>
             </div>
@@ -522,7 +503,7 @@
                     </div>
                 </div>
 
-                <!-- Grid Produk 100g & 50g -->
+                <!-- Grid Produk -->
                 <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
                 <!-- Banner Stok 7 Hari -->
@@ -568,9 +549,8 @@
             </button>
         </div>
 
-        <!-- Drawer Body (Scrollable) -->
+        <!-- Drawer Body -->
         <div class="flex-1 overflow-y-auto p-5 space-y-5">
-            <!-- Daftar Item Keranjang -->
             <div id="cart-items-container" class="space-y-3"></div>
 
             <!-- Form Data Customer & Lokasi Google Maps -->
@@ -615,7 +595,7 @@
             </div>
         </div>
 
-        <!-- Drawer Footer: Ringkasan & Tombol Checkout WA -->
+        <!-- Drawer Footer -->
         <div class="p-5 border-t border-blue-200 bg-slate-50 space-y-4">
             <div class="space-y-1.5 text-xs">
                 <div class="flex justify-between text-slate-600">
@@ -664,14 +644,14 @@
             <div class="relative flex-1 min-h-[360px]">
                 <div id="map-picker" class="absolute inset-0"></div>
 
-                <!-- Pin Tengah dengan Bubble Nama Jalan & Indikator Loading (Seperti di contoh) -->
+                <!-- Pin Tengah dengan Bubble Nama Jalan -->
                 <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center z-[1000] -mt-12">
                     <div id="pin-bubble" class="mb-1.5 bg-slate-900/95 text-white px-3.5 py-2 rounded-2xl shadow-xl border border-white/15 text-center max-w-[240px]">
-                        <span id="pin-bubble-label" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block leading-tight">Mencari lokasi Anda...</span>
-                        <span id="pin-bubble-street" class="text-xs font-semibold text-white block truncate mt-0.5">Menunggu sinyal GPS</span>
+                        <span id="pin-bubble-label" class="text-[10px] font-bold uppercase tracking-wider text-sky-400 block leading-tight">Titik pengantaran</span>
+                        <span id="pin-bubble-street" class="text-xs font-semibold text-white block truncate mt-0.5">Geser peta untuk memilih</span>
                     </div>
                     <div class="relative flex items-center justify-center">
-                        <span id="pin-loading-ring" class="absolute w-11 h-11 rounded-full border-2 border-blue-500/40 border-t-blue-600 animate-spin"></span>
+                        <span id="pin-loading-ring" class="hidden absolute w-11 h-11 rounded-full border-2 border-blue-500/40 border-t-blue-600 animate-spin"></span>
                         <div class="w-9 h-9 rounded-full bg-slate-900 text-white shadow-lg flex items-center justify-center border-2 border-white">
                             <i data-lucide="map-pin" class="w-5 h-5 text-red-500 fill-red-500"></i>
                         </div>
@@ -689,26 +669,20 @@
                     </button>
                 </div>
 
-                <!-- Banner Peringatan Jika Lokasi Belum Aktif -->
-                <div id="gps-banner-box" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-500 text-slate-950 rounded-2xl p-3.5 shadow-xl space-y-2.5">
+                <!-- Kotak Kuning: Pemberitahuan Aktifkan Lokasi Anda atau Pilih Manual -->
+                <div id="gps-banner-box" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-500 text-slate-950 rounded-2xl p-3.5 shadow-xl flex items-center justify-between gap-3">
                     <div class="flex items-start gap-2.5">
                         <span class="w-8 h-8 rounded-xl bg-slate-950/15 flex items-center justify-center shrink-0 mt-0.5">
                             <i data-lucide="locate-off" class="w-4 h-4"></i>
                         </span>
-                        <div class="flex-1">
-                            <span id="gps-banner-title" class="font-display font-extrabold text-xs sm:text-sm block leading-tight">GPS / Lokasi HP Belum Aktif</span>
-                            <span id="gps-banner-sub" class="text-[11px] text-slate-900/90 font-medium block mt-0.5 leading-snug">Nyalakan ikon Lokasi di panel cepat HP Anda, lalu ketuk tombol di bawah.</span>
+                        <div>
+                            <span id="gps-banner-title" class="font-display font-extrabold text-xs sm:text-sm block leading-tight">Aktifkan lokasi Anda atau pilih manual</span>
+                            <span id="gps-banner-sub" class="text-[11px] text-slate-900/90 font-medium block mt-0.5 leading-snug">Nyalakan GPS perangkat Anda untuk deteksi otomatis, atau geser peta secara manual.</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button type="button" onclick="requestAndCenterGPS(false)" class="flex-1 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all">
-                            <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
-                            <span>Bagikan Lokasi Sekarang</span>
-                        </button>
-                        <button type="button" onclick="useManualMapMode()" class="py-2 px-3 rounded-xl bg-white/80 hover:bg-white text-slate-900 font-bold text-xs transition-all">
-                            Geser Manual
-                        </button>
-                    </div>
+                    <button type="button" onclick="useManualMapMode()" class="shrink-0 py-2 px-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white font-bold text-xs transition-all">
+                        Pilih Manual
+                    </button>
                 </div>
 
                 <!-- Tombol Panah Lokasi Saya di Pojok Kanan Bawah -->
@@ -785,12 +759,12 @@
             }
         ];
 
-        // State
+        // State aplikasi
         let calcDurationDays = 1;
         let recommendedPlan = { count100: 3, count50: 1 };
         let cart = [];
 
-        // Helpers
+        // Fungsi pembantu
         const findProduct = id => PRODUCTS.find(p => p.id === id);
         const getValue = id => document.getElementById(id).value.trim();
         const setText = (id, text) => { document.getElementById(id).textContent = text; };
@@ -829,7 +803,7 @@
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateY(8px)';
                 setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            }, 3200);
         }
 
         // Navigasi antar halaman
@@ -851,7 +825,7 @@
             lucide.createIcons();
         }
 
-        // Kalkulator nutrisi
+        // Kalkulator Nutrisi
         function calculateNutrition() {
             const gender = document.querySelector('input[name="gender"]:checked')?.value ?? 'male';
             const goal = document.querySelector('input[name="goal"]:checked')?.value ?? 'maintain';
@@ -861,7 +835,6 @@
             const height = readNumber('input-height', 170, 100, 230);
             const activity = parseFloat(document.getElementById('input-activity')?.value) || 1.55;
 
-            // BMR dengan rumus Mifflin-St Jeor, lalu dikali faktor aktivitas (TDEE)
             const bmr = 10 * weight + 6.25 * height - 5 * age + (gender === 'male' ? 5 : -161);
             let calories = bmr * activity;
             let proteinFactor = 1.7;
@@ -877,7 +850,6 @@
             const targetProtein = Math.round(weight * proteinFactor);
             const targetCalories = Math.round(calories);
 
-            // BMI dan berat badan ideal
             const heightM = height / 100;
             const bmi = +(weight / (heightM * heightM)).toFixed(1);
             const bmiStatus = bmi < 18.5 ? 'Kurang'
@@ -887,7 +859,6 @@
             const minIdeal = Math.round(18.5 * heightM * heightM);
             const maxIdeal = Math.round(24.9 * heightM * heightM);
 
-            // Pack dada ayam diambil ~65% dari target protein harian (minimal 31g)
             const chickenProtein = Math.max(31, Math.round(targetProtein * 0.65));
             let count100 = Math.max(1, Math.floor(chickenProtein / 31));
             const remainder = chickenProtein - count100 * 31;
@@ -939,7 +910,7 @@
             toggleCartDrawer(true);
         }
 
-        // Render katalog menu & harga
+        // Render Katalog Menu & Harga
         function renderMenu() {
             const grid = document.getElementById('menu-grid');
             if (!grid) return;
@@ -1000,7 +971,7 @@
             toggleCartDrawer(true);
         }
 
-        // Keranjang
+        // Keranjang Belanja
         function addToCart(productId, qty = 1, notify = true) {
             const existing = cart.find(item => item.productId === productId);
             if (existing) {
@@ -1096,10 +1067,10 @@
         }
 
         // ==================== GOOGLE MAPS LOCATION PICKER ====================
-        let selectedLocation = null;   // { lat, lng, address, detail, googleMapsUrl }
+        let selectedLocation = null;
         let pickerMap = null;
         let googleTileLayer = null;
-        let pickerDraft = null;        // { lat, lng, address, shortName }
+        let pickerDraft = null;
         let reverseTimer = null;
         let reverseAbort = null;
         let searchTimer = null;
@@ -1107,12 +1078,10 @@
         let userLocationDot = null;
         let gpsWatchId = null;
         let hasCenteredOnGps = false;
-        let lastGpsErrorCode = null;
 
         const CAIRO_CENTER = [30.0444, 31.2357];
         const NOMINATIM = 'https://nominatim.openstreetmap.org';
 
-        // URL Tile Resmi Google Maps (Roadmap & Hybrid/Satelit)
         const GOOGLE_TILE_URLS = {
             roadmap: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=id',
             hybrid: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&hl=id'
@@ -1155,16 +1124,18 @@
             const switcher = document.getElementById('map-layer-switcher');
             if (!banner || !switcher) return;
             banner.classList.toggle('hidden', !show);
-            switcher.classList.toggle('top-28', show);
+            switcher.classList.toggle('top-24', show);
             switcher.classList.toggle('top-3', !show);
         }
 
+        // Mode pilih/geser manual titik pengantaran
         function useManualMapMode() {
             toggleGpsBanner(false);
+            setPinSearchingState(false, 'Pilih manual', 'Geser peta ke titik tujuan');
             onMapMoved();
         }
 
-        // Membuka modal Google Maps & otomatis meminta izin lokasi customer
+        // Membuka modal Google Maps dan memuat titik atau lokasi GPS pengguna
         function openMapPicker() {
             const modal = document.getElementById('map-modal');
             modal.classList.remove('hidden');
@@ -1178,7 +1149,7 @@
                     attribution: 'Data Peta &copy; Google Maps'
                 }).addTo(pickerMap);
                 pickerMap.on('movestart', () => {
-                    setPinSearchingState(true, 'Menentukan titik...', 'Menggeser peta...');
+                    setPinSearchingState(true, 'Titik pengantaran', 'Menggeser peta...');
                 });
                 pickerMap.on('moveend', onMapMoved);
             }
@@ -1206,7 +1177,6 @@
             stopGpsWatcher();
         }
 
-        // Ambil koordinat GPS customer (akurasi tinggi lalu fallback cepat)
         function fetchCustomerGPS() {
             return new Promise((resolve, reject) => {
                 if (!navigator.geolocation) {
@@ -1231,14 +1201,12 @@
             });
         }
 
-        // Pantau otomatis jika customer menyalakan GPS dari panel atas HP saat peta terbuka
         function startGpsWatcher() {
             if (!navigator.geolocation || gpsWatchId !== null) return;
             gpsWatchId = navigator.geolocation.watchPosition(
                 pos => {
                     const lat = pos.coords.latitude;
                     const lng = pos.coords.longitude;
-                    lastGpsErrorCode = null;
                     toggleGpsBanner(false);
 
                     if (pickerMap) {
@@ -1246,7 +1214,7 @@
                         if (!hasCenteredOnGps) {
                             hasCenteredOnGps = true;
                             pickerMap.flyTo([lat, lng], 17, { duration: 0.9 });
-                            showToast('Lokasi GPS terdeteksi!');
+                            showToast('Lokasi aktif & terdeteksi!');
                         }
                     }
                 },
@@ -1262,7 +1230,6 @@
             }
         }
 
-        // Saat customer kembali dari pengaturan HP setelah menyalakan lokasi
         function retryGpsOnReturn() {
             const modal = document.getElementById('map-modal');
             if (!modal || modal.classList.contains('hidden')) return;
@@ -1297,15 +1264,12 @@
             }).addTo(pickerMap);
         }
 
-        // Meminta izin lokasi browser & otomatis terbangkan peta ke lokasi customer
+        // Cek lokasi: jika aktif langsung arahkan peta, jika belum aktif tampilkan kotak kuning pemberitahuan
         async function requestAndCenterGPS(isAutoOnOpen = false) {
-            toggleGpsBanner(false);
-            setPinSearchingState(true, 'Mencari lokasi Anda...', 'Meminta izin akses lokasi...');
             startGpsWatcher();
 
             try {
                 const coords = await fetchCustomerGPS();
-                lastGpsErrorCode = null;
                 hasCenteredOnGps = true;
                 toggleGpsBanner(false);
 
@@ -1315,29 +1279,20 @@
                     pickerMap.flyTo([coords.lat, coords.lng], 17, { duration: 0.9 });
                 }
                 if (!isAutoOnOpen) {
-                    showToast('Berhasil menemukan lokasimu!');
+                    showToast('Lokasi aktif & ditemukan!');
                 }
             } catch (err) {
-                lastGpsErrorCode = err && err.code ? err.code : 2;
-                const bannerTitle = document.getElementById('gps-banner-title');
-                const bannerSub = document.getElementById('gps-banner-sub');
-
-                if (lastGpsErrorCode === 1) {
-                    bannerTitle.textContent = 'Izin Lokasi Diblokir Browser';
-                    bannerSub.textContent = 'Ketuk ikon gembok di bilah alamat browser → izinkan Lokasi → ketuk Bagikan Lokasi Sekarang.';
-                    setPinSearchingState(false, 'Izin lokasi diblokir', 'Aktifkan izin atau geser peta');
-                } else {
-                    bannerTitle.textContent = 'Lokasi (GPS) HP Belum Menyala';
-                    bannerSub.textContent = 'Tarik layar HP dari atas → nyalakan ikon Lokasi (GPS) → ketuk Bagikan Lokasi Sekarang.';
-                    setPinSearchingState(false, 'GPS HP belum menyala', 'Nyalakan GPS atau geser peta');
-                }
-
+                setText('gps-banner-title', 'Aktifkan lokasi Anda atau pilih manual');
+                setText('gps-banner-sub', 'Nyalakan GPS perangkat Anda untuk deteksi otomatis, atau geser peta secara manual.');
+                setPinSearchingState(false, 'Lokasi belum aktif', 'Aktifkan lokasi atau pilih manual');
                 toggleGpsBanner(true);
+                if (pickerMap && !pickerDraft) {
+                    onMapMoved();
+                }
                 lucide.createIcons();
             }
         }
 
-        // Setiap peta selesai digeser, perbarui koordinat & alamat titik pin
         function onMapMoved() {
             if (!pickerMap) return;
             const c = pickerMap.getCenter();
@@ -1381,7 +1336,6 @@
             }
         }
 
-        // Pencarian alamat di modal Google Maps
         async function searchAddress() {
             const q = getValue('map-search');
             if (q.length < 3) {
@@ -1438,7 +1392,6 @@
             }
         });
 
-        // Simpan titik Google Maps & tampilkan di keranjang
         function saveLocation(loc) {
             selectedLocation = loc;
             const gmapsUrl = buildGoogleMapsUrl(loc.lat, loc.lng);
