@@ -677,6 +677,18 @@
                         </div>
                     </div>
                     <div class="w-1 h-2.5 bg-slate-900 rounded-b-full -mt-0.5"></div>
+                </div>
+
+                <!-- Switcher Mode Google Maps (Peta / Satelit) -->
+                <div id="map-layer-switcher" class="absolute top-3 right-3 z-[1000] bg-white rounded-xl shadow-md border border-blue-200 overflow-hidden flex text-xs font-bold transition-all">
+                    <button type="button" id="btn-layer-roadmap" onclick="setGoogleMapLayer('roadmap')" class="px-3 py-2 bg-blue-600 text-white transition-colors">
+                        Peta
+                    </button>
+                    <button type="button" id="btn-layer-hybrid" onclick="setGoogleMapLayer('hybrid')" class="px-3 py-2 bg-white text-slate-700 hover:bg-slate-50 transition-colors">
+                        Satelit
+                    </button>
+                </div>
+
                 <!-- Banner Peringatan Jika Lokasi Belum Aktif -->
                 <div id="gps-banner-box" class="hidden absolute top-3 left-3 right-3 z-[1001] bg-amber-500 text-slate-950 rounded-2xl p-3.5 shadow-xl space-y-2.5">
                     <div class="flex items-start gap-2.5">
@@ -1151,7 +1163,140 @@
             toggleGpsBanner(false);
             onMapMoved();
         }
-// ... existing code ... -->
+
+        // Membuka modal Google Maps & otomatis meminta izin lokasi customer
+        function openMapPicker() {
+            const modal = document.getElementById('map-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('map-detail').value = selectedLocation?.detail || '';
+
+            if (!pickerMap) {
+                pickerMap = L.map('map-picker', { zoomControl: false }).setView(CAIRO_CENTER, 15);
+                googleTileLayer = L.tileLayer(GOOGLE_TILE_URLS.roadmap, {
+                    maxZoom: 20,
+                    attribution: 'Data Peta &copy; Google Maps'
+                }).addTo(pickerMap);
+                pickerMap.on('movestart', () => {
+                    setPinSearchingState(true, 'Menentukan titik...', 'Menggeser peta...');
+                });
+                pickerMap.on('moveend', onMapMoved);
+            }
+
+            setTimeout(() => {
+                pickerMap.invalidateSize();
+                if (selectedLocation) {
+                    toggleGpsBanner(false);
+                    pickerMap.setView([selectedLocation.lat, selectedLocation.lng], 17);
+                    onMapMoved();
+                } else {
+                    hasCenteredOnGps = false;
+                    requestAndCenterGPS(true);
+                }
+            }, 80);
+
+            lucide.createIcons();
+        }
+
+        function closeMapPicker() {
+            const modal = document.getElementById('map-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            hideSearchResults();
+            stopGpsWatcher();
+        }
+
+        // Ambil koordinat GPS customer (akurasi tinggi lalu fallback cepat)
+        function fetchCustomerGPS() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject({ code: 2 });
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                    err => {
+                        if (err.code === 1) {
+                            reject(err);
+                            return;
+                        }
+                        navigator.geolocation.getCurrentPosition(
+                            pos2 => resolve({ lat: pos2.coords.latitude, lng: pos2.coords.longitude }),
+                            err2 => reject(err2),
+                            { enableHighAccuracy: false, timeout: 6000, maximumAge: 60000 }
+                        );
+                    },
+                    { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+                );
+            });
+        }
+
+        // Pantau otomatis jika customer menyalakan GPS dari panel atas HP saat peta terbuka
+        function startGpsWatcher() {
+            if (!navigator.geolocation || gpsWatchId !== null) return;
+            gpsWatchId = navigator.geolocation.watchPosition(
+                pos => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    lastGpsErrorCode = null;
+                    toggleGpsBanner(false);
+
+                    if (pickerMap) {
+                        markUserGpsPosition(lat, lng);
+                        if (!hasCenteredOnGps) {
+                            hasCenteredOnGps = true;
+                            pickerMap.flyTo([lat, lng], 17, { duration: 0.9 });
+                            showToast('Lokasi GPS terdeteksi!');
+                        }
+                    }
+                },
+                () => {},
+                { enableHighAccuracy: true, maximumAge: 5000 }
+            );
+        }
+
+        function stopGpsWatcher() {
+            if (gpsWatchId !== null && navigator.geolocation) {
+                navigator.geolocation.clearWatch(gpsWatchId);
+                gpsWatchId = null;
+            }
+        }
+
+        // Saat customer kembali dari pengaturan HP setelah menyalakan lokasi
+        function retryGpsOnReturn() {
+            const modal = document.getElementById('map-modal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (!hasCenteredOnGps) {
+                requestAndCenterGPS(true);
+            }
+        }
+        window.addEventListener('focus', retryGpsOnReturn);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') retryGpsOnReturn();
+        });
+
+        function markUserGpsPosition(lat, lng) {
+            if (!pickerMap) return;
+            if (userLocationCircle) pickerMap.removeLayer(userLocationCircle);
+            if (userLocationDot) pickerMap.removeLayer(userLocationDot);
+
+            userLocationCircle = L.circle([lat, lng], {
+                radius: 40,
+                color: '#2563eb',
+                fillColor: '#3b82f6',
+                fillOpacity: 0.15,
+                weight: 1.5
+            }).addTo(pickerMap);
+
+            userLocationDot = L.circleMarker([lat, lng], {
+                radius: 7,
+                color: '#ffffff',
+                weight: 2.5,
+                fillColor: '#2563eb',
+                fillOpacity: 1
+            }).addTo(pickerMap);
+        }
+
         // Meminta izin lokasi browser & otomatis terbangkan peta ke lokasi customer
         async function requestAndCenterGPS(isAutoOnOpen = false) {
             toggleGpsBanner(false);
@@ -1191,4 +1336,204 @@
                 lucide.createIcons();
             }
         }
-// ... existing code ... -->
+
+        // Setiap peta selesai digeser, perbarui koordinat & alamat titik pin
+        function onMapMoved() {
+            if (!pickerMap) return;
+            const c = pickerMap.getCenter();
+            pickerDraft = { lat: c.lat, lng: c.lng, address: null, shortName: null };
+            setText('map-coords-label', `${c.lat.toFixed(6)}, ${c.lng.toFixed(6)}`);
+            setText('map-address', 'Memuat alamat lokasi...');
+            setPinSearchingState(true, 'Titik pengantaran', 'Memuat nama jalan...');
+            document.getElementById('map-confirm-btn').disabled = false;
+
+            clearTimeout(reverseTimer);
+            reverseTimer = setTimeout(() => reverseGeocode(c.lat, c.lng), 500);
+        }
+
+        async function reverseGeocode(lat, lng) {
+            if (reverseAbort) reverseAbort.abort();
+            reverseAbort = new AbortController();
+            try {
+                const url = `${NOMINATIM}/reverse?format=json&zoom=18&addressdetails=1&accept-language=id&lat=${lat}&lon=${lng}`;
+                const res = await fetch(url, { signal: reverseAbort.signal });
+                const data = await res.json();
+                if (pickerDraft && pickerDraft.lat === lat && pickerDraft.lng === lng) {
+                    const addr = data.address || {};
+                    const road = addr.road || addr.pedestrian || addr.suburb || addr.neighbourhood || addr.city_district || '';
+                    const houseNo = addr.house_number ? ` No. ${addr.house_number}` : '';
+                    const shortLabel = road ? `${road}${houseNo}` : (data.display_name ? data.display_name.split(',')[0] : `${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+
+                    pickerDraft.address = data.display_name || null;
+                    pickerDraft.shortName = shortLabel;
+                    setText('map-address', pickerDraft.address || `Koordinat Google Maps: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+                    setPinSearchingState(false, 'Titik pengantaran', shortLabel);
+                }
+            } catch (err) {
+                if (err.name === 'AbortError') return;
+                if (pickerDraft) {
+                    const fallbackLabel = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                    pickerDraft.address = null;
+                    pickerDraft.shortName = fallbackLabel;
+                    setText('map-address', `Koordinat Google Maps: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+                    setPinSearchingState(false, 'Titik pengantaran', fallbackLabel);
+                }
+            }
+        }
+
+        // Pencarian alamat di modal Google Maps
+        async function searchAddress() {
+            const q = getValue('map-search');
+            if (q.length < 3) {
+                hideSearchResults();
+                return;
+            }
+            try {
+                const url = `${NOMINATIM}/search?format=json&limit=5&countrycodes=eg&accept-language=id&q=${encodeURIComponent(q)}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                renderSearchResults(data);
+            } catch (err) {
+                showToast('Pencarian lokasi gagal. Coba lagi.', 'warning');
+            }
+        }
+
+        function renderSearchResults(items) {
+            const box = document.getElementById('map-search-results');
+            if (!items.length) {
+                box.innerHTML = `<p class="px-3.5 py-2.5 text-xs text-slate-500">Lokasi tidak ditemukan.</p>`;
+                box.classList.remove('hidden');
+                return;
+            }
+            box.innerHTML = items.map(item => `
+                <button type="button" onclick="pickSearchResult(${Number(item.lat)}, ${Number(item.lon)})" class="w-full text-left px-3.5 py-2.5 text-xs text-slate-700 hover:bg-blue-50 flex items-start gap-2">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5"></i>
+                    <span>${escapeHtml(item.display_name)}</span>
+                </button>
+            `).join('');
+            box.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function pickSearchResult(lat, lng) {
+            hideSearchResults();
+            toggleGpsBanner(false);
+            pickerMap.setView([lat, lng], 17);
+        }
+
+        function hideSearchResults() {
+            document.getElementById('map-search-results')?.classList.add('hidden');
+        }
+
+        const mapSearchInput = document.getElementById('map-search');
+        mapSearchInput.addEventListener('input', () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(searchAddress, 500);
+        });
+        mapSearchInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                clearTimeout(searchTimer);
+                searchAddress();
+            }
+        });
+
+        // Simpan titik Google Maps & tampilkan di keranjang
+        function saveLocation(loc) {
+            selectedLocation = loc;
+            const gmapsUrl = buildGoogleMapsUrl(loc.lat, loc.lng);
+            selectedLocation.googleMapsUrl = gmapsUrl;
+
+            setText('location-status', `Titik Google Maps: ${loc.address}${loc.detail ? ' (' + loc.detail + ')' : ''}`);
+
+            const previewLink = document.getElementById('gmaps-preview-link');
+            if (previewLink) {
+                previewLink.href = gmapsUrl;
+                previewLink.classList.remove('hidden');
+                previewLink.classList.add('inline-flex');
+            }
+
+            const addrField = document.getElementById('cust-address');
+            if (!addrField.value.trim()) {
+                addrField.value = loc.detail ? `${loc.address} (${loc.detail})` : loc.address;
+            }
+        }
+
+        function confirmMapPicker() {
+            if (!pickerDraft) return;
+            const detail = getValue('map-detail');
+            const address = pickerDraft.address || `Titik ${pickerDraft.lat.toFixed(6)}, ${pickerDraft.lng.toFixed(6)}`;
+            saveLocation({ lat: pickerDraft.lat, lng: pickerDraft.lng, address, detail });
+            closeMapPicker();
+            showToast('Titik Google Maps tersimpan!');
+        }
+
+        // Checkout via WhatsApp
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return;
+
+            const requiredFields = [
+                ['cust-name', 'Mohon isi Nama Customer terlebih dahulu!'],
+                ['cust-phone', 'Mohon isi Nomor WhatsApp / Telepon!'],
+                ['cust-address', 'Mohon isi Alamat Lengkap pengiriman!'],
+            ];
+            for (const [id, message] of requiredFields) {
+                if (!getValue(id)) {
+                    showToast(message, 'warning');
+                    document.getElementById(id).focus();
+                    return;
+                }
+            }
+
+            if (!selectedLocation) {
+                showToast('Mohon pilih titik lokasi pengantaran di Google Maps!', 'warning');
+                openMapPicker();
+                return;
+            }
+
+            const custName = getValue('cust-name');
+            const custPhone = getValue('cust-phone');
+            const custAddress = getValue('cust-address');
+            const note = getValue('order-note');
+            const mapsLink = selectedLocation.googleMapsUrl || buildGoogleMapsUrl(selectedLocation.lat, selectedLocation.lng);
+
+            let totalPrice = 0;
+            let totalProtein = 0;
+            const lines = cart.map((item, index) => {
+                const p = findProduct(item.productId);
+                const sub = p.price * item.qty;
+                totalPrice += sub;
+                totalProtein += p.protein * item.qty;
+                return `${index + 1}. ${p.name} (${p.weight}g) x ${item.qty} = ${formatPrice(sub)}`;
+            });
+
+            let message = `Halo *Provit*! Saya ingin memesan paket dada ayam fillet sehat:\n\n`;
+            message += `*DATA PEMESAN*\n`;
+            message += `• Nama: ${custName}\n`;
+            message += `• No. HP/WA: ${custPhone}\n`;
+            message += `• Alamat: ${custAddress}\n`;
+            message += `• Titik Lokasi: ${selectedLocation.address}${selectedLocation.detail ? ' (' + selectedLocation.detail + ')' : ''}\n`;
+            message += `• Google Maps: ${mapsLink}\n`;
+            message += `\n*DETAIL PESANAN*\n`;
+            message += lines.join('\n');
+            message += `\n\n*Total Protein:* ${totalProtein}g\n`;
+            message += `*Total Pembayaran:* ${formatPrice(totalPrice)}\n`;
+            if (note) {
+                message += `*Catatan:* ${note}\n`;
+            }
+            message += `\nMohon info ketersediaan stok & pengiriman ya. Terima kasih!`;
+
+            const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            calculateNutrition();
+            updateCartUI();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
